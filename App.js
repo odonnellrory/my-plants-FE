@@ -10,6 +10,7 @@ import CameraScreen from "./screens/CameraScreen";
 import Camerajs from "./screens/Camerajs";
 import MyPlants from "./screens/MyPlants";
 import Search from "./screens/Search";
+import User from "./screens/User";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,7 +37,7 @@ export default function App() {
           />
           <Tab.Screen
             name="My Profile"
-            component={HomeScreen}
+            component={User}
             options={{ tabBarIcon: ({ color, size }) => <FontAwesome name="user" size={size} color={color} /> }}
           />
         </Tab.Navigator>
