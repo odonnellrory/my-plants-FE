@@ -11,7 +11,7 @@ export default function MyPlants() {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function handleButtonClick() {
-    setIsModalVisible(true);
+    navigation.navigate("Add A Plant");
   }
 
   return (
