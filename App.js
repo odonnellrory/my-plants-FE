@@ -4,6 +4,7 @@ import { StatusBar, StyleSheet, View } from "react-native";
 
 import TabNavigator from "./TabNavigator";
 import CameraScreen from "./screens/CameraScreen";
+import SinglePlant from "./screens/SinglePlant";
 
 const Stack = createStackNavigator();
 
@@ -12,9 +13,10 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
           <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Camera" component={CameraScreen} />
+          <Stack.Screen name="SinglePlant" component={SinglePlant} options={({ route }) => ({ title: route.params.name })} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

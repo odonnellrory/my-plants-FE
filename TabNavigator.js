@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons, FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 
 import HomeScreen from "./screens/HomeScreen";
 import MyPlants from "./screens/MyPlants";
@@ -16,7 +16,7 @@ const TabNavigator = () => {
         name="My Plants"
         component={MyPlants}
         options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="flower-outline" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <FontAwesome6 name="seedling" size={size} color={color} />,
         }}
       />
       <Tab.Screen
