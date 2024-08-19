@@ -7,7 +7,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import TabNavigator from "./TabNavigator";
 import CameraScreen from "./screens/CameraScreen";
 import SinglePlant from "./screens/SinglePlant";
+
 import SignIn from "./screens/SignIn";
+
 
 const Stack = createStackNavigator();
 
