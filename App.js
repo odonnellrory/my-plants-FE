@@ -18,7 +18,6 @@ export default function App() {
           <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
           <Stack.Screen name="Camera" component={CameraScreen} />
           <Stack.Screen name="SinglePlant" component={SinglePlant} options={({ route }) => ({ title: route.params.name })} />
-          <Stack.Screen name="Add A Plant" component={AddPlant} />
         </Stack.Navigator>
       </NavigationContainer>
     </View>
