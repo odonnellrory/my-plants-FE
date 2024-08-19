@@ -2,9 +2,10 @@ import { useState, useRef } from 'react';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native';
 import * as FileSystem from 'expo-file-system';
+import axios from 'axios';
 
-const API_KEY = 'key';
-const API_URL = 'url';
+const API_KEY = '0JgOaRduyTcDFcDkf4mOWiP6CwNGw8GMzujRy5H1GXqe4PR6kv';
+const API_URL = 'https://plant.id/api/v3/identification';
 
 interface PlantSuggestion {
   name: string;
@@ -51,14 +52,17 @@ export default function CameraScreen() {
     try {
       const base64 = await FileSystem.readAsStringAsync(capturedImage, { encoding: FileSystem.EncodingType.Base64 });
   
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Api-Key': API_KEY },
-        body: JSON.stringify({ images: [`data:image/jpeg;base64,${base64}`] }),
-      });
   
-      const data = await response.json();
-      const suggestions = data.result?.classification?.suggestions || [];
+      const response = await axios.post(API_URL, 
+        { images: [`data:image/jpeg;base64,${base64}`] },
+        {
+          headers: { 
+            'Content-Type': 'application/json',
+            'Api-Key': API_KEY
+          }
+        }
+      );
+      const suggestions = response.data.result?.classification?.suggestions || [];
   
       setResults(
         suggestions.length > 0
