@@ -8,47 +8,57 @@ import User from "./screens/User";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = () => {
+const TabNavigator = ({ handleSignOut, currentUser }) => {
   return (
-    <Tab.Navigator screenOptions={{ headerTitleAlign: "center" }} initialRouteName="My Plants">
+    <Tab.Navigator
+      screenOptions={{ headerTitleAlign: "center" }}
+      initialRouteName="My Plants"
+    >
       <Tab.Screen
-        style={HeaderStyle.container}
         name="My Plants"
         component={MyPlants}
         options={{
-          tabBarIcon: ({ color, size }) => <FontAwesome6 name="seedling" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome6 name="seedling" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="Search"
         component={Search}
         options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="search" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="search" size={size} color={color} />
+          ),
         }}
       />
       <Tab.Screen
         name="My Profile"
-        component={User}
         options={{
-          tabBarIcon: ({ color, size }) => <FontAwesome name="user" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="user" size={size} color={color} />
+          ),
         }}
-      />
+      >
+        {(props) => (
+          <User
+            {...props}
+            handleSignOut={handleSignOut}
+            currentUser={currentUser}
+          />
+        )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
-};
-
-const HeaderStyle = {
-  container: {
-    textalign: "center",
-    color: "red",
-  },
 };
 
 export default TabNavigator;
