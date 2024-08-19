@@ -4,8 +4,8 @@ import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } f
 import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 
-const API_KEY = '0JgOaRduyTcDFcDkf4mOWiP6CwNGw8GMzujRy5H1GXqe4PR6kv';
-const API_URL = 'https://plant.id/api/v3/identification';
+const API_KEY = 'key';
+const API_URL = 'url';
 
 interface PlantSuggestion {
   name: string;
