@@ -1,20 +1,29 @@
 import { useState, useRef } from 'react';
 import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { Button, StyleSheet, Text, TouchableOpacity, View, Image, ScrollView } from 'react-native';
+import * as FileSystem from 'expo-file-system';
 
-export default function App() {
+const API_KEY = 'key';
+const API_URL = 'url';
+
+interface PlantSuggestion {
+  name: string;
+  probability: number;
+}
+
+export default function CameraScreen() {
   const [facing, setFacing] = useState<CameraType>('back');
   const [permission, requestPermission] = useCameraPermissions();
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [results, setResults] = useState<PlantSuggestion[]>([]);
+  const [isIdentifying, setIsIdentifying] = useState(false);
   const cameraRef = useRef<CameraView>(null);
 
   if (!permission) {
-    // Camera permissions are still loading.
     return <View />;
   }
 
   if (!permission.granted) {
-    // Camera permissions are not granted yet.
     return (
       <View style={styles.container}>
         <Text style={styles.message}>We need your permission to show the camera</Text>
@@ -31,18 +40,62 @@ export default function App() {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
       setCapturedImage(photo.uri);
+      setResults([]);
+    }
+  }
+
+  async function identifyPlant() {
+    if (!capturedImage) return;
+    setIsIdentifying(true);
+  
+    try {
+      const base64 = await FileSystem.readAsStringAsync(capturedImage, { encoding: FileSystem.EncodingType.Base64 });
+  
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Api-Key': API_KEY },
+        body: JSON.stringify({ images: [`data:image/jpeg;base64,${base64}`] }),
+      });
+  
+      const data = await response.json();
+      const suggestions = data.result?.classification?.suggestions || [];
+  
+      setResults(
+        suggestions.length > 0
+          ? suggestions.slice(0, 5).map(({ name, probability }) => ({ name, probability }))
+          : [{ name: 'Unable to identify', probability: 0 }]
+      );
+    } catch (error) {
+      console.error('Error identifying plant:', error);
+      setResults([{ name: 'Error identifying plant', probability: 0 }]);
+    } finally {
+      setIsIdentifying(false);
     }
   }
 
   return (
     <View style={styles.container}>
       {capturedImage ? (
-        <View style={styles.previewContainer}>
+        <ScrollView contentContainerStyle={styles.previewContainer}>
           <Image source={{ uri: capturedImage }} style={styles.preview} />
-          <TouchableOpacity style={styles.button} onPress={() => setCapturedImage(null)}>
-            <Text style={styles.text}>Back</Text>
+          {results.length > 0 ? (
+            results.map((result, index) => (
+              <Text key={index} style={styles.resultText}>
+                {result.name} ({(result.probability * 100).toFixed(2)}%)
+              </Text>
+            ))
+          ) : (
+            <TouchableOpacity style={styles.button} onPress={identifyPlant} disabled={isIdentifying}>
+              <Text style={styles.text}>{isIdentifying ? 'Identifying...' : 'Identify Plant'}</Text>
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity style={styles.button} onPress={() => {
+            setCapturedImage(null);
+            setResults([]);
+          }}>
+            <Text style={styles.text}>New Picture</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
       ) : (
         <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
           <View style={styles.buttonContainer}>
@@ -81,27 +134,36 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    width: 60,
+    width: 120,
     height: 60,
     borderRadius: 30,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: 10,
   },
   text: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+    textAlign: 'center',
   },
   previewContainer: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+    paddingVertical: 20,
   },
   preview: {
     width: '100%',
-    height: '80%',
+    height: 400,
     resizeMode: 'contain',
+  },
+  resultText: {
+    color: 'white',
+    fontSize: 18,
+    marginVertical: 5,
+    textAlign: 'center',
   },
 });
