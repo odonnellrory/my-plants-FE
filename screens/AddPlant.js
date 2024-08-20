@@ -1,22 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 export default function AddPlant() {
   let navigation = useNavigation();
+
+  const [plantName, setPlantName] = useState("");
+  const [plantLocation, setPlantLocation] = useState("");
+  const [plantNickname, setPlantNickname] = useState("");
+
+  function handlePlantLocationChange(newText) {
+    setPlantLocation(newText);
+  }
+
+  function handlePlantNameChange(newText) {
+    setPlantName(newText);
+  }
+
+  function handlePlantNicknameChange(newText) {
+    setPlantNickname(newText);
+  }
+
   function handleCameraPress() {
     navigation.navigate("Camera");
   }
 
-  function handleAddPlantPress() {}
+  function handleAddPlantPress() {
+    //our api call to perenual
+  }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
       <View style={styles.formContainer}>
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.nameInput}></TextInput>
+          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
           <Pressable style={styles.namePressable}>
             <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
           </Pressable>
@@ -28,12 +47,11 @@ export default function AddPlant() {
           This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and identify
           the plant that way
         </Text>
-        <View></View>
         <Text>Plant Location (optional)</Text>
-        <TextInput style={styles.input}></TextInput>
+        <TextInput style={styles.input} value={plantLocation} onChangeText={handlePlantLocationChange}></TextInput>
         <Text style={styles.nameText}>Where is this plant kept? e.g. Living room</Text>
         <Text>Plant Nickname (optional)</Text>
-        <TextInput style={styles.input}></TextInput>
+        <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
         <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
         <Pressable title="Add Plant" style={styles.pressable} onPress={handleAddPlantPress}>
           <Text style={styles.text}>Add Plant</Text>
