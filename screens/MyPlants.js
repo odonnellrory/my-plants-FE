@@ -22,7 +22,7 @@ export default function MyPlants() {
       </Pressable>
       <View style={styles.singlePlantContainer}>
         {data.map((plant) => {
-          return <PlantCard plant={plant} />;
+          return <PlantCard plant={plant} key={plant.plant_id} />;
         })}
       </View>
     </View>
@@ -53,6 +53,7 @@ const styles = {
     width: "100vw",
     backgroundColor: "#ed8a53",
     margin: 8,
+    marginBottom: 0,
   },
   text: {
     fontSize: 16,
