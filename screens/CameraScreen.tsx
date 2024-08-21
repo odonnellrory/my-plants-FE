@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react';
-import { CameraView, CameraType, useCameraPermissions } from 'expo-camera';
-import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import PlantIdentifier from './PlantIdentifier';
+import { useState, useRef } from "react";
+import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import PlantIdentifier from "./PlantIdentifier";
 
 export default function CameraScreen() {
-  const [facing, setFacing] = useState<CameraType>('back');
+  const [facing, setFacing] = useState<CameraType>("back");
   const [permission, requestPermission] = useCameraPermissions();
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
   const cameraRef = useRef<CameraView>(null);
@@ -23,7 +23,7 @@ export default function CameraScreen() {
   }
 
   function toggleCameraFacing() {
-    setFacing(current => (current === 'back' ? 'front' : 'back'));
+    setFacing((current) => (current === "back" ? "front" : "back"));
   }
 
   async function takePicture() {
@@ -38,11 +38,14 @@ export default function CameraScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={styles.imageProcessContainer}>
       {capturedImage ? (
         <PlantIdentifier capturedImage={capturedImage} onNewPicture={handleNewPicture} />
       ) : (
-        <CameraView ref={cameraRef} style={styles.camera} facing={facing}>
+        <View style={styles.cameraContainer}>
+          <View style={styles.container}>
+            <CameraView ref={cameraRef} style={styles.camera} facing={facing}></CameraView>
+          </View>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={toggleCameraFacing}>
               <Text style={styles.text}>Flip</Text>
@@ -51,7 +54,7 @@ export default function CameraScreen() {
               <Text style={styles.text}>Take</Text>
             </TouchableOpacity>
           </View>
-        </CameraView>
+        </View>
       )}
     </View>
   );
@@ -59,37 +62,49 @@ export default function CameraScreen() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 100,
+    justifyContent: "center",
+    height: "70%",
+  },
+  cameraContainer: {
     flex: 1,
-    justifyContent: 'center',
+    width: "100%",
+    backgroundColor: "black",
+  },
+  imageProcessContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff4c7",
   },
   message: {
-    textAlign: 'center',
+    textAlign: "center",
     paddingBottom: 10,
   },
   camera: {
     flex: 1,
   },
   buttonContainer: {
-    position: 'absolute',
-    bottom: 40,
-    left: 20,
-    right: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    marginTop: 50,
+    marginLeft: 10,
+    marginRight: 10,
+    alignSelf: "stretch",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   button: {
     width: 120,
     height: 60,
     borderRadius: 30,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: 'white',
-    textAlign: 'center',
+    fontWeight: "bold",
+    color: "white",
+    textAlign: "center",
   },
 });

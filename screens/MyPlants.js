@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import { Button, Text, View, Pressable, Modal } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import AddPlantModal from "./AddPlantModal";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 
 export default function MyPlants() {
   const data = testData();
   let navigation = useNavigation();
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  function handleButtonClick() {
+  function handleAddPlantPress() {
     navigation.navigate("Add A Plant");
   }
 
   return (
     <View style={styles.container}>
-      <AddPlantModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
-      <Pressable title="Add Plant" style={styles.button} onPress={handleButtonClick}>
+      <Pressable title="Add Plant" style={styles.button} onPress={handleAddPlantPress}>
         <Text style={styles.text}>Add Plant</Text>
       </Pressable>
       <View style={styles.singlePlantContainer}>

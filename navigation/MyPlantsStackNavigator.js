@@ -4,7 +4,7 @@ import AddPlant from "../screens/AddPlant";
 import MyPlants from "../screens/MyPlants";
 
 const Stack = createStackNavigator();
-export default HomeStack = () => {
+export default function MyPlantsStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="My Plants" screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Screen name="My Plant Collection" component={MyPlants} />
@@ -12,4 +12,4 @@ export default HomeStack = () => {
       <Stack.Screen name="Add A Plant" component={AddPlant} />
     </Stack.Navigator>
   );
-};
+}

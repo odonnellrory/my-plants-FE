@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 
 export default function AddPlant() {
+  const route = useRoute();
+  const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
+
+  console.log(identifiedPlantName);
   let navigation = useNavigation();
 
   const [plantName, setPlantName] = useState("");
@@ -35,7 +40,9 @@ export default function AddPlant() {
       <View style={styles.formContainer}>
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
+          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}>
+            {identifiedPlantName}
+          </TextInput>
           <Pressable style={styles.namePressable}>
             <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
           </Pressable>
@@ -84,6 +91,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFE1A1",
     padding: 8,
     borderRadius: 8,
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "#fff",
   },
   input: {
     backgroundColor: "white",
