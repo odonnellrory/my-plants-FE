@@ -3,7 +3,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar, StyleSheet, View } from "react-native";
 
 import TabNavigator from "./navigation/TabNavigator";
-import CameraScreen from "./screens/CameraScreen";
 import { UserProvider } from "./Context/UserContext";
 
 const Stack = createStackNavigator();
@@ -16,7 +15,6 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
             <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
-            <Stack.Screen name="Camera" component={CameraScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
