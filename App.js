@@ -15,7 +15,11 @@ export default function App() {
         <StatusBar style="auto" />
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
-            <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
+            <Stack.Screen
+              name="Main"
+              component={TabNavigator}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen name="Camera" component={CameraScreen} />
           </Stack.Navigator>
         </NavigationContainer>
