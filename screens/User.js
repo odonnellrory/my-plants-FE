@@ -7,132 +7,112 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 
-export default function User({ handleSignOut, currentUser }) {
-  const userData = {
-    username: currentUser,
-    profilePicture:
-      "https://media.istockphoto.com/id/157030584/vector/thumb-up-emoticon.jpg?s=612x612&w=0&k=20&c=GGl4NM_6_BzvJxLSl7uCDF4Vlo_zHGZVmmqOBIewgKg=",
-    bio: "I love plants",
-    plants: 3,
-    followers: 12,
-    following: 32,
-  };
+import { Ionicons } from "@expo/vector-icons";
+import { useState, useContext } from "react";
+import { UserContext } from "../Context/UserContext";
+
+
+export default function User() {
+
+  const { loggedInUser } = useContext(UserContext); 
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <Image
-          source={{ uri: userData.profilePicture }}
-          style={styles.profilePicture}
-        />
-        <Text style={styles.username}>{userData.username}</Text>
-      </View>
 
-      <View style={styles.statsContainer}>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{userData.plants}</Text>
-          <Text style={styles.statLabel}>Plants</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{userData.followers}</Text>
-          <Text style={styles.statLabel}>Followers</Text>
-        </View>
-        <View style={styles.statItem}>
-          <Text style={styles.statNumber}>{userData.following}</Text>
-          <Text style={styles.statLabel}>Following</Text>
-        </View>
-      </View>
+    <View style={[styles.container]}>
+      <ScrollView>
 
-      <Text style={styles.bio}>{userData.bio}</Text>
+      <Image
+          source={{ uri: loggedInUser.profile_picture }}
+          style={styles.profile_picture}/>
 
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.footerButton} onPress={handleSignOut}>
-          <Ionicons name="log-out-outline" size={24} color="#333" />
-          <Text style={styles.footerButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+        <Text style={[styles.username]}>{loggedInUser.username}</Text>
+        <Text style={[styles.name]}>{loggedInUser.name}</Text>
+        <Text style={[styles.email]}>{loggedInUser.email}</Text>
+        <Text style={[styles.reward_points]}>Reward points: {loggedInUser.reward_points}</Text>
+        <Text style={[styles.plants]}>I own {loggedInUser.plants.length} plants!</Text>
+        <Text style={[styles.created_at]}>Joined {loggedInUser.created_at}</Text>
+      </ScrollView>
+    </View>
+
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
+
     flex: 1,
-    backgroundColor: "#fff",
-  },
-  header: {
+    backgroundColor: "#D5F2E2",
     alignItems: "center",
-    padding: 20,
+    textAlign: 1,
+   
   },
-  profilePicture: {
+
+  username: {
+ 
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    textAlign: 1
+    
+    
+  },
+
+  name: {
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    textAlign: 1,
+    margin: 1
+
+  },
+
+  email: {
+
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    textAlign: 1,
+    margin: 1
+
+  },
+  
+  reward_points: {
+
+    textAlign: 1,
+    margin: 1
+
+  },
+
+  plants: {
+
+    textAlign: 1,
+    margin: 1
+  },
+
+  created_at: {
+
+    textAlign: 1,
+    margin: 1
+
+  },
+  profile_picture: {
+
     width: 120,
     height: 120,
+    alignItems: "center",
+    marginVertical: 50,
+    marginLeft: 50,
     borderRadius: 60,
-    marginBottom: 10,
-  },
-  username: {
-    fontSize: 24,
-    fontWeight: "bold",
-  },
-  statsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: 20,
-  },
-  statItem: {
-    alignItems: "center",
-  },
-  statNumber: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  statLabel: {
-    fontSize: 14,
-    color: "#666",
-  },
-  bio: {
-    fontSize: 16,
-    textAlign: "center",
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  editProfileButton: {
-    backgroundColor: "#C0DEAD",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 20,
-    alignSelf: "center",
-    marginBottom: 20,
-  },
-  editProfileButtonText: {
-    color: "#333",
-    fontWeight: "bold",
-  },
-  section: {
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 20,
-    borderTopWidth: 1,
-    borderTopColor: "#eee",
-  },
-  footerButton: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-  footerButtonText: {
-    marginLeft: 5,
-    color: "#333",
-  },
+    borderWidth: 3,
+    borderColor: '#B4D9A5'
+
+  }
+
+ 
+
+
+ 
+
 });
