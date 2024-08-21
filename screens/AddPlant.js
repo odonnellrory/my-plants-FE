@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable } from "react-native";
+import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable, Image } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
+import * as ImagePicker from "expo-image-picker";
 
 export default function AddPlant() {
   const route = useRoute();
@@ -13,6 +14,8 @@ export default function AddPlant() {
   const [plantName, setPlantName] = useState(identifiedPlantName);
   const [plantLocation, setPlantLocation] = useState("");
   const [plantNickname, setPlantNickname] = useState("");
+  const [imageSelected, setImageSelected] = useState("");
+  const [imageToProcess, setImageToProcess] = useState("");
 
   useEffect(() => {
     setPlantName(identifiedPlantName);
@@ -30,8 +33,33 @@ export default function AddPlant() {
     setPlantNickname(newText);
   }
 
-  function handleCameraPress() {
-    navigation.navigate("Camera");
+  async function handleCameraPress() {
+    //navigation.navigate("Camera");
+    try {
+      await ImagePicker.requestCameraPermissionsAsync();
+      let result = await ImagePicker.launchCameraAsync({
+        cameraType: ImagePicker.CameraType.back,
+        aspect: [1, 1],
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        setImageSelected(result.assets[0].uri);
+        const imageToProcess = result.assets[0].uri;
+        navigation.navigate("Plant Identifier", { imageToProcess });
+      }
+    } catch (error) {}
+  }
+
+  async function handlePhotoGalleryPress() {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    });
+    if (!result.canceled) {
+      setImageSelected(result.assets[0].uri);
+      const imageToProcess = result.assets[0].uri;
+      navigation.navigate("Plant Identifier", { imageToProcess });
+    }
   }
 
   function handleAddPlantPress() {
@@ -48,7 +76,7 @@ export default function AddPlant() {
             <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
           </Pressable>
           <Pressable style={styles.namePressable}>
-            <FontAwesome style={styles.icon} name="photo"></FontAwesome>
+            <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
           </Pressable>
         </View>
         <Text style={styles.nameText}>
@@ -81,6 +109,10 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     margin: 15,
     gap: 10,
+  },
+  image: {
+    width: 300,
+    height: 300,
   },
   nameInput: {
     flex: 6,
