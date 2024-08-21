@@ -10,8 +10,6 @@ export default function IdentifiedPlantCard(props) {
     navigation.navigate("Add A Plant", { identifiedPlant });
   }
 
-  console.log(identifiedPlant);
-  console.log(identifiedPlant.similar_images[0], "<<SIM IM OBJECT");
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: identifiedPlant.similar_images[0].url }}></Image>

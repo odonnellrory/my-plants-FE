@@ -4,8 +4,11 @@ import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import IdentifiedPlantCard from "../Components/IdentifiedPlantCard";
 
-const API_KEY = "LALGPQiyPaFD8XJffrvNbD9y8NqPk3kIdIT6cmwDNW2wVExKjn";
-const API_URL = "https://plant.id/api/v3/identification";
+const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY;
+const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
+console.log(process.env);
+console.log(API_KEY);
+console.log(API_URL);
 
 interface PlantSuggestion {
   name: string;

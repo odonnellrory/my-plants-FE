@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -8,12 +8,15 @@ export default function AddPlant() {
   const route = useRoute();
   const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
 
-  console.log(identifiedPlantName);
   let navigation = useNavigation();
 
-  const [plantName, setPlantName] = useState("");
+  const [plantName, setPlantName] = useState(identifiedPlantName);
   const [plantLocation, setPlantLocation] = useState("");
   const [plantNickname, setPlantNickname] = useState("");
+
+  useEffect(() => {
+    setPlantName(identifiedPlantName);
+  }, [identifiedPlantName]);
 
   function handlePlantLocationChange(newText) {
     setPlantLocation(newText);
@@ -40,9 +43,7 @@ export default function AddPlant() {
       <View style={styles.formContainer}>
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}>
-            {identifiedPlantName}
-          </TextInput>
+          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
           <Pressable style={styles.namePressable}>
             <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
           </Pressable>
