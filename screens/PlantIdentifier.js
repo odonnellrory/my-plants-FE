@@ -3,23 +3,16 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "rea
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import IdentifiedPlantCard from "../Components/IdentifiedPlantCard";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY; //within .env file
 const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
 
-interface PlantSuggestion {
-  name: string;
-  probability: number;
-  similar_images: object;
-}
-
-interface PlantIdentifierProps {
-  capturedImage: string | null;
-  onNewPicture: () => void;
-}
-
-export default function PlantIdentifier({ capturedImage, onNewPicture }: PlantIdentifierProps) {
-  const [identifiedPlantList, setidentifiedPlantList] = useState<PlantSuggestion[]>([]);
+export default function PlantIdentifier() {
+  const route = useRoute();
+  const capturedImage = route.params?.imageToProcess;
+  const [identifiedPlantList, setidentifiedPlantList] = useState([]);
+  console.log(capturedImage, "INSIDE PLANTID");
   const [isIdentifying, setIsIdentifying] = useState(false);
 
   async function identifyPlant() {
@@ -62,7 +55,7 @@ export default function PlantIdentifier({ capturedImage, onNewPicture }: PlantId
         <TouchableOpacity style={styles.pressable} onPress={identifyPlant} disabled={isIdentifying}>
           <Text style={styles.text}>Identify Plant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.pressable} onPress={onNewPicture}>
+        <TouchableOpacity style={styles.pressable}>
           <Text style={styles.text}>New Picture</Text>
         </TouchableOpacity>
         {isIdentifying ? (
