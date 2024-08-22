@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import { Text, View, TextInput, Pressable, KeyboardAvoidingView } from "react-native";
+import {
+  Text,
+  View,
+  TextInput,
+  Pressable,
+  KeyboardAvoidingView,
+} from "react-native";
 
 export default function User() {
   let navigation = useNavigation();
@@ -25,9 +31,17 @@ export default function User() {
       <View style={styles.formContainer}>
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
+          <TextInput
+            style={styles.nameInput}
+            value={plantName}
+            onChangeText={handlePlantNameChange}
+          ></TextInput>
           <Pressable style={styles.namePressable}>
-            <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
+            <Ionicons
+              style={styles.icon}
+              name="camera"
+              onPress={handleCameraPress}
+            ></Ionicons>
           </Pressable>
           <Pressable style={styles.namePressable}>
             <FontAwesome style={styles.icon} name="photo"></FontAwesome>
