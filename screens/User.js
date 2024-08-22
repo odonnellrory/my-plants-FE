@@ -26,19 +26,19 @@ export default function User() {
 
   let navigation = useNavigation();
 
-  function handleCameraPress() {
-    navigation.navigate("Camera");
-  }
+  // function handleCameraPress() {
+  //   navigation.navigate("Camera");
+  // }
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Pressable style={styles.namePressable} name="camera" onPress={handleCameraPress}>
+        {/* <Pressable style={styles.namePressable} name="camera" onPress={handleCameraPress}>
           <Image 
             source={{ uri: loggedInUser.profile_picture }} 
             style={styles.profile_picture} 
           />
-        </Pressable>
+        </Pressable> */}
 
         <Text style={styles.username}>{loggedInUser.username}</Text>
         <Text style={styles.name}>{loggedInUser.name}</Text>
