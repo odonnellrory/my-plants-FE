@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable, Image } from "react-native";
+import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable, Image, TouchableOpacity } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
+import AddPlantModal from "./AddPlantModal";
 
 export default function AddPlant() {
   const route = useRoute();
   const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
+
+ 
 
   let navigation = useNavigation();
 
@@ -15,7 +19,9 @@ export default function AddPlant() {
   const [plantLocation, setPlantLocation] = useState("");
   const [plantNickname, setPlantNickname] = useState("");
   const [imageSelected, setImageSelected] = useState("");
-  const [imageToProcess, setImageToProcess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [plantList, setPlantList] = useState([]);
 
   useEffect(() => {
     setPlantName(identifiedPlantName);
@@ -63,7 +69,19 @@ export default function AddPlant() {
   }
 
   function handleAddPlantPress() {
-    //our api call to perenual
+
+    setIsLoading(true);
+    setIsModalVisible(true);
+
+    // axios.get(`${API_URL}${plantName}`).then((response) => {
+
+
+    //   setPlantList(response.data.data)
+   
+
+    // }
+    // )
+   
   }
 
   return (
@@ -72,12 +90,12 @@ export default function AddPlant() {
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
           <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
-          <Pressable style={styles.namePressable}>
+          <TouchableOpacity style={styles.namePressable}>
             <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
-          </Pressable>
-          <Pressable style={styles.namePressable}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.namePressable}>
             <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Text style={styles.nameText}>
           This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and identify
@@ -89,13 +107,20 @@ export default function AddPlant() {
         <Text>Plant Nickname (optional)</Text>
         <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
         <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
-        <Pressable title="Add Plant" style={styles.pressable} onPress={handleAddPlantPress}>
+        <TouchableOpacity title="Add Plant" style={styles.pressable} onPress={handleAddPlantPress}>
           <Text style={styles.text}>Add Plant</Text>
-        </Pressable>
+        </TouchableOpacity>
+        <AddPlantModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} plantList={plantList}>
+
+        </AddPlantModal>
+      
+     
       </View>
+  
     </KeyboardAvoidingView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -109,6 +134,7 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     margin: 15,
     gap: 10,
+    
   },
   image: {
     width: 300,

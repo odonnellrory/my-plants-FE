@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#D5F2E2",
+    backgroundColor: "#e0f3e1",
   },
 
   scrollContainer: {

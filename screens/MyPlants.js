@@ -29,7 +29,7 @@ export default function MyPlants() {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#fff4c7",
+    backgroundColor: "#e0f3e1",
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -48,7 +48,7 @@ const styles = {
     borderRadius: 4,
     elevation: 3,
     width: "100vw",
-    backgroundColor: "#ed8a53",
+    backgroundColor: "#579981",
     margin: 8,
     marginBottom: 0,
   },

@@ -39,7 +39,7 @@ export default function PlantCard({ plant }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#C0DEAD",
+    backgroundColor: "#99d5bf",
     marginBottom: 10,
     borderRadius: 4,
     padding: 10,
