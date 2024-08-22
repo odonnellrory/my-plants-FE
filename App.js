@@ -41,7 +41,6 @@ export default function App() {
               component={TabNavigator}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="Camera" component={CameraScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
