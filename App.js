@@ -3,11 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar, StyleSheet, View } from "react-native";
 
 import TabNavigator from "./navigation/TabNavigator";
-import CameraScreen from "./screens/CameraScreen";
 import { UserProvider } from "./Context/UserContext";
-import RegisterScreen from "./screens/SignUp";
-import LoginScreen from "./screens/SignIn";
-import WelcomeScreen from "./screens/WelcomeScreen";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +13,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <NavigationContainer>
+
           <Stack.Navigator
             initialRouteName="WelcomeScreen"
             screenOptions={{ headerTitleAlign: "center" }}
@@ -41,6 +38,7 @@ export default function App() {
               component={TabNavigator}
               options={{ headerShown: false }}
             />
+
           </Stack.Navigator>
         </NavigationContainer>
       </View>
