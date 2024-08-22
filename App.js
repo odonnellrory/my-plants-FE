@@ -13,32 +13,8 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="auto" />
         <NavigationContainer>
-
-          <Stack.Navigator
-            initialRouteName="WelcomeScreen"
-            screenOptions={{ headerTitleAlign: "center" }}
-          >
-            <Stack.Screen
-              name="WelcomeScreen"
-              component={WelcomeScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="RegisterScreen"
-              component={RegisterScreen}
-              options={{ title: "Register" }}
-            />
-            <Stack.Screen
-              name="LoginScreen"
-              component={LoginScreen}
-              options={{ title: "Sign In" }}
-            />
-            <Stack.Screen
-              name="Main"
-              component={TabNavigator}
-              options={{ headerShown: false }}
-            />
-
+          <Stack.Navigator screenOptions={{ headerTitleAlign: "center" }}>
+            <Stack.Screen name="Main" component={TabNavigator} options={{ headerShown: false }} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
