@@ -38,7 +38,7 @@ export default function SinglePlant(props) {
 const styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: "#fff4c7",
+    backgroundColor: "#e0f3e1",
   },
   contentContainer: {
     alignItems: "center",
