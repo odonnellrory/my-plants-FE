@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, View, Text, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
 
 Notifications.setNotificationHandler({
@@ -10,7 +10,11 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const PushNotification = ({ plant, showInstantButton = false }) => {
+const PushNotification = ({
+  plant,
+  showInstantButton = false,
+  compact = false,
+}) => {
   const [nextWatering, setNextWatering] = useState(null);
 
   useEffect(() => {
@@ -24,18 +28,13 @@ const PushNotification = ({ plant, showInstantButton = false }) => {
   }, [plant]);
 
   const parseDate = (dateString) => {
-    // First, try parsing as ISO date string
     let date = new Date(dateString);
-
-    // If invalid, try parsing as "YYYY-MM-DD" format
     if (isNaN(date.getTime())) {
       const parts = dateString.split("-");
       if (parts.length === 3) {
         date = new Date(parts[0], parts[1] - 1, parts[2]);
       }
     }
-
-    // If still invalid, try parsing as "DD/MM/YYYY" format
     if (isNaN(date.getTime())) {
       const parts = dateString.split("/");
       if (parts.length === 3) {
@@ -68,7 +67,7 @@ const PushNotification = ({ plant, showInstantButton = false }) => {
 
   const scheduleNotification = async () => {
     if (!nextWatering) {
-      alert("Next watering date not available or invalid");
+      Alert.alert("Error", "Next watering date not available or invalid");
       return;
     }
 
@@ -82,10 +81,14 @@ const PushNotification = ({ plant, showInstantButton = false }) => {
         },
         trigger: nextWatering,
       });
-      alert(`Notification scheduled for ${nextWatering.toLocaleString()}`);
+      Alert.alert(
+        "Success",
+        `Notification scheduled for ${nextWatering.toLocaleString()}`
+      );
     } catch (error) {
       console.error("Error scheduling notification:", error);
-      alert(
+      Alert.alert(
+        "Error",
         "Failed to schedule notification. Please check your permissions and try again."
       );
     }
@@ -98,32 +101,47 @@ const PushNotification = ({ plant, showInstantButton = false }) => {
           title: "Instant Notification",
           body: "This is a test notification sent instantly.",
         },
-        trigger: null, // null trigger means the notification is sent immediately
+        trigger: null,
       });
+      Alert.alert("Success", "Instant notification sent!");
     } catch (error) {
       console.error("Error sending instant notification:", error);
-      alert(
+      Alert.alert(
+        "Error",
         "Failed to send instant notification. Please check your permissions and try again."
       );
     }
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[compact && { padding: 10 }]}>
       {plant && (
         <>
-          <Button
-            title="Schedule Watering Reminder"
+          <TouchableOpacity
+            style={[styles.button, !nextWatering && styles.disabledButton]}
             onPress={scheduleNotification}
             disabled={!nextWatering}
-          />
+          >
+            <Text
+              style={[
+                styles.buttonText,
+                !nextWatering && styles.disabledButtonText,
+              ]}
+            >
+              Schedule Reminder
+            </Text>
+          </TouchableOpacity>
         </>
       )}
       {showInstantButton && (
-        <Button
-          title="TEST: Send Instant Notification"
+        <TouchableOpacity
+          style={[styles.button, styles.instantButton]}
           onPress={sendInstantNotification}
-        />
+        >
+          <Text style={[styles.buttonText, styles.instantButtonText]}>
+            Send Instant Notification
+          </Text>
+        </TouchableOpacity>
       )}
     </View>
   );
@@ -131,11 +149,52 @@ const PushNotification = ({ plant, showInstantButton = false }) => {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
     padding: 20,
+    margin: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#2E7D32",
+    marginBottom: 10,
   },
   dateText: {
-    marginVertical: 10,
     fontSize: 16,
+    color: "#388E3C",
+    marginVertical: 10,
+  },
+  button: {
+    backgroundColor: "#66BB6A",
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    marginTop: 10,
+  },
+  buttonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  disabledButton: {
+    backgroundColor: "#C8E6C9",
+  },
+  disabledButtonText: {
+    color: "#81C784",
+  },
+  instantButton: {
+    backgroundColor: "#4CAF50",
+    marginTop: 15,
+  },
+  instantButtonText: {
+    color: "#FFFFFF",
   },
 });
 

@@ -14,9 +14,6 @@ export default function MyPlants() {
 
   return (
     <View style={styles.container}>
-      <Pressable title="Add Plant" style={styles.button} onPress={handleAddPlantPress}>
-        <Text style={styles.text}>Add Plant</Text>
-      </Pressable>
       <View style={styles.singlePlantContainer}>
         {data.map((plant) => {
           return <PlantCard plant={plant} key={plant.plant_id} />;
@@ -29,35 +26,37 @@ export default function MyPlants() {
 const styles = {
   container: {
     flex: 1,
-    backgroundColor: "#e0f3e1",
+    backgroundColor: "#E8F5E9",
+
     alignItems: "center",
     justifyContent: "flex-start",
+    padding: 15,
   },
   singlePlantContainer: {
     alignSelf: "stretch",
     flex: 1,
-    margin: 8,
-    borderRadius: 4,
+    marginTop: 15,
   },
   button: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 15,
     paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    width: "100vw",
-    backgroundColor: "#579981",
-    margin: 8,
-    marginBottom: 0,
+    borderRadius: 25,
+    backgroundColor: "#66BB6A",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   text: {
     fontSize: 16,
-    lineHeight: 21,
     fontWeight: "bold",
-    letterSpacing: 0.25,
-    color: "#fff",
+    letterSpacing: 0.5,
+    color: "#FFFFFF",
   },
 };
 

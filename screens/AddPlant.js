@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, Pressable, Image, TouchableOpacity } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  Image,
+} from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
@@ -9,7 +18,9 @@ import AddPlantModal from "./AddPlantModal";
 
 export default function AddPlant() {
   const route = useRoute();
-  const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
+  const identifiedPlantName = route.params?.identifiedPlant
+    ? route.params?.identifiedPlant.name
+    : "";
 
  
 
@@ -89,25 +100,54 @@ export default function AddPlant() {
       <View style={styles.formContainer}>
         <Text>Plant Name</Text>
         <View style={styles.nameContainer}>
-          <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
-          <TouchableOpacity style={styles.namePressable}>
-            <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.namePressable}>
-            <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
-          </TouchableOpacity>
+          <TextInput
+            style={styles.nameInput}
+            value={plantName}
+            onChangeText={handlePlantNameChange}
+          ></TextInput>
+          <Pressable style={styles.namePressable}>
+            <Ionicons
+              style={styles.icon}
+              name="camera"
+              onPress={handleCameraPress}
+            ></Ionicons>
+          </Pressable>
+          <Pressable style={styles.namePressable}>
+            <FontAwesome
+              style={styles.icon}
+              name="photo"
+              onPress={handlePhotoGalleryPress}
+            ></FontAwesome>
+          </Pressable>
         </View>
         <Text style={styles.nameText}>
-          This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and identify
+          This is used to identify the plant. It can be it's scientific name or
+          its common name. If you are unsure you can take a photo and identify
           the plant that way
         </Text>
         <Text>Plant Location (optional)</Text>
-        <TextInput style={styles.input} value={plantLocation} onChangeText={handlePlantLocationChange}></TextInput>
-        <Text style={styles.nameText}>Where is this plant kept? e.g. Living room</Text>
+        <TextInput
+          style={styles.input}
+          value={plantLocation}
+          onChangeText={handlePlantLocationChange}
+        ></TextInput>
+        <Text style={styles.nameText}>
+          Where is this plant kept? e.g. Living room
+        </Text>
         <Text>Plant Nickname (optional)</Text>
-        <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
-        <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
-        <TouchableOpacity title="Add Plant" style={styles.pressable} onPress={handleAddPlantPress}>
+        <TextInput
+          style={styles.input}
+          value={plantNickname}
+          onChangeText={handlePlantNicknameChange}
+        ></TextInput>
+        <Text style={styles.nameText}>
+          Feel free to give your plant a nickname!
+        </Text>
+        <Pressable
+          title="Add Plant"
+          style={styles.pressable}
+          onPress={handleAddPlantPress}
+        >
           <Text style={styles.text}>Add Plant</Text>
         </TouchableOpacity>
         <AddPlantModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} plantList={plantList}>
@@ -124,71 +164,93 @@ export default function AddPlant() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff4c7",
+    backgroundColor: "#E8F5E9",
     flex: 1,
     justifyContent: "start",
     alignItems: "center",
   },
-
   formContainer: {
     alignSelf: "stretch",
-    margin: 15,
-    gap: 10,
-    
+    margin: 20,
+    padding: 20,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   image: {
     width: 300,
     height: 300,
+    borderRadius: 15,
+    alignSelf: "center",
+    marginBottom: 20,
   },
   nameInput: {
     flex: 6,
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#F1F8E9",
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#81C784",
   },
   nameText: {
-    backgroundColor: "#FFE1A1",
-    padding: 8,
+    backgroundColor: "#C8E6C9",
+    padding: 10,
     borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 15,
+    color: "#1B5E20",
   },
   text: {
     fontSize: 16,
     lineHeight: 21,
     fontWeight: "bold",
     letterSpacing: 0.25,
-    color: "#fff",
+    color: "#FFFFFF",
   },
   input: {
-    backgroundColor: "white",
-    padding: 10,
-    borderRadius: 8,
+    backgroundColor: "#F1F8E9",
+    padding: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#81C784",
+    marginBottom: 15,
   },
   nameContainer: {
     flexDirection: "row",
     gap: 10,
+    marginBottom: 15,
   },
   namePressable: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 2,
-    borderRadius: 8,
-    borderColor: "gray",
-    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: "#81C784",
+    backgroundColor: "#F1F8E9",
+    padding: 10,
   },
   icon: {
     fontSize: 25,
+    color: "#4CAF50",
   },
   pressable: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 15,
     paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    width: "100vw",
-    backgroundColor: "#ed8a53",
-    marginTop: 30,
+    borderRadius: 25,
+    backgroundColor: "#66BB6A",
+    marginTop: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
 });

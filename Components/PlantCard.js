@@ -39,11 +39,16 @@ export default function PlantCard({ plant }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#99d5bf",
-    marginBottom: 10,
-    borderRadius: 4,
-    padding: 10,
+    backgroundColor: "#FFFFFF",
+    marginBottom: 15,
+    borderRadius: 15,
+    padding: 15,
     overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   cardContent: {
     flexDirection: "row",
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    borderRadius: 4,
+    borderRadius: 10,
   },
   imageContainer: {
     justifyContent: "center",
@@ -67,19 +72,25 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
+    color: "#2E7D32",
   },
   conditionContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#E8F5E9",
+    borderRadius: 20,
+    padding: 8,
+    marginTop: 5,
   },
   icons: {
     fontSize: 20,
-    color: "#20a7db",
+    color: "#4CAF50",
     marginRight: 5,
   },
   conditionText: {
     fontSize: 14,
+    color: "#388E3C",
   },
   notificationContainer: {
     marginTop: 10,
