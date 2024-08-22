@@ -14,11 +14,11 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  const username = loggedInUser.username;
+  //const username = loggedInUser.username;
 
   const [backgroundColour, setBackgroundColour] = useState("#D5F2E2");
   const [profilePicture, setProfilePicture] = useState({});
-  const [newUsername, setNewUsername] = useState({ username });
+  // const [newUsername, setNewUsername] = useState({ username });
 
   let navigation = useNavigation();
 
@@ -27,9 +27,18 @@ export default function User() {
   }
 
   const handleSignOut = () => {
+    setLoggedInUser(null);
     navigation.navigate("WelcomeScreen");
+    return;
   };
 
+  if (!loggedInUser) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.errorText}>User not logged in.</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
