@@ -23,7 +23,9 @@ export default function SinglePlant(props) {
           <Text>This plant does best in a {plant.sunlight} environment</Text>
         </View>
         <View style={styles.sunWaterContainer}>
+
           <SimpleLineIcons style={styles.waterIcon} name="drop" />
+
           <Text>This plant requires {plant.water} watering</Text>
         </View>
       </View>

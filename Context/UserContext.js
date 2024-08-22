@@ -1,24 +1,28 @@
-import { createContext, useState, useEffect } from "react";
+import React, { createContext, useState } from "react";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [loggedInUser, setLoggedInUser] = useState({
-    username: "PlantQueen",
-    name: "Margaret",
-    email: "margaretlovesplants@hotmail.com",
-    reward_points: 100,
-    profile_picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-    plants: ["bob", "betty"],
-    _id: 1,
-    created_at: "2019/08/20",
-    __v: 10, 
-  });
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
-  return <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>{children}</UserContext.Provider>;
+  const setGuestUser = () => {
+    setLoggedInUser({
+      username: "guest",
+      name: "Guest User",
+      email: "guest@example.com",
+      profile_picture:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ5EulFzh3cGFWxYkTMsLjrdByuFZ41COirw&s",
+      reward_points: 0,
+      plants: [],
+      created_at: "2024",
+    });
+  };
+
+  return (
+    <UserContext.Provider
+      value={{ loggedInUser, setLoggedInUser, setGuestUser }}
+    >
+      {children}
+    </UserContext.Provider>
+  );
 };
-
-
-
-
-
