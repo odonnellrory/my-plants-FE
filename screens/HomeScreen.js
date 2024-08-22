@@ -5,12 +5,8 @@ import PushNotification from "../Components/PushNotification";
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Home Screen</Text>
-      <PushNotification
-        title="Time to water your plant!"
-        body="Don't forget to give your plant some water."
-        buttonTitle="Schedule Plant Watering Reminder"
-      />
+      <Text style={styles.title}>Home Screen</Text>
+      <PushNotification showInstantButton={true} />
     </View>
   );
 }
@@ -21,5 +17,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff4c7",
     alignItems: "center",
     justifyContent: "center",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
   },
 });
