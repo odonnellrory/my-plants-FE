@@ -6,7 +6,7 @@ import {
   KeyboardAvoidingView,
   TextInput,
   StyleSheet,
-  Pressable,
+  TouchableOpacity,
   Image,
 } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
@@ -21,8 +21,6 @@ export default function AddPlant() {
   const identifiedPlantName = route.params?.identifiedPlant
     ? route.params?.identifiedPlant.name
     : "";
-
- 
 
   let navigation = useNavigation();
 
@@ -80,19 +78,15 @@ export default function AddPlant() {
   }
 
   function handleAddPlantPress() {
-
     setIsLoading(true);
     setIsModalVisible(true);
 
     // axios.get(`${API_URL}${plantName}`).then((response) => {
 
-
     //   setPlantList(response.data.data)
-   
 
     // }
     // )
-   
   }
 
   return (
@@ -105,20 +99,20 @@ export default function AddPlant() {
             value={plantName}
             onChangeText={handlePlantNameChange}
           ></TextInput>
-          <Pressable style={styles.namePressable}>
+          <TouchableOpacity style={styles.nameTouchableOpacity}>
             <Ionicons
               style={styles.icon}
               name="camera"
               onPress={handleCameraPress}
             ></Ionicons>
-          </Pressable>
-          <Pressable style={styles.namePressable}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.nameTouchableOpacity}>
             <FontAwesome
               style={styles.icon}
               name="photo"
               onPress={handlePhotoGalleryPress}
             ></FontAwesome>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Text style={styles.nameText}>
           This is used to identify the plant. It can be it's scientific name or
@@ -143,24 +137,22 @@ export default function AddPlant() {
         <Text style={styles.nameText}>
           Feel free to give your plant a nickname!
         </Text>
-        <Pressable
+        <TouchableOpacity
           title="Add Plant"
-          style={styles.pressable}
+          style={styles.TouchableOpacity}
           onPress={handleAddPlantPress}
         >
           <Text style={styles.text}>Add Plant</Text>
         </TouchableOpacity>
-        <AddPlantModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} plantList={plantList}>
-
-        </AddPlantModal>
-      
-     
+        <AddPlantModal
+          isModalVisible={isModalVisible}
+          setIsModalVisible={setIsModalVisible}
+          plantList={plantList}
+        ></AddPlantModal>
       </View>
-  
     </KeyboardAvoidingView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -224,7 +216,7 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 15,
   },
-  namePressable: {
+  nameTouchableOpacity: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
@@ -238,7 +230,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "#4CAF50",
   },
-  pressable: {
+  TouchableOpacity: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
