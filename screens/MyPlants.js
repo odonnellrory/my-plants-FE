@@ -27,6 +27,7 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: "#E8F5E9",
+
     alignItems: "center",
     justifyContent: "flex-start",
     padding: 15,

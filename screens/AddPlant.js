@@ -13,6 +13,8 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
+import axios from "axios";
+import AddPlantModal from "./AddPlantModal";
 
 export default function AddPlant() {
   const route = useRoute();
@@ -20,13 +22,17 @@ export default function AddPlant() {
     ? route.params?.identifiedPlant.name
     : "";
 
+ 
+
   let navigation = useNavigation();
 
   const [plantName, setPlantName] = useState(identifiedPlantName);
   const [plantLocation, setPlantLocation] = useState("");
   const [plantNickname, setPlantNickname] = useState("");
   const [imageSelected, setImageSelected] = useState("");
-  const [imageToProcess, setImageToProcess] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [plantList, setPlantList] = useState([]);
 
   useEffect(() => {
     setPlantName(identifiedPlantName);
@@ -74,7 +80,19 @@ export default function AddPlant() {
   }
 
   function handleAddPlantPress() {
-    //our api call to perenual
+
+    setIsLoading(true);
+    setIsModalVisible(true);
+
+    // axios.get(`${API_URL}${plantName}`).then((response) => {
+
+
+    //   setPlantList(response.data.data)
+   
+
+    // }
+    // )
+   
   }
 
   return (
@@ -131,11 +149,18 @@ export default function AddPlant() {
           onPress={handleAddPlantPress}
         >
           <Text style={styles.text}>Add Plant</Text>
-        </Pressable>
+        </TouchableOpacity>
+        <AddPlantModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} plantList={plantList}>
+
+        </AddPlantModal>
+      
+     
       </View>
+  
     </KeyboardAvoidingView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
