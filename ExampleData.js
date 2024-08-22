@@ -8,11 +8,12 @@ export default function testData() {
       water: "Frequent",
       sunlight: "part shade",
       last_watering: "16/08/2024",
-      next_watering: "19/08/2024",
+      next_watering: "30/08/2024",
       date_added: "01/05/2024",
       plant_nickname: "Bob",
       username: "plantman",
-      img_url: "https://perenual.com/storage/species_image/2_abies_alba_pyramidalis/regular/49255769768_df55596553_b.jpg",
+      img_url:
+        "https://perenual.com/storage/species_image/2_abies_alba_pyramidalis/regular/49255769768_df55596553_b.jpg",
     },
     {
       plant_id: 2,
@@ -22,11 +23,12 @@ export default function testData() {
       water: "Frequent",
       sunlight: "part",
       last_watering: "13/08/2024",
-      next_watering: "16/08/2024",
+      next_watering: "30/08/2024",
       date_added: "01/05/2024",
       plant_nickname: "Betty",
       username: "plantwoman",
-      img_url: "https://perenual.com/storage/species_image/2_abies_alba_pyramidalis/regular/49255769768_df55596553_b.jpg",
+      img_url:
+        "https://perenual.com/storage/species_image/2_abies_alba_pyramidalis/regular/49255769768_df55596553_b.jpg",
     },
   ];
 }
