@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({ baseURL: "https://my-plants-be.onrender.com" });
+const api = axios.create({ baseURL: "https://my-plants-be.onrender.com/" });
 
 const getPlantById = (username, plant_id) => {
   return api
@@ -13,9 +13,9 @@ const getPlantById = (username, plant_id) => {
     });
 };
 
-const getPlantList = () => {
+const getPlantList = (username) => {
   return api
-    .get(`/api/user/${username}/plants`)
+    .get(`/api/users/${username}/plants`)
     .then((response) => {
       return response;
     })
