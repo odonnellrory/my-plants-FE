@@ -5,6 +5,7 @@ import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
 import axios from "axios";
+import { getPlantList } from "../src/api";
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
@@ -13,17 +14,22 @@ export default function MyPlants() {
 
   const { loggedInUser } = useContext(UserContext);
   const username = loggedInUser.username;
+
   useEffect(() => {
-    axios
-      .get(`https://my-plants-be.onrender.com/api/users/${username}/plants`)
-      .then(({ data }) => {
-        console.log(data);
-        setplants(data.plants);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+
+    getPlantList(username).then(({ data }) => {
+
+      setplants(data.plants)
+
+      console.log(data.plants)
+
+    }).catch((error) => {
+
+      console.log(error)
+
+    })
+  }, [])
+
 
   return (
     <View style={styles.container}>
