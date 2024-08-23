@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Text,
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
@@ -18,9 +9,7 @@ import AddPlantModal from "./AddPlantModal";
 
 export default function AddPlant() {
   const route = useRoute();
-  const identifiedPlantName = route.params?.identifiedPlant
-    ? route.params?.identifiedPlant.name
-    : "";
+  const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
 
   let navigation = useNavigation();
 
@@ -31,6 +20,9 @@ export default function AddPlant() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [plantList, setPlantList] = useState([]);
+  const [isError, setIsError] = useState(false);
+
+  API_URL = process.env.REACT_APP_PERENUAL_API_URL_NAME;
 
   useEffect(() => {
     setPlantName(identifiedPlantName);
@@ -49,7 +41,6 @@ export default function AddPlant() {
   }
 
   async function handleCameraPress() {
-    //navigation.navigate("Camera");
     try {
       await ImagePicker.requestCameraPermissionsAsync();
       let result = await ImagePicker.launchCameraAsync({
@@ -81,75 +72,54 @@ export default function AddPlant() {
     setIsLoading(true);
     setIsModalVisible(true);
 
-    // axios.get(`${API_URL}${plantName}`).then((response) => {
-
-    //   setPlantList(response.data.data)
-
-    // }
-    // )
+    axios
+      .get(`${API_URL}${plantName}`)
+      .then((response) => {
+        setPlantList(response.data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setIsError(true);
+        setIsLoading(false);
+      });
   }
 
   return (
     <KeyboardAvoidingView style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text>Plant Name</Text>
-        <View style={styles.nameContainer}>
-          <TextInput
-            style={styles.nameInput}
-            value={plantName}
-            onChangeText={handlePlantNameChange}
-          ></TextInput>
-          <TouchableOpacity style={styles.nameTouchableOpacity}>
-            <Ionicons
-              style={styles.icon}
-              name="camera"
-              onPress={handleCameraPress}
-            ></Ionicons>
+      <ScrollView>
+        <View style={styles.formContainer}>
+          <Text>Plant Name</Text>
+          <View style={styles.nameContainer}>
+            <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
+            <TouchableOpacity style={styles.nameTouchableOpacity}>
+              <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.nameTouchableOpacity}>
+              <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.nameText}>
+            This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and identify
+            the plant that way
+          </Text>
+          <Text>Plant Location (optional)</Text>
+          <TextInput style={styles.input} value={plantLocation} onChangeText={handlePlantLocationChange}></TextInput>
+          <Text style={styles.nameText}>Where is this plant kept? e.g. Living room</Text>
+          <Text>Plant Nickname (optional)</Text>
+          <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
+          <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
+          <TouchableOpacity title="Add Plant" style={styles.TouchableOpacity} onPress={handleAddPlantPress}>
+            <Text style={styles.text}>Add Plant</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.nameTouchableOpacity}>
-            <FontAwesome
-              style={styles.icon}
-              name="photo"
-              onPress={handlePhotoGalleryPress}
-            ></FontAwesome>
-          </TouchableOpacity>
+          <AddPlantModal
+            isModalVisible={isModalVisible}
+            setIsModalVisible={setIsModalVisible}
+            plantList={plantList}
+            plantLocation={plantLocation}
+            plantNickname={plantNickname}
+          ></AddPlantModal>
         </View>
-        <Text style={styles.nameText}>
-          This is used to identify the plant. It can be it's scientific name or
-          its common name. If you are unsure you can take a photo and identify
-          the plant that way
-        </Text>
-        <Text>Plant Location (optional)</Text>
-        <TextInput
-          style={styles.input}
-          value={plantLocation}
-          onChangeText={handlePlantLocationChange}
-        ></TextInput>
-        <Text style={styles.nameText}>
-          Where is this plant kept? e.g. Living room
-        </Text>
-        <Text>Plant Nickname (optional)</Text>
-        <TextInput
-          style={styles.input}
-          value={plantNickname}
-          onChangeText={handlePlantNicknameChange}
-        ></TextInput>
-        <Text style={styles.nameText}>
-          Feel free to give your plant a nickname!
-        </Text>
-        <TouchableOpacity
-          title="Add Plant"
-          style={styles.TouchableOpacity}
-          onPress={handleAddPlantPress}
-        >
-          <Text style={styles.text}>Add Plant</Text>
-        </TouchableOpacity>
-        <AddPlantModal
-          isModalVisible={isModalVisible}
-          setIsModalVisible={setIsModalVisible}
-          plantList={plantList}
-        ></AddPlantModal>
-      </View>
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
