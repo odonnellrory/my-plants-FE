@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, FlatList, RefreshControl } from "react-native";
-import axios from "axios";
 import { UserContext } from "../Context/UserContext";
+import { fetchPlants } from "../src/api";
 
 const NewsCard = ({ title, content, date }) => (
   <View style={styles.card}>
@@ -20,15 +20,12 @@ export default function HomeScreen() {
     return new Date(dateString).toLocaleDateString();
   };
 
-  const fetchPlants = async () => {
+  const loadPlants = async () => {
     if (!loggedInUser) return;
 
     setIsLoading(true);
     try {
-      const response = await axios.get(
-        `https://my-plants-be.onrender.com/api/users/${loggedInUser.username}/plants`
-      );
-      const plants = response.data.plants;
+      const plants = await fetchPlants(loggedInUser.username);
 
       let newsFeed = [];
       plants.forEach((plant) => {
@@ -57,17 +54,16 @@ export default function HomeScreen() {
       });
 
       newsFeed.sort((a, b) => new Date(b.date) - new Date(a.date));
-
       setNewsItems(newsFeed);
     } catch (error) {
-      console.error("Error fetching plants:", error);
+      console.error("Error loading plants:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchPlants();
+    loadPlants();
   }, [loggedInUser]);
 
   return (
@@ -84,7 +80,7 @@ export default function HomeScreen() {
         )}
         keyExtractor={(item) => item.id}
         refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={fetchPlants} />
+          <RefreshControl refreshing={isLoading} onRefresh={loadPlants} />
         }
         ListEmptyComponent={
           <Text style={styles.emptyText}>
