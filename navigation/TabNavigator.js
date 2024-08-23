@@ -31,18 +31,14 @@ const TabNavigator = () => {
         options={{
           headerShown: false,
           tabBarHideOnKeyboard: true,
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome6 name="seedling" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <FontAwesome6 name="seedling" size={size} color={color} />,
         }}
       />
       <Tab.Screen
         name="Home"
         component={HomeScreen}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
         }}
       />
       <Tab.Screen
@@ -50,18 +46,14 @@ const TabNavigator = () => {
         component={AddPlant}
         options={{
           tabBarHideOnKeyboard: true,
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="add-circle" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <Ionicons name="add-circle" size={size} color={color} />,
         }}
       />
       <Tab.Screen
         name="My Profile"
         component={User}
         options={{
-          tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="user" size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <FontAwesome name="user" size={size} color={color} />,
         }}
       />
     </Tab.Navigator>
@@ -83,7 +75,6 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     backgroundColor: "#FFF",
-    height: 60,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
