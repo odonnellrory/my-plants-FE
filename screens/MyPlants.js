@@ -19,9 +19,9 @@ export default function MyPlants() {
 
     getPlantList(username)
       .then(({ data }) => {
+
         setplants(data.plants);
 
-        console.log(data.plants);
       })
       .catch((error) => {
         console.log(error);

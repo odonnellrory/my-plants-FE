@@ -7,8 +7,10 @@ import PushNotification from "./PushNotification";
 export default function PlantCard({ plant }) {
   let navigation = useNavigation();
 
+
+
   function handlePlantCardPress() {
-    navigation.navigate("SinglePlant", { plant, name: plant.common_name });
+    navigation.navigate("SinglePlant", { plant, name: plant.common_name, plant_id: plant._id });
   }
 
   const formatDate = (dateString) => {
