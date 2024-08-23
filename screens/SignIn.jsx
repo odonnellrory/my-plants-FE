@@ -12,15 +12,6 @@ import { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
-const users = [
-  "tickle122",
-  "grumpy19",
-  "happyamy2016",
-  "cooljmessy",
-  "weegembump",
-  "jessjelly",
-];
-
 const SignIn = () => {
   const [username, setUsername] = useState("greenThumb");
   const [password, setPassword] = useState("greenlife");
