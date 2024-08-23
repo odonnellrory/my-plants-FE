@@ -1,9 +1,11 @@
-import { Text, Modal, View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, Modal, View, ScrollView, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import AddPlantCard from "../Components/AddPlantCard";
 import { AntDesign } from "@expo/vector-icons";
+import { useState } from "react";
 
 function AddPlantModal(props) {
   const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleButtonPress() {
     setIsModalVisible(false);
@@ -11,11 +13,10 @@ function AddPlantModal(props) {
 
   return (
     <Modal visible={isModalVisible} animationType="slide" transparent={true}>
-      <View style={styles.modalContainer}>
+      <SafeAreaView style={styles.modalContainer}>
         <TouchableOpacity style={styles.closeButton} onPress={handleButtonPress}>
           <AntDesign name="close" style={styles.closeButton}></AntDesign>
         </TouchableOpacity>
-
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <Text style={styles.modalTitle}>Found Plants</Text>
           <Text style={styles.text}>
@@ -27,7 +28,7 @@ function AddPlantModal(props) {
             })}
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     </Modal>
   );
 }
