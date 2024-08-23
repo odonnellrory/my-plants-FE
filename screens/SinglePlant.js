@@ -20,12 +20,16 @@ export default function SinglePlant(props) {
       <View style={styles.conditionContainer}>
         <View style={styles.sunWaterContainer}>
           <Feather name="sun" style={styles.sunIcon} />
-          <Text>This plant does best in a {plant.sunlight} environment</Text>
+          <Text style={styles.sunWaterText}>
+            This plant does best in a {plant.sunlight} environment
+          </Text>
         </View>
         <View style={styles.sunWaterContainer}>
           <SimpleLineIcons style={styles.waterIcon} name="drop" />
 
-          <Text>This plant requires {plant.water} watering</Text>
+          <Text style={styles.sunWaterText}>
+            This plant requires {plant.water} watering
+          </Text>
         </View>
       </View>
       <Text style={styles.description}>{plant.plant_description}</Text>
@@ -70,6 +74,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#C8E6C9",
     alignSelf: "stretch",
+    fontSize: 15,
     color: "#1B5E20",
   },
   conditionContainer: {
@@ -93,7 +98,7 @@ const styles = StyleSheet.create({
   },
   waterIcon: {
     fontSize: 40,
-    color: "#4CAF50",
+    color: "#04D9FF",
     marginBottom: 10,
   },
   sunIcon: {
@@ -106,5 +111,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
     color: "#2E7D32",
+  },
+  sunWaterText: {
+    fontSize: 12,
   },
 });

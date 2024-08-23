@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
 
@@ -15,35 +15,9 @@ const PushNotification = ({
   showInstantButton = false,
   compact = false,
 }) => {
-  const [nextWatering, setNextWatering] = useState(null);
-
-  useEffect(() => {
+  React.useEffect(() => {
     registerForPushNotificationsAsync();
-    if (plant && plant.next_watering) {
-      const parsedDate = parseDate(plant.next_watering);
-      if (parsedDate) {
-        setNextWatering(parsedDate);
-      }
-    }
-  }, [plant]);
-
-  const parseDate = (dateString) => {
-    let date = new Date(dateString);
-    if (isNaN(date.getTime())) {
-      const parts = dateString.split("-");
-      if (parts.length === 3) {
-        date = new Date(parts[0], parts[1] - 1, parts[2]);
-      }
-    }
-    if (isNaN(date.getTime())) {
-      const parts = dateString.split("/");
-      if (parts.length === 3) {
-        date = new Date(parts[2], parts[1] - 1, parts[0]);
-      }
-    }
-
-    return isNaN(date.getTime()) ? null : date;
-  };
+  }, []);
 
   const registerForPushNotificationsAsync = async () => {
     try {
@@ -59,31 +33,39 @@ const PushNotification = ({
       }
     } catch (error) {
       console.warn("Error getting notification permissions:", error);
-      alert(
+      Alert.alert(
+        "Permission Error",
         "Failed to get push notification permissions. Some features may not work."
       );
     }
   };
 
   const scheduleNotification = async () => {
-    if (!nextWatering) {
-      Alert.alert("Error", "Next watering date not available or invalid");
+    if (!plant || !plant.next_watering) {
+      Alert.alert("Error", "Next watering date not available");
+      return;
+    }
+
+    const nextWateringDate = new Date(plant.next_watering);
+
+    if (isNaN(nextWateringDate.getTime())) {
+      Alert.alert("Error", "Invalid next watering date");
       return;
     }
 
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: `Time to water your ${plant.plant_name || "plant"}!`,
+          title: `Time to water your ${plant.common_name || "plant"}!`,
           body: `Don't forget to give your ${
-            plant.plant_nickname || "plant"
+            plant.nickname || plant.common_name || "plant"
           } some water.`,
         },
-        trigger: nextWatering,
+        trigger: nextWateringDate,
       });
       Alert.alert(
         "Success",
-        `Notification scheduled for ${nextWatering.toLocaleString()}`
+        `Notification scheduled for ${nextWateringDate.toLocaleString()}`
       );
     } catch (error) {
       console.error("Error scheduling notification:", error);
@@ -116,22 +98,20 @@ const PushNotification = ({
   return (
     <View style={[compact && { padding: 10 }]}>
       {plant && (
-        <>
-          <TouchableOpacity
-            style={[styles.button, !nextWatering && styles.disabledButton]}
-            onPress={scheduleNotification}
-            disabled={!nextWatering}
+        <TouchableOpacity
+          style={[styles.button, !plant.next_watering && styles.disabledButton]}
+          onPress={scheduleNotification}
+          disabled={!plant.next_watering}
+        >
+          <Text
+            style={[
+              styles.buttonText,
+              !plant.next_watering && styles.disabledButtonText,
+            ]}
           >
-            <Text
-              style={[
-                styles.buttonText,
-                !nextWatering && styles.disabledButtonText,
-              ]}
-            >
-              Schedule Reminder
-            </Text>
-          </TouchableOpacity>
-        </>
+            Schedule Reminder
+          </Text>
+        </TouchableOpacity>
       )}
       {showInstantButton && (
         <TouchableOpacity
@@ -148,28 +128,6 @@ const PushNotification = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#FFFFFF",
-    borderRadius: 15,
-    padding: 20,
-    margin: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    color: "#2E7D32",
-    marginBottom: 10,
-  },
-  dateText: {
-    fontSize: 16,
-    color: "#388E3C",
-    marginVertical: 10,
-  },
   button: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,

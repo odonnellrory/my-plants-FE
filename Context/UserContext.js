@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQ5EulFzh3cGFWxYkTMsLjrdByuFZ41COirw&s",
       reward_points: 0,
       plants: [],
-      created_at: "2024",
+      created_at: "2024-08-17T00:00:00.000Z",
     });
   };
 
