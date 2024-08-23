@@ -32,6 +32,10 @@ export default function User() {
     return;
   };
 
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString();
+  };
+
   if (!loggedInUser) {
     return (
       <View style={styles.container}>
@@ -56,7 +60,9 @@ export default function User() {
           <Text style={styles.infoText}>
             I own {loggedInUser.plants.length} plants!
           </Text>
-          <Text style={styles.infoText}>Joined {loggedInUser.created_at}</Text>
+          <Text style={styles.infoText}>
+            Joined {formatDate(loggedInUser.created_at)}
+          </Text>
 
           <TouchableOpacity
             style={styles.signOutButton}

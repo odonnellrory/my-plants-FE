@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from "react-native";
 import axios from "axios";
 import { useContext } from "react";
@@ -21,17 +22,20 @@ const users = [
 ];
 
 const SignIn = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("greenThumb");
+  const [password, setPassword] = useState("greenlife");
   const { setLoggedInUser, setGuestUser } = useContext(UserContext);
   const navigation = useNavigation();
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post("http://localhost:9000/api/login", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://my-plants-be.onrender.com/api/login",
+        {
+          username,
+          password,
+        }
+      );
       setLoggedInUser(response.data.user);
       navigation.navigate("Main");
     } catch (error) {

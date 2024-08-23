@@ -11,20 +11,25 @@ export default function PlantCard({ plant }) {
     navigation.navigate("SinglePlant", { plant, name: plant.plant_name });
   }
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
+  };
+
   return (
     <View style={styles.container}>
       <Pressable onPress={handlePlantCardPress}>
         <View style={styles.cardContent}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: plant.img_url }} />
-            <Text>{plant.plant_nickname}</Text>
+            <Text>{plant.nickname || plant.common_name}</Text>
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.text}>{plant.plant_name}</Text>
             <View style={styles.conditionContainer}>
               <SimpleLineIcons style={styles.icons} name="drop" />
               <Text style={styles.conditionText}>
-                Next Watering {plant.next_watering}
+                Next Watering: {formatDate(plant.next_watering)}
               </Text>
             </View>
           </View>
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
   },
   icons: {
     fontSize: 20,
-    color: "#4CAF50",
+    color: "#04D9FF",
     marginRight: 5,
   },
   conditionText: {
