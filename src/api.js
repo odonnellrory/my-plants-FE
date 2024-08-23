@@ -61,7 +61,7 @@ const changeNickname = (username, plant_id, nickname) => {
 
 const postPlantByUser = (username) => {
   return api
-    .post(`/users/${username}/plants`)
+    .post(`/api/users/${username}/plants`)
     .then((response) => {
       return response;
     })
