@@ -11,6 +11,7 @@ import {
 import { useState, useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import PushNotification from "../Components/PushNotification";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
@@ -72,6 +73,7 @@ export default function User() {
           </TouchableOpacity>
         </View>
       </ScrollView>
+      <PushNotification showInstantButton={true} />
     </View>
   );
 }
