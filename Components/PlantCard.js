@@ -8,7 +8,7 @@ export default function PlantCard({ plant }) {
   let navigation = useNavigation();
 
   function handlePlantCardPress() {
-    navigation.navigate("SinglePlant", { plant, name: plant.plant_name });
+    navigation.navigate("SinglePlant", { plant, name: plant.common_name });
   }
 
   const formatDate = (dateString) => {
@@ -21,11 +21,11 @@ export default function PlantCard({ plant }) {
       <Pressable onPress={handlePlantCardPress}>
         <View style={styles.cardContent}>
           <View style={styles.imageContainer}>
-            <Image style={styles.image} source={{ uri: plant.img_url }} />
+            <Image style={styles.image} source={{ uri: plant.image_url }} />
             <Text>{plant.nickname || plant.common_name}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{plant.plant_name}</Text>
+            <Text style={styles.text}>{plant.common_name}</Text>
             <View style={styles.conditionContainer}>
               <SimpleLineIcons style={styles.icons} name="drop" />
               <Text style={styles.conditionText}>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#E8F5E9",
     borderRadius: 20,
-    padding: 8,
+    padding: 10,
     marginTop: 5,
   },
   icons: {

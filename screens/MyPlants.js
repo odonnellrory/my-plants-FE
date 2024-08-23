@@ -1,24 +1,39 @@
-import React, { useState } from "react";
-import { Button, Text, View, Pressable, Modal } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { Button, Text, View, Pressable, Modal, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
+import { UserContext } from "../Context/UserContext";
+import axios from "axios";
 
 export default function MyPlants() {
+  const [plants, setplants] = useState([]);
   const data = testData();
   let navigation = useNavigation();
 
-  function handleAddPlantPress() {
-    navigation.navigate("Add A Plant");
-  }
+  const { loggedInUser } = useContext(UserContext);
+  const username = loggedInUser.username;
+  useEffect(() => {
+    axios
+      .get(`https://my-plants-be.onrender.com/api/users/${username}/plants`)
+      .then(({ data }) => {
+        console.log(data);
+        setplants(data.plants);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
-      <View style={styles.singlePlantContainer}>
-        {data.map((plant) => {
-          return <PlantCard plant={plant} key={plant.plant_id} />;
-        })}
-      </View>
+      <ScrollView style={styles.singlePlantContainer}>
+        <View>
+          {plants.map((plant) => {
+            return <PlantCard plant={plant} key={plant._id} />;
+          })}
+        </View>
+      </ScrollView>
     </View>
   );
 }
