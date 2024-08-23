@@ -1,72 +1,71 @@
 import { Text, Modal, View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import AddPlantCard from "../Components/AddPlantCard";
+import { AntDesign } from "@expo/vector-icons";
 
 function AddPlantModal(props) {
-    const { isModalVisible, setIsModalVisible, plantList } = props;
+  const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname } = props;
 
-    return (
-        <Modal
-            visible={isModalVisible}
-            animationType="slide" 
-            transparent={true} 
-        >
-            <View style={styles.modalContainer}>
-                <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                    <Text style={styles.modalTitle}>Results</Text>
-               <View>
-                {plantList.map((plant) => {
+  function handleButtonPress() {
+    setIsModalVisible(false);
+  }
 
-                    return   <AddPlantCard key={plant.id} plant={plant}> 
+  return (
+    <Modal visible={isModalVisible} animationType="slide" transparent={true}>
+      <View style={styles.modalContainer}>
+        <TouchableOpacity style={styles.closeButton} onPress={handleButtonPress}>
+          <AntDesign name="close" style={styles.closeButton}></AntDesign>
+        </TouchableOpacity>
 
-                    </AddPlantCard>
-
-                })}
-             
-               </View>
-                </ScrollView>
-                <TouchableOpacity
-                    style={styles.closeButton}
-                    onPress={() => setIsModalVisible(false)}>
-                    <Text style={styles.closeButtonText}>X</Text>
-                </TouchableOpacity>
-            </View>
-        </Modal>
-    );
+        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <Text style={styles.modalTitle}>Found Plants</Text>
+          <Text style={styles.text}>
+            Looks like we found a few plants that match that name! Please select which one looks like your plant to add to your collection!
+          </Text>
+          <View>
+            {plantList.map((plant) => {
+              return <AddPlantCard key={plant.id} plant={plant} plantLocation={plantLocation} plantNickname={plantNickname}></AddPlantCard>;
+            })}
+          </View>
+        </ScrollView>
+      </View>
+    </Modal>
+  );
 }
 
 const styles = StyleSheet.create({
-    modalContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#92E7B0", 
-    },
-    scrollViewContent: {
-        width: "90%",
-        backgroundColor: "#92E7B0",
-        padding: 20,
-        borderRadius: 10,
-        alignItems: "center",
-        paddingBottom: 70, 
-    },
-    modalTitle: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginBottom: 15,
-        color: "#fff",
-    },
-    closeButton: {
-        position: "absolute",
-        bottom: 20, 
-        alignSelf: "center",
-        padding: 10,
-        borderRadius: 5,
-        backgroundColor: '#fff',
-    },
-    closeButtonText: {
-        color: "#38D870",
-        fontWeight: "bold",
-    },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E9",
+  },
+  scrollViewContent: {
+    backgroundColor: "#E8F5E9",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+    color: "#2E7D32",
+  },
+  closeButton: {
+    marginLeft: 8,
+    marginTop: 8,
+    fontSize: 30,
+    color: "#2E7D32",
+    alignSelf: "flex-start",
+  },
+  text: {
+    fontSize: 14,
+    color: "#388E3C",
+    backgroundColor: "#E8F5E9",
+    borderRadius: 10,
+    alignSelf: "center",
+    marginBottom: 10,
+  },
 });
 
 export default AddPlantModal;
