@@ -13,23 +13,20 @@ export default function MyPlants() {
   let navigation = useNavigation();
 
   const { loggedInUser } = useContext(UserContext);
-  const username = loggedInUser.username;
 
   useEffect(() => {
+    const username = loggedInUser.username;
 
-    getPlantList(username).then(({ data }) => {
+    getPlantList(username)
+      .then(({ data }) => {
+        setplants(data.plants);
 
-      setplants(data.plants)
-
-      console.log(data.plants)
-
-    }).catch((error) => {
-
-      console.log(error)
-
-    })
-  }, [])
-
+        console.log(data.plants);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>
