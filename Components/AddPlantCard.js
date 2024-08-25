@@ -1,39 +1,50 @@
 import axios from "axios";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { postPlantByUser } from "../src/api";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 function AddPlantCard(props) {
-  const { plant, plantNickname, plantLocation } = props;
+  const { plant, plantNickname, plantLocation, setIsModalVisible } = props;
   const { loggedInUser } = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+  let navigation = useNavigation();
 
   console.log(plantNickname);
+  let plantImage = "";
 
-  API_KEY = process.env.REACT_APP_PERENUAL_API_KEY;
+  if (plant.default_image === null || plant.default_image.original_url === null) {
+    plantImage = "https://img.freepik.com/free-vector/houseplant-brown-pot-nature-icon_24877-82849.jpg";
+  } else {
+    plantImage = plant.default_image.original_url;
+  }
+
+  API_KEY = process.env.REACT_APP_PERENUAL_API_KEY_2;
   API_URL = process.env.REACT_APP_PERENUAL_API_URL_ID;
   API_URL_CG = process.env.REACT_APP_PERENUAL_API_URL_CG;
 
   function handleAddPlantPress() {
+    setIsLoading(true);
     return axios
       .get(`${API_URL}${plant.id}?key=${API_KEY}`)
       .then((response) => {
         const nickname = plantNickname ? plantNickname : "";
         const plant_location = plantLocation ? plantLocation : "";
         const common_name = response.data.common_name ? response.data.common_name : "";
-        const plant_origin = response.data.origin[0] ? response.data.origin[0] : "";
         const scientific_name = response.data.scientific_name ? response.data.scientific_name : "";
         const type = response.data.type ? response.data.type : "";
         const cycle = response.data.cycle ? response.data.cycle : "";
         const description = response.data.description ? response.data.description : "";
         const sunlight = response.data.sunlight[0] ? response.data.sunlight[0] : "";
         let watering = response.data.watering ? response.data.watering : "";
-        const image_url = plant.default_image.regular_url;
+        const image_url = plantImage;
         let next_watering = new Date();
 
         if (watering === "Average") watering = 7;
         if (watering === "Frequent") watering = 3;
-        if (watering === "Infrequent") watering = 10;
+        if (watering === "Minimum") watering = 10;
 
         next_watering.setDate(next_watering.getDate() + watering);
 
@@ -41,7 +52,6 @@ function AddPlantCard(props) {
           nickname,
           plant_location,
           common_name,
-          plant_origin, //this is string in db but array in 3rd party api
           scientific_name, //array in both
           type,
           cycle,
@@ -49,6 +59,7 @@ function AddPlantCard(props) {
           sunlight,
           watering,
           image_url,
+          next_watering,
         };
 
         return Promise.all([dbObject, axios.get(`${API_URL_CG}${plant.id}&key=${API_KEY}`)]);
@@ -65,22 +76,24 @@ function AddPlantCard(props) {
             }
           });
         });
-        console.log(dbObject);
-
-        //return postPlantByUser(loggedInUser);
+        return postPlantByUser(loggedInUser.username, dbObject);
       })
-      .then((response) => {
-        //then navigate to my plants page (or single plant?) on successful post to see new plant
+      .then((newAddedPlant) => {
+        setIsLoading(false);
+        setIsModalVisible(false);
+        navigation.navigate("My Plant Collection", { newAddedPlant });
       })
       .catch((error) => {
         console.log(error);
+        setIsError(true);
       });
   }
 
   return (
     <View style={styles.container}>
-      {plant.id < 3000 && <Image style={styles.image} source={{ uri: plant.default_image.regular_url }}></Image>}
-      {plant.id < 3000 && <Text style={styles.text}>{plant.common_name}</Text>}
+      {plant.id < 3000 && <Image style={styles.image} source={{ uri: plantImage }}></Image>}
+      {plant.id < 3000 && <Text style={styles.text}>Common name: {plant.common_name}</Text>}
+      {plant.id < 3000 && <Text style={styles.text}>Scientific name: {plant.scientific_name[0]}</Text>}
       {plant.id < 3000 && (
         <TouchableOpacity style={styles.button} onPress={handleAddPlantPress}>
           <Text style={styles.buttonText}>Add Plant to my Plant Collection</Text>

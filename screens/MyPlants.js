@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Text, View, Pressable, Modal, ScrollView } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
@@ -11,22 +11,23 @@ export default function MyPlants() {
   const [plants, setplants] = useState([]);
   const data = testData();
   let navigation = useNavigation();
+  const route = useRoute();
+  const newAddedPlant = route.params?.newAddedPlant.plant._id ? route.params?.newAddedPlant.plant._id : "";
+  console.log(newAddedPlant);
 
   const { loggedInUser } = useContext(UserContext);
+  const username = loggedInUser.username;
 
   useEffect(() => {
-    const username = loggedInUser.username;
-
     getPlantList(username)
       .then(({ data }) => {
 
         setplants(data.plants);
-
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [newAddedPlant]);
 
   return (
     <View style={styles.container}>
