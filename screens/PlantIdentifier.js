@@ -14,6 +14,7 @@ export default function PlantIdentifier() {
   const [identifiedPlantList, setidentifiedPlantList] = useState([]);
   console.log(capturedImage, "INSIDE PLANTID");
   const [isIdentifying, setIsIdentifying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function identifyPlant() {
     if (!capturedImage) return;
@@ -39,9 +40,11 @@ export default function PlantIdentifier() {
           ? suggestions.slice(0, 5).map(({ name, probability, similar_images }) => ({ name, probability, similar_images }))
           : [{ name: "Unable to identify", probability: 0 }]
       );
+      setIsLoading(false);
     } catch (error) {
       console.error("Error identifying plant:", error);
       setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
+      setIsLoading(false);
     } finally {
       setIsIdentifying(false);
     }
@@ -52,10 +55,10 @@ export default function PlantIdentifier() {
       <ScrollView>
         <Image source={{ uri: capturedImage }} style={styles.preview} />
 
-        <TouchableOpacity style={styles.pressable} onPress={identifyPlant} disabled={isIdentifying}>
+        <TouchableOpacity style={styles.TouchableOpacity} onPress={identifyPlant} disabled={isIdentifying}>
           <Text style={styles.text}>Identify Plant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.pressable}>
+        <TouchableOpacity style={styles.TouchableOpacity}>
           <Text style={styles.text}>New Picture</Text>
         </TouchableOpacity>
         {isIdentifying ? (
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff4c7",
+    backgroundColor: "#E8F5E9",
     paddingVertical: 20,
   },
   preview: {
@@ -82,17 +85,20 @@ const styles = StyleSheet.create({
     height: 400,
     resizeMode: "contain",
   },
-  pressable: {
-    height: 45,
+  TouchableOpacity: {
     alignSelf: "stretch",
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 15,
     paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "#ed8a53",
+    borderRadius: 25,
+    backgroundColor: "#66BB6A",
     marginTop: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   text: {
     fontSize: 16,
@@ -107,7 +113,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   identifyingText: {
-    color: "#ed8a53",
+    color: "#2E7D32",
     fontWeight: "bold",
+    alignText: "center",
+    marginTop: 10,
+    alignSelf: "center",
   },
 });
