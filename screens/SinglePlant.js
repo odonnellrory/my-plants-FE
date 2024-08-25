@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     borderRadius: 15,
-    margin: 10,
+    marginVertical: 5,
     padding: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
