@@ -11,7 +11,7 @@ function AddPlantModal(props) {
     setIsModalVisible(false);
   }
 
-  if (isModalLoading) return <LottieView style={{ flex: 1 }} source={require("../assets/loadingAnimation.json")} autoPlay loop />;
+  //if (isModalLoading) return <LottieView style={{ flex: 1 }} source={require("../assets/loadingAnimation.json")} autoPlay loop />;
 
   return (
     <Modal visible={isModalVisible} animationType="slide" transparent={true}>
