@@ -19,6 +19,7 @@ export default function AddPlant() {
   const [imageSelected, setImageSelected] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalLoading, setIsModalLoading] = useState(false);
   const [plantList, setPlantList] = useState([]);
   const [isError, setIsError] = useState(false);
 
@@ -69,18 +70,20 @@ export default function AddPlant() {
   }
 
   function handleAddPlantPress() {
-    setIsLoading(true);
+    setIsModalLoading(true);
     setIsModalVisible(true);
 
     axios
       .get(`${API_URL}${plantName}`)
       .then((response) => {
         setPlantList(response.data.data);
-        setIsLoading(false);
+        setIsModalLoading(false);
+        setPlantName("");
       })
       .catch((error) => {
+        console.log(error);
         setIsError(true);
-        setIsLoading(false);
+        setIsModalLoading(false);
       });
   }
 
@@ -117,6 +120,8 @@ export default function AddPlant() {
             plantList={plantList}
             plantLocation={plantLocation}
             plantNickname={plantNickname}
+            isModalLoading={isModalLoading}
+            setIsModalLoading={setIsModalLoading}
           ></AddPlantModal>
         </View>
       </ScrollView>

@@ -2,14 +2,16 @@ import { Text, Modal, View, ScrollView, StyleSheet, TouchableOpacity, SafeAreaVi
 import AddPlantCard from "../Components/AddPlantCard";
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
+import LottieView from "lottie-react-native";
 
 function AddPlantModal(props) {
-  const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname } = props;
-  const [isLoading, setIsLoading] = useState(false);
+  const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname, isModalLoading } = props;
 
   function handleButtonPress() {
     setIsModalVisible(false);
   }
+
+  if (isModalLoading) return <LottieView style={{ flex: 1 }} source={require("../assets/loadingAnimation.json")} autoPlay loop />;
 
   return (
     <Modal visible={isModalVisible} animationType="slide" transparent={true}>
@@ -19,9 +21,17 @@ function AddPlantModal(props) {
         </TouchableOpacity>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <Text style={styles.modalTitle}>Found Plants</Text>
-          <Text style={styles.text}>
-            Looks like we found a few plants that match that name! Please select which one looks like your plant to add to your collection!
-          </Text>
+          {plantList.length > 1 ? (
+            <Text style={styles.text}>
+              Looks like we found a few plants that match that name! Please select which one seems like your plant to add to your collection!
+            </Text>
+          ) : plantList.length === 1 ? (
+            <Text style={styles.text}>We found exactly one plant from the result! click to add it to your collection</Text>
+          ) : (
+            <Text style={styles.text}>
+              Looks like we couldn't find that plant! We have over 10,000 plants in our database and are constantly adding to it
+            </Text>
+          )}
           <View>
             {plantList.map((plant) => {
               return <AddPlantCard key={plant.id} plant={plant} plantLocation={plantLocation} plantNickname={plantNickname}></AddPlantCard>;
