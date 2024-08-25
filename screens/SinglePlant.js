@@ -8,9 +8,7 @@ import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 import { getPlantById } from "../src/api";
 
-
 export default function SinglePlant(props) {
-
   const [plantProfile, setPlantProfile] = useState([]);
   const route = useRoute();
   const plant = route.params?.plant;
@@ -19,64 +17,77 @@ export default function SinglePlant(props) {
 
   const { loggedInUser } = useContext(UserContext);
 
-
   useEffect(() => {
+    const username = loggedInUser.username;
 
-    const username = loggedInUser.username
+    getPlantById(username, plant_id)
+      .then(({ data }) => {
+        setPlantProfile(data.plant);
 
-    getPlantById(username, plant_id).then(({ data }) => {
-    
-      setPlantProfile(data.plant)
-
-      console.table(data.plant)
-
-
-    }).catch((error) => {
-
-      console.log(error)
-
-    })
-  }, [])
+        console.table(data.plant);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
-    <ScrollView
-      style={styles.screenContainer}
-      contentContainerStyle={styles.contentContainer}
-    >
-      <View style={styles.plantInfoContainer}>
-        <Text style={styles.nickname}>{plantProfile.nickname}</Text>
-        <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
-      </View>
-      <View style={styles.conditionContainer}>
-        <View style={styles.sunWaterContainer}>
-          <Feather name="sun" style={styles.sunIcon} />
-          <Text style={styles.sunWaterText}>
-            {plantProfile.sunlight_care_guide} 
-          </Text>
+    <View style={styles.container}>
+      <ScrollView style={styles.screenContainer}>
+        <View style={styles.plantInfoContainer}>
+          <Text style={styles.nickname}>{plantProfile.nickname ? plantProfile.nickname : plantProfile.common_name}</Text>
+          <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
         </View>
-        <View style={styles.sunWaterContainer}>
-          <SimpleLineIcons style={styles.waterIcon} name="drop" />
 
-          <Text style={styles.sunWaterText}>
-           {plantProfile.watering_care_guide}
-          </Text>
+        <View style={styles.careGuideContainer}>
+          <View style={styles.individualCareGuideContainer}>
+            <View style={styles.individualGuide}>
+              <Text style={styles.guideHeadings}>Description</Text>
+            </View>
+            <Text style={styles.guideText}>{plantProfile.description}</Text>
+          </View>
+
+          <View style={styles.individualCareGuideContainer}>
+            <View style={styles.individualGuide}>
+              <Feather style={styles.sunIcon} name="sun" />
+              <Text style={styles.guideHeadings}>Sunlight Guide</Text>
+            </View>
+            <Text style={styles.guideText}>{plantProfile.sunlight_care_guide}</Text>
+          </View>
+          <View style={styles.individualCareGuideContainer}>
+            <View style={styles.individualGuide}>
+              <SimpleLineIcons style={styles.waterIcon} name="drop" />
+              <Text style={styles.guideHeadings}>Watering Guide</Text>
+            </View>
+            <Text style={styles.guideText}>{plantProfile.watering_care_guide}</Text>
+          </View>
+          <View style={styles.individualCareGuideContainer}>
+            <View style={styles.individualGuide}>
+              <Feather style={styles.scissorIcon} name="scissors" />
+              <Text style={styles.guideHeadings}>Pruning Guide</Text>
+            </View>
+            <Text style={styles.guideText}>{plantProfile.pruning_care_guide}</Text>
+          </View>
         </View>
-        <View style={styles.sunWaterContainer}>
-          <Text style={styles.sunWaterText}>
-            {plantProfile.pruning_care_guide} 
-          </Text>
-        </View>
-      </View>
-      <Text style={styles.description}>{plantProfile.description}</Text>
-      <PushNotification plant={plant} />
-    </ScrollView>
+
+        <PushNotification plant={plant} />
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  screenContainer: {
+  container: {
     flex: 1,
     backgroundColor: "#E8F5E9",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 15,
+  },
+  screenContainer: {
+    alignSelf: "stretch",
+
+    marginTop: 15,
   },
   contentContainer: {
     alignItems: "center",
@@ -97,6 +108,46 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  guideHeadings: {
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#2E7D32",
+  },
+  individualGuide: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+  },
+  descriptionHeader: {
+    alignSelf: "flex-start",
+    fontWeight: "bold",
+    fontSize: 20,
+    color: "#2E7D32",
+  },
+  careGuideContainer: {
+    backgroundColor: "#E8F5E9",
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 5,
+  },
+  descriptionContainer: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#C8E6C9",
+    alignSelf: "stretch",
+    fontSize: 14,
+    color: "#1B5E20",
+    marginVertical: 5,
+  },
+  individualCareGuideContainer: {
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#C8E6C9",
+    alignSelf: "stretch",
+    fontSize: 14,
+    color: "#1B5E20",
+    marginVertical: 5,
+  },
   image: {
     width: 300,
     height: 300,
@@ -104,23 +155,15 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   description: {
-    margin: 10,
-    padding: 15,
+    padding: 10,
     borderRadius: 10,
-    backgroundColor: "#C8E6C9",
+
     alignSelf: "stretch",
-    fontSize: 15,
+    fontSize: 14,
     color: "#1B5E20",
   },
-  conditionContainer: {
-    alignSelf: "stretch",
-    flexDirection: "row",
-    alignItems: "stretch",
-    justifyContent: "center",
-    marginVertical: 15,
-  },
-  sunWaterContainer: {
-    flex: 1,
+
+  sunContainer: {
     justifyContent: "center",
     alignItems: "center",
     maxWidth: 150,
@@ -132,14 +175,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#F1F8E9",
   },
   waterIcon: {
-    fontSize: 40,
+    fontSize: 20,
     color: "#04D9FF",
-    marginBottom: 10,
+  },
+  scissorIcon: {
+    fontSize: 20,
+    color: "brown",
   },
   sunIcon: {
-    fontSize: 40,
+    fontSize: 20,
     color: "#FFA000",
-    marginBottom: 10,
   },
   nickname: {
     fontSize: 24,
@@ -147,8 +192,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     color: "#2E7D32",
   },
-  sunWaterText: {
-    fontSize: 12,
+  guideText: {
+    fontSize: 14,
+    color: "#2E7D32",
   },
   origin: {
     margin: 10,
@@ -158,7 +204,6 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     fontSize: 15,
     color: "#1B5E20",
-
   },
   scientific_name: {
     margin: 10,
@@ -168,6 +213,5 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     fontSize: 15,
     color: "#1B5E20",
-
-  }
+  },
 });
