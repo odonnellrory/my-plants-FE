@@ -31,7 +31,7 @@ export default function IdentifiedPlantCard(props) {
 const styles = {
   container: {
     backgroundColor: "#FFFFFF",
-    marginBottom: 15,
+    marginVertical: 8,
     borderRadius: 15,
     padding: 15,
     overflow: "hidden",
