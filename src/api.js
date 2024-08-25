@@ -4,7 +4,7 @@ const api = axios.create({ baseURL: "https://my-plants-be.onrender.com/" });
 
 const getPlantById = (username, plant_id) => {
   return api
-    .get(`/api/users/${username}/${plant_id}`)
+    .get(`/api/users/${username}/plants/${plant_id}`)
     .then((response) => {
       return response;
     })

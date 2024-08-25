@@ -21,6 +21,7 @@ export default function MyPlants() {
   useEffect(() => {
     getPlantList(username)
       .then(({ data }) => {
+
         setplants(data.plants);
       })
       .catch((error) => {

@@ -3,10 +3,40 @@ import React from "react";
 import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 import PushNotification from "../Components/PushNotification";
+import { useEffect, useState } from "react";
+import { UserContext } from "../Context/UserContext";
+import { useContext } from "react";
+import { getPlantById } from "../src/api";
+
 
 export default function SinglePlant(props) {
+
+  const [plantProfile, setPlantProfile] = useState([]);
   const route = useRoute();
   const plant = route.params?.plant;
+
+  const { plant_id, name } = route.params;
+
+  const { loggedInUser } = useContext(UserContext);
+
+
+  useEffect(() => {
+
+    const username = loggedInUser.username
+
+    getPlantById(username, plant_id).then(({ data }) => {
+    
+      setPlantProfile(data.plant)
+
+      console.table(data.plant)
+
+
+    }).catch((error) => {
+
+      console.log(error)
+
+    })
+  }, [])
 
   return (
     <ScrollView
@@ -14,25 +44,30 @@ export default function SinglePlant(props) {
       contentContainerStyle={styles.contentContainer}
     >
       <View style={styles.plantInfoContainer}>
-        <Text style={styles.nickname}>{plant.plant_nickname}</Text>
-        <Image style={styles.image} source={{ uri: plant.img_url }} />
+        <Text style={styles.nickname}>{plantProfile.nickname}</Text>
+        <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
       </View>
       <View style={styles.conditionContainer}>
         <View style={styles.sunWaterContainer}>
           <Feather name="sun" style={styles.sunIcon} />
           <Text style={styles.sunWaterText}>
-            This plant does best in a {plant.sunlight} environment
+            {plantProfile.sunlight_care_guide} 
           </Text>
         </View>
         <View style={styles.sunWaterContainer}>
           <SimpleLineIcons style={styles.waterIcon} name="drop" />
 
           <Text style={styles.sunWaterText}>
-            This plant requires {plant.water} watering
+           {plantProfile.watering_care_guide}
+          </Text>
+        </View>
+        <View style={styles.sunWaterContainer}>
+          <Text style={styles.sunWaterText}>
+            {plantProfile.pruning_care_guide} 
           </Text>
         </View>
       </View>
-      <Text style={styles.description}>{plant.plant_description}</Text>
+      <Text style={styles.description}>{plantProfile.description}</Text>
       <PushNotification plant={plant} />
     </ScrollView>
   );
@@ -115,4 +150,24 @@ const styles = StyleSheet.create({
   sunWaterText: {
     fontSize: 12,
   },
+  origin: {
+    margin: 10,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "#C8E6C9",
+    alignSelf: "stretch",
+    fontSize: 15,
+    color: "#1B5E20",
+
+  },
+  scientific_name: {
+    margin: 10,
+    padding: 15,
+    borderRadius: 10,
+    backgroundColor: "#C8E6C9",
+    alignSelf: "stretch",
+    fontSize: 15,
+    color: "#1B5E20",
+
+  }
 });
