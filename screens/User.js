@@ -52,7 +52,6 @@ export default function User() {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <PushNotification showInstantButton={true} />
     </View>
   );
 }

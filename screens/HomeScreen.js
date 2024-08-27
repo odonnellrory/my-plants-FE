@@ -68,7 +68,6 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Plant Newsfeed</Text>
       <FlatList
         data={newsItems}
         renderItem={({ item }) => (

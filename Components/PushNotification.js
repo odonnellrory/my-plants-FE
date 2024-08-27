@@ -1,158 +1,81 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
+import { updatePlantWatering } from "../src/api";
+import { UserContext } from "../Context/UserContext";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
+const PushNotification = ({ plant }) => {
+  const { loggedInUser } = useContext(UserContext);
 
-const PushNotification = ({
-  plant,
-  showInstantButton = false,
-  compact = false,
-}) => {
-  React.useEffect(() => {
-    registerForPushNotificationsAsync();
-  }, []);
+  const handleWatered = async () => {
+    if (!plant || !loggedInUser) {
+      Alert.alert("Error", "Plant or user information not available");
+      return;
+    }
 
-  const registerForPushNotificationsAsync = async () => {
     try {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        throw new Error("Permission not granted for notifications");
-      }
-    } catch (error) {
-      console.warn("Error getting notification permissions:", error);
-      Alert.alert(
-        "Permission Error",
-        "Failed to get push notification permissions. Some features may not work."
+      const currentDate = new Date();
+      const updatedPlant = await updatePlantWatering(
+        loggedInUser.username,
+        plant._id
       );
+      await scheduleNextWateringNotification(updatedPlant.plant);
+      Alert.alert(
+        "Success",
+        `Plant watered! Last watered: ${currentDate.toLocaleDateString()}\nNext watering: ${new Date(
+          updatedPlant.plant.next_watering
+        ).toLocaleDateString()}`
+      );
+    } catch (error) {
+      console.error("Error updating plant watering:", error);
+      Alert.alert("Error", "Failed to update plant watering. Please try again");
     }
   };
 
-  const scheduleNotification = async () => {
-    if (!plant || !plant.next_watering) {
-      Alert.alert("Error", "Next watering date not available");
-      return;
-    }
-
-    const nextWateringDate = new Date(plant.next_watering);
-
-    if (isNaN(nextWateringDate.getTime())) {
-      Alert.alert("Error", "Invalid next watering date");
-      return;
-    }
+  const scheduleNextWateringNotification = async (updatedPlant) => {
+    const nextWateringDate = new Date(updatedPlant.next_watering);
 
     try {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: `Time to water your ${plant.common_name || "plant"}!`,
-          body: `Don't forget to give your ${
-            plant.nickname || plant.common_name || "plant"
-          } some water.`,
+          title: `Water your ${updatedPlant.common_name || "plant"}!`,
+          body: `Time to water ${
+            updatedPlant.nickname || updatedPlant.common_name || "plant"
+          }.`,
+          data: { username: updatedPlant.username, plantId: updatedPlant._id },
         },
         trigger: nextWateringDate,
       });
-      Alert.alert(
-        "Success",
-        `Notification scheduled for ${nextWateringDate.toLocaleString()}`
-      );
     } catch (error) {
       console.error("Error scheduling notification:", error);
-      Alert.alert(
-        "Error",
-        "Failed to schedule notification. Please check your permissions and try again."
-      );
-    }
-  };
-
-  const sendInstantNotification = async () => {
-    try {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Instant Notification",
-          body: "This is a test notification sent instantly.",
-        },
-        trigger: null,
-      });
-      Alert.alert("Success", "Instant notification sent!");
-    } catch (error) {
-      console.error("Error sending instant notification:", error);
-      Alert.alert(
-        "Error",
-        "Failed to send instant notification. Please check your permissions and try again."
-      );
+      Alert.alert("Error", "Failed to schedule next watering notification.");
     }
   };
 
   return (
-    <View style={[compact && { padding: 10 }]}>
-      {plant && (
-        <TouchableOpacity
-          style={[styles.button, !plant.next_watering && styles.disabledButton]}
-          onPress={scheduleNotification}
-          disabled={!plant.next_watering}
-        >
-          <Text
-            style={[
-              styles.buttonText,
-              !plant.next_watering && styles.disabledButtonText,
-            ]}
-          >
-            Schedule Reminder
-          </Text>
-        </TouchableOpacity>
-      )}
-      {showInstantButton && (
-        <TouchableOpacity
-          style={[styles.button, styles.instantButton]}
-          onPress={sendInstantNotification}
-        >
-          <Text style={[styles.buttonText, styles.instantButtonText]}>
-            Send Instant Notification
-          </Text>
-        </TouchableOpacity>
-      )}
+    <View style={styles.container}>
+      <TouchableOpacity style={styles.button} onPress={handleWatered}>
+        <Text style={styles.buttonText}>Water Plant</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 10,
+  },
   button: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: "center",
-    marginTop: 10,
   },
   buttonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "bold",
-  },
-  disabledButton: {
-    backgroundColor: "#C8E6C9",
-  },
-  disabledButtonText: {
-    color: "#81C784",
-  },
-  instantButton: {
-    backgroundColor: "#4CAF50",
-    marginTop: 15,
-  },
-  instantButtonText: {
-    color: "#FFFFFF",
   },
 });
 
