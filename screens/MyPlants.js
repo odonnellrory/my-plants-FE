@@ -4,11 +4,14 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
-import axios from "axios";
 import { getPlantList } from "../src/api";
+import LottieView from "lottie-react-native";
+import Loading from "../Components/Loading";
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const data = testData();
   let navigation = useNavigation();
   const route = useRoute();
@@ -17,17 +20,28 @@ export default function MyPlants() {
   console.log(deletedPlant);
 
   const { loggedInUser } = useContext(UserContext);
-  const username = loggedInUser.username;
+  const username = loggedInUser ? loggedInUser.username : null;
 
   useEffect(() => {
+
+    setIsLoading(true)
+
     getPlantList(username)
+
       .then(({ data }) => {
         setplants(data.plants);
+
+        setIsLoading(false);
+
       })
       .catch((error) => {
         console.log(error);
       });
   }, [newAddedPlant, deletedPlant]);
+
+  if(isLoading){
+    return <Loading/>
+  }
 
   return (
     <View style={styles.container}>
@@ -46,7 +60,6 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: "#E8F5E9",
-
     alignItems: "center",
     justifyContent: "flex-start",
     padding: 15,
@@ -77,6 +90,21 @@ const styles = {
     letterSpacing: 0.5,
     color: "#FFFFFF",
   },
+  animation: {
+    width: 200,
+    height: 200,
+    justifyContent: 'center',
+     alignItems: 'center',
+      flex: 1
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
+  },
+  
+ 
 };
 
-const addPlant = {};
+

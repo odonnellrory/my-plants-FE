@@ -7,10 +7,16 @@ import { useEffect, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 import { getPlantById } from "../src/api";
+
+import LottieView from "lottie-react-native";
+import Loading from "../Components/Loading";
+
 import DeletePlant from "../Components/DeletePlant";
+
 
 export default function SinglePlant(props) {
   const [plantProfile, setPlantProfile] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const route = useRoute();
   const plant = route.params?.plant;
 
@@ -21,9 +27,15 @@ export default function SinglePlant(props) {
   useEffect(() => {
     const username = loggedInUser.username;
 
+    setIsLoading(true)
+
     getPlantById(username, plant_id)
+
       .then(({ data }) => {
+    
         setPlantProfile(data.plant);
+
+        setIsLoading(false)
 
         console.table(data.plant);
       })
@@ -31,6 +43,11 @@ export default function SinglePlant(props) {
         console.log(error);
       });
   }, []);
+
+  if(isLoading){
+    return <Loading/>
+  }
+
 
   return (
     <View style={styles.container}>
@@ -113,7 +130,7 @@ const styles = StyleSheet.create({
   guideHeadings: {
     fontWeight: "bold",
     fontSize: 20,
-    color: "#2E7D32",
+    color: "#333",
   },
   individualGuide: {
     flexDirection: "row",
@@ -125,6 +142,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "#2E7D32",
+  
   },
   careGuideContainer: {
     backgroundColor: "#E8F5E9",
@@ -220,5 +238,18 @@ const styles = StyleSheet.create({
     alignSelf: "stretch",
     fontSize: 15,
     color: "#1B5E20",
+  },
+  animation: {
+    width: 200,
+    height: 200,
+    justifyContent: 'center',
+     alignItems: 'center',
+      flex: 1
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
   },
 });

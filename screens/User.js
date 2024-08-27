@@ -4,14 +4,14 @@ import { useState, useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import PushNotification from "../Components/PushNotification";
+import Loading from "../Components/Loading";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  //const username = loggedInUser.username;
 
-  const [backgroundColour, setBackgroundColour] = useState("#D5F2E2");
-  const [profilePicture, setProfilePicture] = useState({});
-  // const [newUsername, setNewUsername] = useState({ username });
+  const [isLoading, setIsLoading] = useState(true);
+
+  setTimeout(() => {setIsLoading(false)}, 2000)
 
   let navigation = useNavigation();
 
@@ -20,7 +20,12 @@ export default function User() {
   }
 
   const handleSignOut = () => {
+
+    setLoggedInUser(null);
+    setTimeout(() => {}, setIsLoading(false))
+
     setLoggedInUser({});
+
     navigation.navigate("WelcomeScreen");
   };
 
@@ -35,11 +40,20 @@ export default function User() {
       </View>
     );
   }
+
+  if(isLoading){
+    return <Loading/>
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Image source={{ uri: loggedInUser.profile_picture }} style={styles.profile_picture} />
+          <Image 
+            source={{ uri: loggedInUser.profile_picture }}
+            style={styles.profile_picture}
+          />
+
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>
           <Text style={styles.infoText}>{loggedInUser.email}</Text>
