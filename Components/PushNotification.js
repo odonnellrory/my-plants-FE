@@ -15,10 +15,7 @@ const PushNotification = ({ plant }) => {
 
     try {
       const currentDate = new Date();
-      const updatedPlant = await updatePlantWatering(
-        loggedInUser.username,
-        plant._id
-      );
+      const updatedPlant = await updatePlantWatering(loggedInUser.username, plant._id);
       await scheduleNextWateringNotification(updatedPlant.plant);
       Alert.alert(
         "Success",
@@ -39,9 +36,7 @@ const PushNotification = ({ plant }) => {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `Water your ${updatedPlant.common_name || "plant"}!`,
-          body: `Time to water ${
-            updatedPlant.nickname || updatedPlant.common_name || "plant"
-          }.`,
+          body: `Time to water ${updatedPlant.nickname || updatedPlant.common_name || "plant"}.`,
           data: { username: updatedPlant.username, plantId: updatedPlant._id },
         },
         trigger: nextWateringDate,
@@ -62,9 +57,7 @@ const PushNotification = ({ plant }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
+  container: {},
   button: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,
