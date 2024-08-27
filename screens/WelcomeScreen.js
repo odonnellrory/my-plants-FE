@@ -1,23 +1,9 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  ImageBackground,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useContext } from "react";
-import { UserContext } from "../Context/UserContext";
 
-const WelcomeScreen = () => {
+export default function WelcomeScreen() {
   const navigation = useNavigation();
-  const { setGuestUser } = useContext(UserContext);
-
-  const handleGuestLogin = () => {
-    setGuestUser();
-    navigation.navigate("Main");
-  };
 
   return (
     <ImageBackground
@@ -30,30 +16,17 @@ const WelcomeScreen = () => {
       <View style={styles.container}>
         <Text style={styles.title}>Welcome to My Plant App</Text>
 
-        <Pressable
-          style={styles.pressable}
-          onPress={() => navigation.navigate("LoginScreen")}
-        >
+        <TouchableOpacity style={styles.pressable} onPress={() => navigation.navigate("LoginScreen")}>
           <Text style={styles.pressableText}>Sign In</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable
-          style={[styles.pressable, styles.registerButton]}
-          onPress={() => navigation.navigate("RegisterScreen")}
-        >
+        <TouchableOpacity style={[styles.pressable, styles.registerButton]} onPress={() => navigation.navigate("RegisterScreen")}>
           <Text style={styles.pressableText}>Sign Up</Text>
-        </Pressable>
-
-        <Pressable
-          style={[styles.pressable, styles.guestButton]}
-          onPress={handleGuestLogin}
-        >
-          <Text style={styles.pressableText}>Continue as Guest</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </ImageBackground>
   );
-};
+}
 
 const styles = StyleSheet.create({
   background: {
@@ -111,5 +84,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#A5D6A7",
   },
 });
-
-export default WelcomeScreen;

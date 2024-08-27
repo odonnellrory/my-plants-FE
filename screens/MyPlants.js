@@ -15,8 +15,9 @@ export default function MyPlants() {
   const data = testData();
   let navigation = useNavigation();
   const route = useRoute();
-  const newAddedPlant = route.params?.newAddedPlant.plant._id ? route.params?.newAddedPlant.plant._id : "";
-  console.log(newAddedPlant);
+  const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
+  const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
+  console.log(deletedPlant);
 
   const { loggedInUser } = useContext(UserContext);
   const username = loggedInUser ? loggedInUser.username : null;
@@ -28,7 +29,6 @@ export default function MyPlants() {
     getPlantList(username)
 
       .then(({ data }) => {
-
         setplants(data.plants);
 
         setIsLoading(false);
@@ -37,7 +37,7 @@ export default function MyPlants() {
       .catch((error) => {
         console.log(error);
       });
-  }, [newAddedPlant]);
+  }, [newAddedPlant, deletedPlant]);
 
   if(isLoading){
     return <Loading/>

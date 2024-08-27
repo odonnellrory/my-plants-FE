@@ -1,16 +1,9 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  Pressable,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-const RegisterScreen = () => {
+export default function RegisterScreen() {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,47 +54,23 @@ const RegisterScreen = () => {
     <View style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.label}>Username</Text>
-        <TextInput
-          style={styles.input}
-          value={username}
-          onChangeText={setUsername}
-          placeholder="Enter username"
-        />
+        <TextInput style={styles.input} value={username} onChangeText={setUsername} placeholder="Enter username" />
         <Text style={styles.label}>Name</Text>
-        <TextInput
-          style={styles.input}
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter name"
-        />
+        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter name" />
         <Text style={styles.label}>Email</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={setEmail}
-          placeholder="Enter email"
-          keyboardType="email-address"
-        />
+        <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter email" keyboardType="email-address" />
         <Text style={styles.label}>Password</Text>
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={setPassword}
-          placeholder="Enter password"
-          secureTextEntry
-        />
-        <Pressable style={styles.pressable} onPress={handleSubmit}>
+        <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Enter password" secureTextEntry />
+        <TouchableOpacity style={styles.pressable} onPress={handleSubmit}>
           <Text style={styles.text}>Sign Up</Text>
-        </Pressable>
-        <Pressable style={styles.loginNavigate} onPress={handleLoginNavigate}>
-          <Text style={styles.loginText}>
-            Already have an account? Log in here.
-          </Text>
-        </Pressable>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginNavigate} onPress={handleLoginNavigate}>
+          <Text style={styles.loginText}>Already have an account? Log in here.</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -164,4 +133,3 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
-export default RegisterScreen;
