@@ -23,8 +23,16 @@ const TabNavigator = () => {
         tabBarActiveTintColor: "#2E7D32",
         tabBarInactiveTintColor: "#9E9E9E",
         headerTintColor: "#FFFFFF",
+        initialRouteName: "Home",
       })}
     >
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
+        }}
+      />
       <Tab.Screen
         name="My Plants"
         component={MyPlantsStackNavigator}
@@ -34,13 +42,7 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => <FontAwesome6 name="seedling" size={size} color={color} />,
         }}
       />
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
-        }}
-      />
+
       <Tab.Screen
         name="Add Plant"
         component={AddPlant}
