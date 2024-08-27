@@ -21,8 +21,6 @@ export default function PlantCard({ plant }) {
     return date.toLocaleDateString();
   };
 
-  console.log(plant._id);
-
   return (
     <View style={styles.container}>
       <Pressable onPress={handlePlantCardPress}>

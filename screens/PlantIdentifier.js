@@ -16,8 +16,6 @@ export default function PlantIdentifier() {
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(capturedImage, "INSIDE PLANTID");
-
   async function identifyPlant() {
     if (!capturedImage) return;
     setIsIdentifying(true);

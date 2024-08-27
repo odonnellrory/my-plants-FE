@@ -15,7 +15,6 @@ const Stack = createStackNavigator();
 
 export default function RootStack() {
   const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="WelcomeScreen" screenOptions={{ headerTitleAlign: "center" }}>

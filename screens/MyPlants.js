@@ -17,7 +17,6 @@ export default function MyPlants() {
   const route = useRoute();
   const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
-  console.log(deletedPlant);
 
   const { loggedInUser } = useContext(UserContext);
   const username = loggedInUser ? loggedInUser.username : null;
