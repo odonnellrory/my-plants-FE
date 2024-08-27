@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable } from "react-native";
 import { useState, useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
@@ -28,9 +20,8 @@ export default function User() {
   }
 
   const handleSignOut = () => {
-    setLoggedInUser(null);
+    setLoggedInUser({});
     navigation.navigate("WelcomeScreen");
-    return;
   };
 
   const formatDate = (dateString) => {
@@ -48,27 +39,15 @@ export default function User() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Image
-            source={{ uri: loggedInUser.profile_picture }}
-            style={styles.profile_picture}
-          />
+          <Image source={{ uri: loggedInUser.profile_picture }} style={styles.profile_picture} />
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>
           <Text style={styles.infoText}>{loggedInUser.email}</Text>
-          <Text style={styles.infoText}>
-            Reward points: {loggedInUser.reward_points}
-          </Text>
-          <Text style={styles.infoText}>
-            I own {loggedInUser.plants.length} plants!
-          </Text>
-          <Text style={styles.infoText}>
-            Joined {formatDate(loggedInUser.created_at)}
-          </Text>
+          <Text style={styles.infoText}>Reward points: {loggedInUser.reward_points}</Text>
+          <Text style={styles.infoText}>I own {loggedInUser.plants.length} plants!</Text>
+          <Text style={styles.infoText}>Joined {formatDate(loggedInUser.created_at)}</Text>
 
-          <TouchableOpacity
-            style={styles.signOutButton}
-            onPress={handleSignOut}
-          >
+          <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
         </View>

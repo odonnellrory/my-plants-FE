@@ -1,33 +1,24 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Alert,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 
-const SignIn = () => {
+export default function SignIn() {
   const [username, setUsername] = useState("greenThumb");
   const [password, setPassword] = useState("greenlife");
-  const { setLoggedInUser, setGuestUser } = useContext(UserContext);
+  const { setLoggedInUser, loggedInUser } = useContext(UserContext);
   const navigation = useNavigation();
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(
-        "https://my-plants-be.onrender.com/api/login",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post("https://my-plants-be.onrender.com/api/login", {
+        username,
+        password,
+      });
       setLoggedInUser(response.data.user);
+      console.log(loggedInUser);
       navigation.navigate("Main");
     } catch (error) {
       if (error.response) {
@@ -52,37 +43,27 @@ const SignIn = () => {
     }
   };
 
-  const handleGuestAccess = () => {
-    setGuestUser();
-    navigation.navigate("Main");
+  const handleSignUp = () => {
+    navigation.navigate("RegisterScreen");
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.formContainer}>
+        <Text style={styles.title}>Sign In</Text>
+        <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
+        <TextInput style={styles.input} placeholder="Password" value={password} onChangeText={setPassword} secureTextEntry />
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.guestButton} onPress={handleGuestAccess}>
-        <Text style={styles.guestButtonText}>Continue as Guest</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Sign In</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+          <Text style={styles.signUpButtonText}>Not A User? Sign up Here!</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -91,6 +72,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     backgroundColor: "#E8F5E9",
+  },
+  formContainer: {
+    alignSelf: "stretch",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   title: {
     fontSize: 28,
@@ -130,17 +122,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
-  guestButton: {
-    backgroundColor: "#81C784",
-    padding: 15,
-    borderRadius: 25,
-    width: "100%",
-    alignItems: "center",
+  signUpButton: {
+    marginTop: 10,
+    alignSelf: "center",
   },
-  guestButtonText: {
-    color: "#FFFFFF",
-    fontSize: 18,
-    fontWeight: "bold",
+  signUpButtonText: {
+    color: "#388E3C",
+    textDecorationLine: "underline",
   },
   note: {
     marginTop: 20,
@@ -152,5 +140,3 @@ const styles = StyleSheet.create({
     color: "#2E7D32",
   },
 });
-
-export default SignIn;
