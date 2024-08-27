@@ -18,7 +18,6 @@ export default function SignIn() {
         password,
       });
       setLoggedInUser(response.data.user);
-      console.log(loggedInUser);
       navigation.navigate("Main");
     } catch (error) {
       if (error.response) {
