@@ -20,13 +20,7 @@ export default function User() {
   }
 
   const handleSignOut = () => {
-
     setLoggedInUser(null);
-    setTimeout(() => {}, setIsLoading(false))
-
-    setLoggedInUser({});
-
-    navigation.navigate("WelcomeScreen");
   };
 
   const formatDate = (dateString) => {
@@ -34,16 +28,13 @@ export default function User() {
   };
 
   if (!loggedInUser) {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.errorText}>User not logged in.</Text>
-      </View>
-    );
+    return <View style={styles.container}></View>;
   }
 
-  if(isLoading){
-    return <Loading/>
-  }
+  const numberOfPlants = loggedInUser.plants ? loggedInUser.plants.length : 0;
+
+  if (isLoading) return <Loading/>
+  
 
   return (
     <View style={styles.container}>
@@ -58,9 +49,12 @@ export default function User() {
           <Text style={styles.infoText}>{loggedInUser.name}</Text>
           <Text style={styles.infoText}>{loggedInUser.email}</Text>
           <Text style={styles.infoText}>Reward points: {loggedInUser.reward_points}</Text>
-          <Text style={styles.infoText}>I own {loggedInUser.plants.length} plants!</Text>
+          <Text style={styles.infoText}>
+            <Text style={styles.infoText}>I own </Text>
+            <Text style={styles.infoTextBold}>{numberOfPlants}</Text>
+            {numberOfPlants === 1 ? <Text style={styles.infoText}> plant!</Text> : <Text style={styles.infoText}> plants!</Text>}
+          </Text>
           <Text style={styles.infoText}>Joined {formatDate(loggedInUser.created_at)}</Text>
-
           <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
@@ -110,17 +104,26 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: "center",
   },
+  infoTextBold: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#388E3C",
+    marginBottom: 5,
+    textAlign: "center",
+  },
+
   signOutButton: {
-    backgroundColor: "#EF5350",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    backgroundColor: "#66BB6A",
+    padding: 15,
     borderRadius: 25,
-    marginTop: 20,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 15,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   signOutText: {
     color: "#FFFFFF",
