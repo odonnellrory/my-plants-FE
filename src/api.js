@@ -122,6 +122,21 @@ const fetchPlants = async (username) => {
   }
 };
 
+const updatePlantWatering = (username, plantId) => {
+  const currentDate = new Date().toISOString();
+  return api
+    .patch(`/api/users/${username}/plants/${plantId}/water`, {
+      last_watered: currentDate,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error updating plant watering:", error);
+      throw error;
+    });
+};
+
 export {
   getPlantById,
   getPlantList,
@@ -133,4 +148,5 @@ export {
   loginUser,
   getUserInfo,
   fetchPlants,
+  updatePlantWatering,
 };

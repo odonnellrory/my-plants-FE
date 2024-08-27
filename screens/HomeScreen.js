@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { View, Text, StyleSheet, FlatList, RefreshControl } from "react-native";
 import { UserContext } from "../Context/UserContext";
 import { fetchPlants } from "../src/api";
+import LottieView from "lottie-react-native";
+import Loading from "../Components/Loading";
 
 const NewsCard = ({ title, content, date }) => (
   <View style={styles.card}>
@@ -63,12 +65,16 @@ export default function HomeScreen() {
   };
 
   useEffect(() => {
+    
     loadPlants();
   }, [loggedInUser]);
 
+  if(isLoading){
+    return <Loading/>
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Plant Newsfeed</Text>
       <FlatList
         data={newsItems}
         renderItem={({ item }) => (
@@ -138,4 +144,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginTop: 20,
   },
+  animation: {
+    width: 200,
+    height: 200,
+    justifyContent: 'center',
+     alignItems: 'center',
+      flex: 1
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#E8F5E9',
+  },
+  
 });
