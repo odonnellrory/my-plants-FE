@@ -3,14 +3,17 @@ import { Text, View, Image, Pressable, StyleSheet } from "react-native";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import PushNotification from "./PushNotification";
+import TestNotification from "./TestNotification";
 
 export default function PlantCard({ plant }) {
   let navigation = useNavigation();
 
-
-
   function handlePlantCardPress() {
-    navigation.navigate("SinglePlant", { plant, name: plant.common_name, plant_id: plant._id });
+    navigation.navigate("SinglePlant", {
+      plant,
+      name: plant.common_name,
+      plant_id: plant._id,
+    });
   }
 
   const formatDate = (dateString) => {
@@ -39,6 +42,7 @@ export default function PlantCard({ plant }) {
       </Pressable>
       <View style={styles.notificationContainer}>
         <PushNotification plant={plant} compact={true} />
+        <TestNotification plant={plant} />
       </View>
     </View>
   );
