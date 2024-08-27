@@ -4,17 +4,20 @@ import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import IdentifiedPlantCard from "../Components/IdentifiedPlantCard";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import Loading from "../Components/Loading";
 
 const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY; //within .env file
 const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
 
 export default function PlantIdentifier() {
+
   const route = useRoute();
   const capturedImage = route.params?.imageToProcess;
   const [identifiedPlantList, setidentifiedPlantList] = useState([]);
-  console.log(capturedImage, "INSIDE PLANTID");
   const [isIdentifying, setIsIdentifying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  console.log(capturedImage, "INSIDE PLANTID");
 
   async function identifyPlant() {
     if (!capturedImage) return;
@@ -40,15 +43,30 @@ export default function PlantIdentifier() {
           ? suggestions.slice(0, 5).map(({ name, probability, similar_images }) => ({ name, probability, similar_images }))
           : [{ name: "Unable to identify", probability: 0 }]
       );
+
       setIsLoading(false);
-    } catch (error) {
+
+    }
+     catch (error) {
+
       console.error("Error identifying plant:", error);
+
       setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
+
       setIsLoading(false);
-    } finally {
+
+    } 
+    finally {
+      
       setIsIdentifying(false);
+      setIsLoading(false)
     }
   }
+
+  if(isLoading){
+    return <Loading/>
+  }
+
 
   return (
     <View style={styles.container}>

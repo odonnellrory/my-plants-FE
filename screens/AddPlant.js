@@ -6,6 +6,7 @@ import { useRoute } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import AddPlantModal from "./AddPlantModal";
+import Loading from "../Components/Loading";
 
 export default function AddPlant() {
   const route = useRoute();
@@ -17,16 +18,21 @@ export default function AddPlant() {
   const [plantLocation, setPlantLocation] = useState("");
   const [plantNickname, setPlantNickname] = useState("");
   const [imageSelected, setImageSelected] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
   const [plantList, setPlantList] = useState([]);
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingPlants, setLoadingPlants] = useState(false);
 
   API_URL = process.env.REACT_APP_PERENUAL_API_URL_NAME;
 
   useEffect(() => {
+
     setPlantName(identifiedPlantName);
+
+    setIsLoading(false)
+
   }, [identifiedPlantName]);
 
   function handlePlantLocationChange(newText) {
@@ -72,6 +78,7 @@ export default function AddPlant() {
   function handleAddPlantPress() {
     setIsModalLoading(true);
     setIsModalVisible(true);
+    setIsLoading(true)
 
     axios
       .get(`${API_URL}${plantName}`)
@@ -79,13 +86,23 @@ export default function AddPlant() {
         setPlantList(response.data.data);
         setIsModalLoading(false);
         setPlantName("");
+        setIsLoading(false)
       })
       .catch((error) => {
         console.log(error);
         setIsError(true);
         setIsModalLoading(false);
+        setIsLoading(false)
       });
   }
+
+  if(isLoading){
+    return <Loading/>
+  }
+
+ 
+
+  
 
   return (
     <KeyboardAvoidingView style={styles.container}>
