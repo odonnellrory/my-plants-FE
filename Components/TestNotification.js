@@ -39,7 +39,7 @@ const TestNotification = ({ plant }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingVertical: 10,
   },
   button: {
     backgroundColor: "#66BB6A",
