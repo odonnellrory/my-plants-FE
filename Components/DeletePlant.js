@@ -3,6 +3,7 @@ import { TouchableOpacity, View, Text, StyleSheet, Modal } from "react-native";
 import { deletePlantById } from "../src/api";
 import { useNavigation } from "@react-navigation/native";
 import { UserContext } from "../Context/UserContext";
+import Loading from "./Loading";
 
 export default function DeletePlant(props) {
   const { plant_id } = props;
@@ -38,20 +39,30 @@ export default function DeletePlant(props) {
       <Modal visible={showWarning} transparent>
         <View style={styles.modalContentsContainer}>
           <View style={styles.warningModal}>
-            <View style={styles.warningHeader}>
-              <Text style={styles.headerText}>Warning!</Text>
-            </View>
-            <View style={styles.warningBody}>
-              <Text>Are you sure you want to remove this plant from your collection?</Text>
-            </View>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity style={styles.modalCancel} onPress={handleCancelModal}>
-                <Text style={styles.text}>Cancel</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.modalConfirm} onPress={handleDeleteOnPress}>
-                <Text style={styles.text}>Delete</Text>
-              </TouchableOpacity>
-            </View>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <>
+                <View style={styles.warningHeader}>
+                  <Text style={styles.headerText}>Warning!</Text>
+                </View>
+                <View style={styles.warningBody}>
+                  {isError ? (
+                    <Text style={styles.error}>Something went wrong and we coudln't remove your plant - please try again!</Text>
+                  ) : (
+                    <Text>Are you sure you want to remove this plant from your collection?</Text>
+                  )}
+                </View>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={styles.modalCancel} onPress={handleCancelModal}>
+                    <Text style={styles.text}>Cancel</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.modalConfirm} onPress={handleDeleteOnPress}>
+                    <Text style={styles.text}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
           </View>
         </View>
       </Modal>
@@ -133,5 +144,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignSelf: "center",
     gap: 50,
+  },
+  error: {
+    color: "#dc0000",
+    fontWeight: "bold",
   },
 });

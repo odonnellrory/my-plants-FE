@@ -21,6 +21,8 @@ export default function PlantCard({ plant }) {
     return date.toLocaleDateString();
   };
 
+  console.log(plant._id);
+
   return (
     <View style={styles.container}>
       <Pressable onPress={handlePlantCardPress}>
@@ -40,7 +42,7 @@ export default function PlantCard({ plant }) {
       </Pressable>
       <View style={styles.notificationContainer}>
         <PushNotification plant={plant} compact={true} />
-        <TestNotification plant={plant} />
+        {plant._id === "66cdb79ef4c340d96edf7da3" && <TestNotification plant={plant} />}
       </View>
     </View>
   );

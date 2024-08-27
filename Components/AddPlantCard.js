@@ -4,6 +4,7 @@ import { postPlantByUser } from "../src/api";
 import { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
+import Loading from "./Loading";
 
 function AddPlantCard(props) {
   const { plant, plantNickname, plantLocation, setIsModalVisible } = props;
@@ -12,7 +13,6 @@ function AddPlantCard(props) {
   const [isError, setIsError] = useState(false);
   let navigation = useNavigation();
 
-  console.log(plantNickname);
   let plantImage = "";
 
   if (plant.default_image === null || plant.default_image.original_url === null) {
@@ -88,6 +88,8 @@ function AddPlantCard(props) {
         setIsError(true);
       });
   }
+
+  if (isLoading) return <Loading />;
 
   return (
     <View style={styles.container}>
