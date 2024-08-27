@@ -45,12 +45,28 @@ export default function SinglePlant(props) {
     return <Loading />;
   }
 
+  console.log(plantProfile.plant_location);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.screenContainer}>
         <View style={styles.plantInfoContainer}>
           <Text style={styles.nickname}>{plantProfile.nickname ? plantProfile.nickname : plantProfile.common_name}</Text>
           <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
+          <Text style={styles.guideText}>
+            <Text>This plants scientific name is </Text>
+            <Text style={styles.bold}>{plantProfile.scientific_name}</Text>
+          </Text>
+          {plantProfile.plant_location && (
+            <Text style={styles.guideText}>
+              {plantProfile.nickname ? (
+                <Text>{plantProfile.nickname} is located in the </Text>
+              ) : (
+                <Text>this {plantProfile.common_name} is located in the </Text>
+              )}
+              <Text style={styles.bold}>{plantProfile.plant_location}</Text>
+            </Text>
+          )}
         </View>
 
         <View style={styles.careGuideContainer}>
@@ -127,6 +143,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "#333",
+  },
+  bold: {
+    fontWeight: "bold",
   },
   individualGuide: {
     flexDirection: "row",
