@@ -34,7 +34,15 @@ function AddPlantModal(props) {
           )}
           <View>
             {plantList.map((plant) => {
-              return <AddPlantCard key={plant.id} plant={plant} plantLocation={plantLocation} plantNickname={plantNickname}></AddPlantCard>;
+              return (
+                <AddPlantCard
+                  key={plant.id}
+                  plant={plant}
+                  plantLocation={plantLocation}
+                  plantNickname={plantNickname}
+                  setIsModalVisible={setIsModalVisible}
+                ></AddPlantCard>
+              );
             })}
           </View>
         </ScrollView>
