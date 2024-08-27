@@ -45,8 +45,6 @@ export default function SinglePlant(props) {
     return <Loading />;
   }
 
-  console.log(plantProfile.plant_location);
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.screenContainer}>
