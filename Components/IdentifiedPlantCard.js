@@ -6,20 +6,18 @@ import Loading from "./Loading";
 export default function IdentifiedPlantCard(props) {
   let navigation = useNavigation();
   const { identifiedPlant } = props;
-  const [plantLoading, setPlantLoading] = useState(true)
+  const [plantLoading, setPlantLoading] = useState(true);
 
   function handleMyPlantPress(event) {
-
     navigation.navigate("Add A Plant", { identifiedPlant });
 
-    setPlantLoading(false)
+    setPlantLoading(false);
 
     //if the add plant is continuously loading this loading state could be the issue.
-
   }
 
-  if(setPlantLoading){
-    return <Loading/>
+  if (setPlantLoading) {
+    return <Loading />;
   }
 
   return (
@@ -39,8 +37,6 @@ export default function IdentifiedPlantCard(props) {
     </View>
   );
 }
-
-
 
 const styles = {
   container: {

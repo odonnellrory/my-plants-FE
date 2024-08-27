@@ -11,7 +11,9 @@ export default function User() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  setTimeout(() => {setIsLoading(false)}, 2000)
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 2000);
 
   let navigation = useNavigation();
 
@@ -33,17 +35,13 @@ export default function User() {
 
   const numberOfPlants = loggedInUser.plants ? loggedInUser.plants.length : 0;
 
-  if (isLoading) return <Loading/>
-  
+  if (isLoading) return <Loading />;
 
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Image 
-            source={{ uri: loggedInUser.profile_picture }}
-            style={styles.profile_picture}
-          />
+          <Image source={{ uri: loggedInUser.profile_picture }} style={styles.profile_picture} />
 
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>

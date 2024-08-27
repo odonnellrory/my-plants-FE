@@ -23,24 +23,21 @@ export default function MyPlants() {
   const username = loggedInUser ? loggedInUser.username : null;
 
   useEffect(() => {
-
-    setIsLoading(true)
+    setIsLoading(true);
 
     getPlantList(username)
-
       .then(({ data }) => {
         setplants(data.plants);
 
         setIsLoading(false);
-
       })
       .catch((error) => {
         console.log(error);
       });
   }, [newAddedPlant, deletedPlant]);
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -93,18 +90,14 @@ const styles = {
   animation: {
     width: 200,
     height: 200,
-    justifyContent: 'center',
-     alignItems: 'center',
-      flex: 1
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E9",
   },
-  
- 
 };
-
-

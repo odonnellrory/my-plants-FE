@@ -13,7 +13,6 @@ import Loading from "../Components/Loading";
 
 import DeletePlant from "../Components/DeletePlant";
 
-
 export default function SinglePlant(props) {
   const [plantProfile, setPlantProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,15 +26,13 @@ export default function SinglePlant(props) {
   useEffect(() => {
     const username = loggedInUser.username;
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     getPlantById(username, plant_id)
-
       .then(({ data }) => {
-    
         setPlantProfile(data.plant);
 
-        setIsLoading(false)
+        setIsLoading(false);
 
         console.table(data.plant);
       })
@@ -44,10 +41,9 @@ export default function SinglePlant(props) {
       });
   }, []);
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
 
   return (
     <View style={styles.container}>
@@ -142,7 +138,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "#2E7D32",
-  
   },
   careGuideContainer: {
     backgroundColor: "#E8F5E9",
@@ -242,14 +237,14 @@ const styles = StyleSheet.create({
   animation: {
     width: 200,
     height: 200,
-    justifyContent: 'center',
-     alignItems: 'center',
-      flex: 1
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E9",
   },
 });

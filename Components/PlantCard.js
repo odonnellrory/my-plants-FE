@@ -33,9 +33,7 @@ export default function PlantCard({ plant }) {
             <Text style={styles.text}>{plant.common_name}</Text>
             <View style={styles.conditionContainer}>
               <SimpleLineIcons style={styles.icons} name="drop" />
-              <Text style={styles.conditionText}>
-                Next Watering: {formatDate(plant.next_watering)}
-              </Text>
+              <Text style={styles.conditionText}>Next Watering: {formatDate(plant.next_watering)}</Text>
             </View>
           </View>
         </View>

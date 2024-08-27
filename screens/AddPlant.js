@@ -28,11 +28,9 @@ export default function AddPlant() {
   API_URL = process.env.REACT_APP_PERENUAL_API_URL_NAME;
 
   useEffect(() => {
-
     setPlantName(identifiedPlantName);
 
-    setIsLoading(false)
-
+    setIsLoading(false);
   }, [identifiedPlantName]);
 
   function handlePlantLocationChange(newText) {
@@ -78,7 +76,7 @@ export default function AddPlant() {
   function handleAddPlantPress() {
     setIsModalLoading(true);
     setIsModalVisible(true);
-    setIsLoading(true)
+    setIsLoading(true);
 
     axios
       .get(`${API_URL}${plantName}`)
@@ -86,23 +84,19 @@ export default function AddPlant() {
         setPlantList(response.data.data);
         setIsModalLoading(false);
         setPlantName("");
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
         setIsError(true);
         setIsModalLoading(false);
-        setIsLoading(false)
+        setIsLoading(false);
       });
   }
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
- 
-
-  
 
   return (
     <KeyboardAvoidingView style={styles.container}>

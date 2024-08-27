@@ -10,7 +10,6 @@ const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY; //within .env file
 const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
 
 export default function PlantIdentifier() {
-
   const route = useRoute();
   const capturedImage = route.params?.imageToProcess;
   const [identifiedPlantList, setidentifiedPlantList] = useState([]);
@@ -45,28 +44,21 @@ export default function PlantIdentifier() {
       );
 
       setIsLoading(false);
-
-    }
-     catch (error) {
-
+    } catch (error) {
       console.error("Error identifying plant:", error);
 
       setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
 
       setIsLoading(false);
-
-    } 
-    finally {
-      
+    } finally {
       setIsIdentifying(false);
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
 
   return (
     <View style={styles.container}>
