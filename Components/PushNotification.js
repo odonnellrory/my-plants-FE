@@ -15,7 +15,10 @@ const PushNotification = ({ plant }) => {
 
     try {
       const currentDate = new Date();
-      const updatedPlant = await updatePlantWatering(loggedInUser.username, plant._id);
+      const updatedPlant = await updatePlantWatering(
+        loggedInUser.username,
+        plant._id
+      );
       await scheduleNextWateringNotification(updatedPlant.plant);
       Alert.alert(
         "Success",
@@ -36,7 +39,9 @@ const PushNotification = ({ plant }) => {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `Water your ${updatedPlant.common_name || "plant"}!`,
-          body: `Time to water ${updatedPlant.nickname || updatedPlant.common_name || "plant"}.`,
+          body: `Time to water ${
+            updatedPlant.nickname || updatedPlant.common_name || "plant"
+          }.`,
           data: { username: updatedPlant.username, plantId: updatedPlant._id },
         },
         trigger: nextWateringDate,
@@ -50,7 +55,7 @@ const PushNotification = ({ plant }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleWatered}>
-        <Text style={styles.buttonText}>Water Plant</Text>
+        <Text style={styles.buttonText}>I just watered this plant!</Text>
       </TouchableOpacity>
     </View>
   );
