@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 import { getPlantById } from "../src/api";
+import DeletePlant from "../Components/DeletePlant";
 
 export default function SinglePlant(props) {
   const [plantProfile, setPlantProfile] = useState([]);
@@ -71,6 +72,7 @@ export default function SinglePlant(props) {
         </View>
 
         <PushNotification plant={plant} />
+        <DeletePlant plant_id={plant._id} />
       </ScrollView>
     </View>
   );
@@ -142,11 +144,16 @@ const styles = StyleSheet.create({
   individualCareGuideContainer: {
     padding: 10,
     borderRadius: 10,
-    backgroundColor: "#C8E6C9",
+    backgroundColor: "white",
     alignSelf: "stretch",
     fontSize: 14,
     color: "#1B5E20",
     marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
   },
   image: {
     width: 300,
