@@ -4,7 +4,7 @@ import * as Notifications from "expo-notifications";
 import { updatePlantWatering } from "../src/api";
 import { UserContext } from "../Context/UserContext";
 
-const PushNotification = ({ plant }) => {
+const PushNotification = ({ plant, updatePlantData }) => {
   const { loggedInUser } = useContext(UserContext);
 
   const handleWatered = async () => {
@@ -13,13 +13,26 @@ const PushNotification = ({ plant }) => {
       return;
     }
 
+    const currentDate = new Date();
+    const nextWateringDate = new Date(currentDate);
+    nextWateringDate.setDate(nextWateringDate.getDate() + 7); // Assuming a 7-day watering cycle
+
+    // Optimistic update
+    updatePlantData({
+      last_watered: currentDate.toISOString(),
+      next_watering: nextWateringDate.toISOString(),
+    });
+
     try {
-      const currentDate = new Date();
       const updatedPlant = await updatePlantWatering(
         loggedInUser.username,
         plant._id
       );
       await scheduleNextWateringNotification(updatedPlant.plant);
+
+      // Update with actual server data
+      updatePlantData(updatedPlant.plant);
+
       Alert.alert(
         "Success",
         `Plant watered! Last watered: ${currentDate.toLocaleDateString()}\nNext watering: ${new Date(
@@ -29,6 +42,12 @@ const PushNotification = ({ plant }) => {
     } catch (error) {
       console.error("Error updating plant watering:", error);
       Alert.alert("Error", "Failed to update plant watering. Please try again");
+
+      // Revert optimistic update on error
+      updatePlantData({
+        last_watered: plant.last_watered,
+        next_watering: plant.next_watering,
+      });
     }
   };
 
