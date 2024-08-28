@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginTop: 5,
     marginBottom: 25,
+    padding: 5,
   },
   input: {
     backgroundColor: "#F1F8E9",
