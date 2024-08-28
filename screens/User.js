@@ -5,15 +5,15 @@ import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import PushNotification from "../Components/PushNotification";
 import Loading from "../Components/Loading";
+import LottieView from "lottie-react-native";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const [isLoading, setIsLoading] = useState(true);
 
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  setTimeout(() => {setIsLoading(false)}, 1000)
+
 
   let navigation = useNavigation();
 
@@ -41,7 +41,18 @@ export default function User() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Image source={{ uri: loggedInUser.profile_picture }} style={styles.profile_picture} />
+
+
+        <LottieView
+               source={require('../ProfilePic.json')}
+               autoPlay
+               loop
+               style={styles.profile_picture}
+            />
+          {/* <Image 
+            source={{ uri: loggedInUser.profile_picture }}
+            style={styles.profile_picture}
+          /> */}
 
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>

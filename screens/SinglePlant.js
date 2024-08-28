@@ -1,14 +1,15 @@
 import { useRoute } from "@react-navigation/native";
 import React from "react";
-import { Text, View, Image, ScrollView, StyleSheet } from "react-native";
+import { Text, View, Image, ScrollView, StyleSheet, Pressable } from "react-native";
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 import PushNotification from "../Components/PushNotification";
 import { useEffect, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
-import { getPlantById } from "../src/api";
+import { getPlantById, killPlant } from "../src/api";
+import { useNavigation } from "@react-navigation/native";
 
-import LottieView from "lottie-react-native";
+
 import Loading from "../Components/Loading";
 
 import DeletePlant from "../Components/DeletePlant";
@@ -16,8 +17,13 @@ import DeletePlant from "../Components/DeletePlant";
 export default function SinglePlant(props) {
   const [plantProfile, setPlantProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isDead, setIsDead] = useState(false);
+
+
   const route = useRoute();
   const plant = route.params?.plant;
+
+  let navigation = useNavigation();
 
   const { plant_id, name } = route.params;
 
@@ -39,7 +45,21 @@ export default function SinglePlant(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [isDead]);
+
+  const handleGardenButton = () => {
+
+    setIsDead(true)
+    setIsLoading(true)
+
+    killPlant(loggedInUser.username, plant_id)
+
+    setPlantProfile([])
+    setIsLoading(false)
+
+  }
+
+
 
   if (isLoading) {
     return <Loading />;
@@ -100,6 +120,16 @@ export default function SinglePlant(props) {
 
         <PushNotification plant={plant} />
         <DeletePlant plant_id={plant._id} />
+        <View>
+
+        <Pressable
+          style={styles.graveyardButton}
+          onPress={handleGardenButton}
+        >
+          <Text style={styles.buttonText}>Send to Garden</Text>
+        </Pressable>
+
+        </View>
       </ScrollView>
     </View>
   );
@@ -264,4 +294,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#E8F5E9",
   },
+  graveyardButton: {
+    marginTop: 20,
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+    backgroundColor: "#AAD4B4",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  buttonText: {
+  
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold"
+  }
 });

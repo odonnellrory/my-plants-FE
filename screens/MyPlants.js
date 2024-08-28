@@ -1,12 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, ScrollView } from "react-native";
+
+import { Button, Text, View, Pressable, Modal, ScrollView, StyleSheet } from "react-native";
+
 import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
 import { getPlantList } from "../src/api";
 import Loading from "../Components/Loading";
+
+import PlantGraveyard from "./PlantGraveyard";
+
 import NoPlantsCard from "../Components/NoPlantsCard";
+
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
@@ -35,13 +41,31 @@ export default function MyPlants() {
       });
   }, [newAddedPlant, deletedPlant]);
 
-  if (isLoading) {
-    return <Loading />;
+
+
+  if(isLoading){
+    return <Loading/>
+
   }
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.singlePlantContainer}>
+
+        
+      <Pressable
+          style={styles.graveyardButton}
+          onPress={() => navigation.navigate('Plant graveyard', { plants })}
+        >
+          <Text style={styles.buttonText}>The Garden</Text>
+        </Pressable>
+      
+        <View>
+          {plants ? plants.map((plant) => { 
+            
+            return <PlantCard plant={plant} key={plant._id} />;
+          }) : <Text>No plants yet!</Text>} 
+
         <View></View>
         <View>
           {plants.length === 0 ? (
@@ -51,13 +75,15 @@ export default function MyPlants() {
               return <PlantCard plant={plant} key={plant._id} />;
             })
           )}
+
         </View>
       </ScrollView>
     </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: "#E8F5E9",
@@ -77,7 +103,7 @@ const styles = {
     paddingVertical: 15,
     paddingHorizontal: 32,
     borderRadius: 25,
-    backgroundColor: "#66BB6A",
+    backgroundColor: "#E8F5E9",
     marginBottom: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -104,4 +130,32 @@ const styles = {
     alignItems: "center",
     backgroundColor: "#E8F5E9",
   },
+
+  graveyardButton: {
+    alignSelf: "stretch",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 32,
+    borderRadius: 25,
+    backgroundColor: "#AAD4B4",
+    marginBottom: 15,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2,
+  },
+  buttonText: {
+  
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold"
+  }
+
+});
+
+
+
 };
+

@@ -24,6 +24,30 @@ const getPlantList = (username) => {
     });
 };
 
+const getDeadPlants = (username) => {
+  return api
+    .get(`/api/users/${username}/plants_graveyard`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const killPlant = (username, plant_id) => {
+
+  return api.patch(`/api/users/${username}/plants/${plant_id}/dead`).then((response) => {
+
+    return response;
+
+  }).catch((error) => {
+
+    console.log(error)
+
+  })
+}
+
 const getUserInfo = (username) => {
   api
     .get(`/api/users/${username}`)
@@ -137,6 +161,8 @@ const updatePlantWatering = (username, plantId) => {
     });
 };
 
+
+
 export {
   getPlantById,
   getPlantList,
@@ -149,4 +175,6 @@ export {
   getUserInfo,
   fetchPlants,
   updatePlantWatering,
+  getDeadPlants,
+  killPlant
 };
