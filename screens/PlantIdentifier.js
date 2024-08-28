@@ -55,7 +55,7 @@ export default function PlantIdentifier() {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollContainer}>
         <View style={styles.plantImageContainer}>
           <Image source={{ uri: capturedImage }} style={styles.preview} />
           {identifiedPlantList.length > 0 && (
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#E8F5E9",
-    paddingVertical: 20,
+    padding: 15,
   },
   plantImageContainer: {
     alignSelf: "stretch",
@@ -106,9 +106,13 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "center",
   },
+  scrollContainer: {
+    flexGrow: 1,
+    alignSelf: "stretch",
+  },
   preview: {
-    width: 380,
-    height: 400,
+    width: 350,
+    height: 350,
     resizeMode: "contain",
     marginVertical: 10,
   },
@@ -137,6 +141,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#388E3C",
     padding: 8,
+    marginHorizontal: 15,
   },
   userTextContainer: {
     borderRadius: 10,

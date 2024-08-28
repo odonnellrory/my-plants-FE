@@ -86,6 +86,7 @@ export default function AddPlant() {
   }
 
   function handleAddPlantPress() {
+    if (plantName.length < 1) return;
     setIsModalLoading(true);
     setIsModalVisible(true);
     setIsLoading(true);
@@ -187,13 +188,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#E8F5E9",
     flex: 1,
-    justifyContent: "start",
-    alignItems: "center",
+    padding: 15,
   },
   formContainer: {
     alignSelf: "stretch",
-    margin: 20,
-    padding: 20,
+    padding: 15,
     backgroundColor: "#FFFFFF",
     borderRadius: 15,
     shadowColor: "#000",
@@ -218,11 +217,8 @@ const styles = StyleSheet.create({
     borderColor: "#81C784",
   },
   nameText: {
-    backgroundColor: "#C8E6C9",
-    padding: 10,
-    borderRadius: 8,
-    marginTop: 5,
-    marginBottom: 15,
+    padding: 5,
+
     color: "#1B5E20",
   },
   text: {
@@ -231,6 +227,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "#FFFFFF",
+  },
+  textContainer: {
+    backgroundColor: "#C8E6C9",
+    borderRadius: 8,
+    marginTop: 5,
+    marginBottom: 15,
   },
   input: {
     backgroundColor: "#F1F8E9",
