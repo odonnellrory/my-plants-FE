@@ -84,6 +84,8 @@ export default function AddPlant() {
         setPlantList(response.data.data);
         setIsModalLoading(false);
         setPlantName("");
+        setPlantNickname("");
+        setPlantLocation("");
         setIsLoading(false);
       })
       .catch((error) => {
