@@ -1,6 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Button, Text, View, Pressable, Modal, ScrollView, StyleSheet } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  Pressable,
+  Modal,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
@@ -13,7 +21,6 @@ import PlantGraveyard from "./PlantGraveyard";
 
 import NoPlantsCard from "../Components/NoPlantsCard";
 
-
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -21,7 +28,9 @@ export default function MyPlants() {
   const data = testData();
   let navigation = useNavigation();
   const route = useRoute();
-  const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
+  const newAddedPlant = route.params?.newAddedPlant
+    ? route.params?.newAddedPlant.plant._id
+    : "";
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
 
   const { loggedInUser } = useContext(UserContext);
@@ -41,32 +50,29 @@ export default function MyPlants() {
       });
   }, [newAddedPlant, deletedPlant]);
 
-
-
-  if(isLoading){
-    return <Loading/>
-
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <View style={styles.container}>
       <ScrollView style={styles.singlePlantContainer}>
-
-        
-      <Pressable
+        <Pressable
           style={styles.graveyardButton}
-          onPress={() => navigation.navigate('Plant graveyard', { plants })}
+          onPress={() => navigation.navigate("Plant graveyard", { plants })}
         >
           <Text style={styles.buttonText}>The Garden</Text>
         </Pressable>
-      
-        <View>
-          {plants ? plants.map((plant) => { 
-            
-            return <PlantCard plant={plant} key={plant._id} />;
-          }) : <Text>No plants yet!</Text>} 
 
-        <View></View>
+        <View>
+          {plants ? (
+            plants.map((plant) => {
+              return <PlantCard plant={plant} key={plant._id} />;
+            })
+          ) : (
+            <Text>No plants yet!</Text>
+          )}
+        </View>
         <View>
           {plants.length === 0 ? (
             <NoPlantsCard />
@@ -75,7 +81,6 @@ export default function MyPlants() {
               return <PlantCard plant={plant} key={plant._id} />;
             })
           )}
-
         </View>
       </ScrollView>
     </View>
@@ -83,7 +88,6 @@ export default function MyPlants() {
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     backgroundColor: "#E8F5E9",
@@ -147,15 +151,8 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   buttonText: {
-  
     color: "#fff",
     fontSize: 16,
-    fontWeight: "bold"
-  }
-
+    fontWeight: "bold",
+  },
 });
-
-
-
-};
-
