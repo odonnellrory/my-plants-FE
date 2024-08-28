@@ -5,7 +5,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import PlantGravestone from "../Components/PlantGravestone";
 import { UserContext } from "../Context/UserContext";
 import { getDeadPlants } from "../src/api";
+import NoPlantsCard from "../Components/NoPlantsCard";
 import Loading from "../Components/Loading";
+import NoMemorialPlants from "../Components/NoMemorialPlants";
 
 const PlantGraveyard = () => {
   const { loggedInUser } = useContext(UserContext);
@@ -15,7 +17,7 @@ const PlantGraveyard = () => {
   useEffect(() => {
     getDeadPlants(loggedInUser.username)
       .then((response) => {
-        setplants(response);
+        setplants(response.plants);
 
         setIsLoading(false);
       })
@@ -31,9 +33,13 @@ const PlantGraveyard = () => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.plants}>
-        {plants.map((plant) => {
-          return <PlantGravestone plant={plant} key={plant._id} />;
-        })}
+        {plants.length === 0 ? (
+          <NoMemorialPlants />
+        ) : (
+          plants.map((plant) => {
+            return <PlantGravestone plant={plant} key={plant._id} />;
+          })
+        )}
       </ScrollView>
     </View>
   );

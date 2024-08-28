@@ -1,34 +1,20 @@
-import {
-  View,
-  StyleSheet,
-  Text,
-  Image,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Text, Image, Pressable, TouchableOpacity } from "react-native";
 import LottieView from "lottie-react-native";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 import { killPlant } from "../src/api";
-import ReviveUser from "./RevingPlant";
-import RevivePlant from "./RevingPlant";
+import RevivePlant from "./RevivingPlant";
+
 const PlantGravestone = ({ plant }) => {
   const info = plant.description.split(".");
   const { loggedInUser } = useContext(UserContext);
   return (
     <View style={styles.container}>
-      <LottieView
-        source={require("../HoverPlantpot.json")}
-        autoPlay
-        loop
-        style={styles.plantPot}
-      />
+      <LottieView source={require("../HoverPlantpot.json")} autoPlay loop style={styles.plantPot} />
 
       <View style={styles.container2}>
         <Text style={styles.text}>In Memory of: </Text>
-        <Text style={styles.name}>
-          {plant.nickname ? plant.nickname : plant.common_name}
-        </Text>
+        <Text style={styles.name}>{plant.nickname ? plant.nickname : plant.common_name}</Text>
         <Text style={styles.description}>{info[0]}.</Text>
       </View>
 
