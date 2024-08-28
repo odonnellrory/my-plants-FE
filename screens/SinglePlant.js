@@ -8,10 +8,7 @@ import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
 import { getPlantById, killPlant } from "../src/api";
 import { useNavigation } from "@react-navigation/native";
-
-
 import Loading from "../Components/Loading";
-
 import DeletePlant from "../Components/DeletePlant";
 
 export default function SinglePlant(props) {
@@ -19,14 +16,11 @@ export default function SinglePlant(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isDead, setIsDead] = useState(false);
 
-
   const route = useRoute();
   const plant = route.params?.plant;
 
   let navigation = useNavigation();
-
   const { plant_id, name } = route.params;
-
   const { loggedInUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -58,8 +52,6 @@ export default function SinglePlant(props) {
     setIsLoading(false)
 
   }
-
-
 
   if (isLoading) {
     return <Loading />;

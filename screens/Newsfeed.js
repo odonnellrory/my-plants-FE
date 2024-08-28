@@ -70,6 +70,14 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+
+        <LottieView
+               source={require('../Greenhouse.json')}
+               autoPlay
+               loop
+               style={styles.greenhouse}
+        />
+    
       <FlatList
         data={newsItems}
         renderItem={({ item }) => <NewsCard title={item.title} content={item.content} date={item.date} />}
@@ -84,6 +92,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "#E8F5E9",
     padding: 20,
   },
@@ -140,4 +150,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#E8F5E9",
   },
+  greenhouse: {
+    width: 150,
+    height: 150,
+    marginBottom: 10, 
+  }
 });

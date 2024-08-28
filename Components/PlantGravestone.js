@@ -27,8 +27,7 @@ const PlantGravestone = ({ plant }) => {
            </View>
        
            </View>
-    
-           
+ 
     )
 }
 
@@ -44,7 +43,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 4,
         elevation: 3,
-    
     },
     container2: {
       backgroundColor: "#8CC498",
@@ -57,14 +55,12 @@ const styles = StyleSheet.create({
       shadowRadius: 4,
       elevation: 3,
       width: 250
-
     },
     name: {
       fontSize: 16,
       fontWeight: 'bold',
       marginTop: 5,
       color: '#346840',
-      fontFamily: "Georgia",
       fontWeight: "bold"
     },
     image: {
@@ -75,15 +71,10 @@ const styles = StyleSheet.create({
       width: 150,
       height: 150
     },
-    text: {
-      fontFamily: "Georgia"
-    },
     description: {
-      fontFamily: "Georgia",
       flex: 1,
       justifyContent: "center",
       textAlign: "center",
-    
     }
   });
 

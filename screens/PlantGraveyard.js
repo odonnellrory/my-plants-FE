@@ -52,7 +52,6 @@ const PlantGraveyard = () => {
     )
 }
 
-
 export default PlantGraveyard;
 
 const styles = StyleSheet.create({
