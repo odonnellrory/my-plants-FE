@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
@@ -10,17 +10,18 @@ const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY; //within .env file
 const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
 
 export default function PlantIdentifier() {
-
   const route = useRoute();
   const capturedImage = route.params?.imageToProcess;
   const [identifiedPlantList, setidentifiedPlantList] = useState([]);
   const [isIdentifying, setIsIdentifying] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  console.log(capturedImage, "INSIDE PLANTID");
+  useEffect(() => {
+    setidentifiedPlantList([]);
+  }, []);
 
   async function identifyPlant() {
     if (!capturedImage) return;
+
     setIsIdentifying(true);
 
     try {
@@ -44,43 +45,32 @@ export default function PlantIdentifier() {
           : [{ name: "Unable to identify", probability: 0 }]
       );
 
-      setIsLoading(false);
-
-    }
-     catch (error) {
-
-      console.error("Error identifying plant:", error);
-
-      setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
-
-      setIsLoading(false);
-
-    } 
-    finally {
-      
       setIsIdentifying(false);
-      setIsLoading(false)
+    } catch (error) {
+      console.error("Error identifying plant:", error);
+      setIsIdentifying(false);
+      setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
     }
   }
-
-  if(isLoading){
-    return <Loading/>
-  }
-
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <Image source={{ uri: capturedImage }} style={styles.preview} />
-
+        <View style={styles.plantImageContainer}>
+          <Image source={{ uri: capturedImage }} style={styles.preview} />
+          {identifiedPlantList.length > 0 && (
+            <View style={styles.userTextContainer}>
+              <Text style={styles.userText}>Not getting the result you're looking for? Try taking a close up picture of the leaves on the plant</Text>
+            </View>
+          )}
+        </View>
         <TouchableOpacity style={styles.TouchableOpacity} onPress={identifyPlant} disabled={isIdentifying}>
           <Text style={styles.text}>Identify Plant</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.TouchableOpacity}>
-          <Text style={styles.text}>New Picture</Text>
-        </TouchableOpacity>
         {isIdentifying ? (
-          <Text style={styles.identifyingText}>Identifying...</Text>
+          <View style={styles.indentifyingContainer}>
+            <Loading />
+          </View>
         ) : (
           identifiedPlantList.length > 0 &&
           identifiedPlantList.map((identifiedPlant, index) => <IdentifiedPlantCard key={index} identifiedPlant={identifiedPlant} />)
@@ -98,10 +88,29 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8F5E9",
     paddingVertical: 20,
   },
+  plantImageContainer: {
+    alignSelf: "stretch",
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    borderRadius: 15,
+    marginVertical: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  indentifyingContainer: {
+    flex: 1,
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
   preview: {
     width: 380,
     height: 400,
     resizeMode: "contain",
+    marginVertical: 10,
   },
   TouchableOpacity: {
     alignSelf: "stretch",
@@ -122,6 +131,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "white",
+    textAlign: "center",
+  },
+  userText: {
+    fontSize: 14,
+    color: "#388E3C",
+    padding: 8,
+  },
+  userTextContainer: {
+    borderRadius: 10,
+    backgroundColor: "#E8F5E9",
+    marginTop: 6,
+    marginBottom: 12,
+  },
+  identifyingText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#2E7D32",
     textAlign: "center",
   },
   resultText: {

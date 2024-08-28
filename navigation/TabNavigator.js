@@ -3,10 +3,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 
-import HomeScreen from "../screens/HomeScreen";
+import Newsfeed from "../screens/Newsfeed";
 import User from "../screens/User";
 import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
-import AddPlant from "../screens/AddPlant";
+import AddPlantStackNavigator from "../navigation/AddPlantStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,13 +27,6 @@ const TabNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => <Ionicons name="home" size={size} color={color} />,
-        }}
-      />
-      <Tab.Screen
         name="My Plants"
         component={MyPlantsStackNavigator}
         options={{
@@ -42,11 +35,19 @@ const TabNavigator = () => {
           tabBarIcon: ({ color, size }) => <FontAwesome6 name="seedling" size={size} color={color} />,
         }}
       />
+      <Tab.Screen
+        name="Newsfeed"
+        component={Newsfeed}
+        options={{
+          tabBarIcon: ({ color, size }) => <Ionicons name="newspaper" size={size} color={color} />,
+        }}
+      />
 
       <Tab.Screen
-        name="Add Plant"
-        component={AddPlant}
+        name="Add Plants"
+        component={AddPlantStackNavigator}
         options={{
+          headerShown: false,
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ color, size }) => <Ionicons name="add-circle" size={size} color={color} />,
         }}

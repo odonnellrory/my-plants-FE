@@ -55,16 +55,14 @@ const PushNotification = ({ plant }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.button} onPress={handleWatered}>
-        <Text style={styles.buttonText}>Water Plant</Text>
+        <Text style={styles.buttonText}>I just watered this plant!</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 10,
-  },
+  container: {},
   button: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,

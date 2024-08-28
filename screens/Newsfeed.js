@@ -40,17 +40,13 @@ export default function HomeScreen() {
         newsFeed.push({
           id: `${plant._id}-watered`,
           title: `${plant.nickname || plant.common_name} Watered`,
-          content: `You last watered this plant on ${formatDate(
-            plant.last_watered
-          )}.`,
+          content: `You last watered this plant on ${formatDate(plant.last_watered)}.`,
           date: formatDate(plant.last_watered),
         });
         newsFeed.push({
           id: `${plant._id}-nextWater`,
           title: `Water ${plant.nickname || plant.common_name} Soon`,
-          content: `This plant needs to be watered next on ${formatDate(
-            plant.next_watering
-          )}.`,
+          content: `This plant needs to be watered next on ${formatDate(plant.next_watering)}.`,
           date: formatDate(plant.next_watering),
         });
       });
@@ -65,34 +61,21 @@ export default function HomeScreen() {
   };
 
   useEffect(() => {
-    
     loadPlants();
   }, [loggedInUser]);
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <View style={styles.container}>
       <FlatList
         data={newsItems}
-        renderItem={({ item }) => (
-          <NewsCard
-            title={item.title}
-            content={item.content}
-            date={item.date}
-          />
-        )}
+        renderItem={({ item }) => <NewsCard title={item.title} content={item.content} date={item.date} />}
         keyExtractor={(item) => item.id}
-        refreshControl={
-          <RefreshControl refreshing={isLoading} onRefresh={loadPlants} />
-        }
-        ListEmptyComponent={
-          <Text style={styles.emptyText}>
-            No plant news yet. Add some plants to see updates!
-          </Text>
-        }
+        refreshControl={<RefreshControl refreshing={isLoading} onRefresh={loadPlants} />}
+        ListEmptyComponent={<Text style={styles.emptyText}>No plant news yet. Add some plants to see updates!</Text>}
       />
     </View>
   );
@@ -147,15 +130,14 @@ const styles = StyleSheet.create({
   animation: {
     width: 200,
     height: 200,
-    justifyContent: 'center',
-     alignItems: 'center',
-      flex: 1
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E9",
   },
-  
 });

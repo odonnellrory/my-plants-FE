@@ -16,9 +16,7 @@ const TestNotification = ({ plant }) => {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `Water your ${plant.common_name || "plant"}!`,
-          body: `Time to water ${
-            plant.nickname || plant.common_name || "plant"
-          }.`,
+          body: `Time to water ${plant.nickname || plant.common_name || "plant"}.`,
           data: { username: loggedInUser.username, plantId: plant._id },
         },
         trigger: null,
@@ -32,10 +30,7 @@ const TestNotification = ({ plant }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleInstantNotification}
-      >
+      <TouchableOpacity style={styles.button} onPress={handleInstantNotification}>
         <Text style={styles.buttonText}>Test Notification</Text>
       </TouchableOpacity>
     </View>
@@ -44,7 +39,7 @@ const TestNotification = ({ plant }) => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
+    paddingVertical: 10,
   },
   button: {
     backgroundColor: "#66BB6A",

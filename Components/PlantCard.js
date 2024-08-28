@@ -27,22 +27,20 @@ export default function PlantCard({ plant }) {
         <View style={styles.cardContent}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: plant.image_url }} />
-            <Text>{plant.nickname || plant.common_name}</Text>
+            <Text style={styles.scientificName}>{plant.scientific_name[0]}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{plant.common_name}</Text>
+            <Text style={styles.text}>{plant.nickname || plant.common_name}</Text>
             <View style={styles.conditionContainer}>
               <SimpleLineIcons style={styles.icons} name="drop" />
-              <Text style={styles.conditionText}>
-                Next Watering: {formatDate(plant.next_watering)}
-              </Text>
+              <Text style={styles.conditionText}>Next Watering: {formatDate(plant.next_watering)}</Text>
             </View>
           </View>
         </View>
       </Pressable>
       <View style={styles.notificationContainer}>
         <PushNotification plant={plant} compact={true} />
-        <TestNotification plant={plant} />
+        {plant._id === "66cdb79ef4c340d96edf7da3" && <TestNotification plant={plant} />}
       </View>
     </View>
   );
@@ -68,6 +66,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 10,
+  },
+  scientificName: {
+    color: "#2E7D32",
+    width: 100,
+    textAlign: "center",
+    fontWeight: "bold",
   },
   imageContainer: {
     justifyContent: "center",
@@ -102,6 +106,7 @@ const styles = StyleSheet.create({
   conditionText: {
     fontSize: 14,
     color: "#388E3C",
+    padding: 2,
   },
   notificationContainer: {
     marginTop: 10,

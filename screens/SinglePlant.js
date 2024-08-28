@@ -32,15 +32,13 @@ export default function SinglePlant(props) {
   useEffect(() => {
     const username = loggedInUser.username;
 
-    setIsLoading(true)
+    setIsLoading(true);
 
     getPlantById(username, plant_id)
-
       .then(({ data }) => {
-    
         setPlantProfile(data.plant);
 
-        setIsLoading(false)
+        setIsLoading(false);
 
         console.table(data.plant);
       })
@@ -63,10 +61,9 @@ export default function SinglePlant(props) {
 
 
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
 
   return (
     <View style={styles.container}>
@@ -74,6 +71,20 @@ export default function SinglePlant(props) {
         <View style={styles.plantInfoContainer}>
           <Text style={styles.nickname}>{plantProfile.nickname ? plantProfile.nickname : plantProfile.common_name}</Text>
           <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
+          <Text style={styles.guideText}>
+            <Text>This plants scientific name is </Text>
+            <Text style={styles.bold}>{plantProfile.scientific_name}</Text>
+          </Text>
+          {plantProfile.plant_location && (
+            <Text style={styles.guideText}>
+              {plantProfile.nickname ? (
+                <Text>{plantProfile.nickname} is located in the </Text>
+              ) : (
+                <Text>this {plantProfile.common_name} is located in the </Text>
+              )}
+              <Text style={styles.bold}>{plantProfile.plant_location}</Text>
+            </Text>
+          )}
         </View>
 
         <View style={styles.careGuideContainer}>
@@ -161,6 +172,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#333",
   },
+  bold: {
+    fontWeight: "bold",
+  },
   individualGuide: {
     flexDirection: "row",
     alignItems: "center",
@@ -171,7 +185,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     color: "#2E7D32",
-  
   },
   careGuideContainer: {
     backgroundColor: "#E8F5E9",
@@ -271,15 +284,15 @@ const styles = StyleSheet.create({
   animation: {
     width: 200,
     height: 200,
-    justifyContent: 'center',
-     alignItems: 'center',
-      flex: 1
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
   loadingContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#E8F5E9",
   },
   graveyardButton: {
     marginTop: 20,
