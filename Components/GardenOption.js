@@ -55,28 +55,16 @@ const GardenOption = (props) => {
                 </View>
                 <View style={styles.warningBody}>
                   {isError ? (
-                    <Text style={styles.error}>
-                      Something went wrong and we coudn't remove your plant -
-                      please try again!
-                    </Text>
+                    <Text style={styles.error}>Something went wrong and we coudn't remove your plant - please try again!</Text>
                   ) : (
-                    <Text>
-                      This will permanently move your plant to the plant
-                      graveyard, are you sure you want to do this?
-                    </Text>
+                    <Text>This will move your plant to the plant graveyard, are you sure you want to do this?</Text>
                   )}
                 </View>
                 <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.modalCancel}
-                    onPress={handleCancelModal}
-                  >
+                  <TouchableOpacity style={styles.modalCancel} onPress={handleCancelModal}>
                     <Text style={styles.text}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.modalConfirm}
-                    onPress={handleMoveToGraveyard}
-                  >
+                  <TouchableOpacity style={styles.modalConfirm} onPress={handleMoveToGraveyard}>
                     <Text style={styles.text}>Confirm</Text>
                   </TouchableOpacity>
                 </View>
@@ -85,10 +73,7 @@ const GardenOption = (props) => {
           </View>
         </View>
       </Modal>
-      <TouchableOpacity
-        style={styles.touchableOpacity}
-        onPress={handleGardenButtonOnPress}
-      >
+      <TouchableOpacity style={styles.touchableOpacity} onPress={handleGardenButtonOnPress}>
         <Text style={styles.text}>Move to Garden</Text>
       </TouchableOpacity>
     </View>

@@ -42,7 +42,7 @@ const RevivePlant = (props) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Modal visible={showWarning} transparent>
         <View style={styles.modalContentsContainer}>
           <View style={styles.warningModal}>
@@ -55,28 +55,16 @@ const RevivePlant = (props) => {
                 </View>
                 <View style={styles.warningBody}>
                   {isError ? (
-                    <Text style={styles.error}>
-                      Something went wrong and we coudn't remove your plant -
-                      please try again!
-                    </Text>
+                    <Text style={styles.error}>Something went wrong and we coudn't remove your plant - please try again!</Text>
                   ) : (
-                    <Text>
-                      This will move your plant to the plant ypur plants list,
-                      are you sure you want to do this?
-                    </Text>
+                    <Text>This will move your plant to the plant ypur plants list, are you sure you want to do this?</Text>
                   )}
                 </View>
                 <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.modalCancel}
-                    onPress={handleCancelModal}
-                  >
+                  <TouchableOpacity style={styles.modalCancel} onPress={handleCancelModal}>
                     <Text style={styles.text}>Cancel</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.modalConfirm}
-                    onPress={handleMoveToGraveyard}
-                  >
+                  <TouchableOpacity style={styles.modalConfirm} onPress={handleMoveToGraveyard}>
                     <Text style={styles.text}>Confirm</Text>
                   </TouchableOpacity>
                 </View>
@@ -85,10 +73,7 @@ const RevivePlant = (props) => {
           </View>
         </View>
       </Modal>
-      <TouchableOpacity
-        style={styles.touchableOpacity}
-        onPress={handleGardenButtonOnPress}
-      >
+      <TouchableOpacity style={styles.touchableOpacity} onPress={handleGardenButtonOnPress}>
         <Text style={styles.text}>Revive</Text>
       </TouchableOpacity>
     </View>
@@ -98,6 +83,9 @@ const RevivePlant = (props) => {
 export default RevivePlant;
 
 const styles = StyleSheet.create({
+  container: {
+    width: 250,
+  },
   touchableOpacity: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,

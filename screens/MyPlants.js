@@ -29,7 +29,6 @@ export default function MyPlants() {
 
     getPlantList(username)
       .then(({ data }) => {
-        console.log(data.plants);
         setplants(data.plants);
 
         setIsLoading(false);
