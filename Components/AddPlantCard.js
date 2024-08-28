@@ -13,8 +13,6 @@ function AddPlantCard(props) {
   const [isError, setIsError] = useState(false);
   let navigation = useNavigation();
 
-  console.log(plantNickname, plantLocation);
-
   let plantImage = "";
 
   if (plant.default_image === null || plant.default_image.original_url === null) {

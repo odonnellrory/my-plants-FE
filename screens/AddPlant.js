@@ -45,8 +45,6 @@ export default function AddPlant() {
     setPlantNickname(newText);
   }
 
-  console.log(plantNickname, "<<<INSIDE ADD PLANT");
-
   async function handleCameraPress() {
     try {
       await ImagePicker.requestCameraPermissionsAsync();
