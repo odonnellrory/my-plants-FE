@@ -45,10 +45,7 @@ const PushNotification = ({ plant, updatePlantData }) => {
       );
     } catch (error) {
       console.error("Error updating plant watering or user rewards:", error);
-      Alert.alert(
-        "Error",
-        "Failed to update plant watering or user rewards. Please try again"
-      );
+      Alert.alert("Error", "Failed to update plant watering or user rewards. Please try again");
 
       updatePlantData({
         last_watered: plant.last_watered,
@@ -64,9 +61,7 @@ const PushNotification = ({ plant, updatePlantData }) => {
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `Water your ${updatedPlant.common_name || "plant"}!`,
-          body: `Time to water ${
-            updatedPlant.nickname || updatedPlant.common_name || "plant"
-          }.`,
+          body: `Time to water ${updatedPlant.nickname || updatedPlant.common_name || "plant"}.`,
           data: { username: updatedPlant.username, plantId: updatedPlant._id },
         },
         trigger: nextWateringDate,

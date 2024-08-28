@@ -30,8 +30,6 @@ const PlantGraveyard = () => {
 
   return (
     <View style={styles.container}>
-    
-
       <ScrollView style={styles.plants}>
         {plants.map((plant) => {
           return <PlantGravestone plant={plant} key={plant._id} />;
@@ -57,6 +55,5 @@ const styles = StyleSheet.create({
   },
   plants: {
     alignSelf: "stretch",
-  
-  }
+  },
 });

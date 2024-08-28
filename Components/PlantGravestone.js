@@ -10,7 +10,7 @@ const PlantGravestone = ({ plant }) => {
 
       <View style={styles.container2}>
         <Text style={styles.text}>In Memory of: </Text>
-        <Text style={styles.name}>{plant.nickname ? plant.nickname : plant.common_name }</Text>
+        <Text style={styles.name}>{plant.nickname ? plant.nickname : plant.common_name}</Text>
         <Text style={styles.description}>{info[0]}.</Text>
       </View>
     </View>
@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8F5E9",
     padding: 10,
     alignItems: "center",
-
   },
   container2: {
     backgroundColor: "#8CC498",
@@ -34,8 +33,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 250,
     borderTopRightRadius: 150,
-    borderTopLeftRadius: 150
-  
+    borderTopLeftRadius: 150,
   },
   name: {
     fontSize: 16,

@@ -12,8 +12,9 @@ export default function User() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  setTimeout(() => {setIsLoading(false)}, 1000)
-
+  setTimeout(() => {
+    setIsLoading(false);
+  }, 1000);
 
   let navigation = useNavigation();
 
@@ -41,14 +42,7 @@ export default function User() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-
-
-        <LottieView
-               source={require('../ProfilePic.json')}
-               autoPlay
-               loop
-               style={styles.profile_picture}
-            />
+          <LottieView source={require("../ProfilePic.json")} autoPlay loop style={styles.profile_picture} />
           {/* <Image 
             source={{ uri: loggedInUser.profile_picture }}
             style={styles.profile_picture}

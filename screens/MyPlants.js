@@ -9,7 +9,6 @@ import { UserContext } from "../Context/UserContext";
 import { getPlantList } from "../src/api";
 import Loading from "../Components/Loading";
 
-
 import NoPlantsCard from "../Components/NoPlantsCard";
 
 export default function MyPlants() {
