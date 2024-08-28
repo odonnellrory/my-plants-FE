@@ -159,6 +159,18 @@ const updatePlantWatering = (username, plantId) => {
     });
 };
 
+const updateUserRewards = (username, points) => {
+  return api
+    .patch(`/api/users/${username}/rewards`, { points })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      console.error("Error updating user rewards:", error);
+      throw error;
+    });
+};
+
 export {
   getPlantById,
   getPlantList,
@@ -173,4 +185,5 @@ export {
   updatePlantWatering,
   getDeadPlants,
   killPlant,
+  updateUserRewards,
 };
