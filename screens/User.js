@@ -1,40 +1,54 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable } from "react-native";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import PushNotification from "../Components/PushNotification";
 import Loading from "../Components/Loading";
 import LottieView from "lottie-react-native";
+import { getPlantList } from "../src/api";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const [isLoading, setIsLoading] = useState(true);
-
-  setTimeout(() => {
-    setIsLoading(false);
-  }, 1000);
+  const [usersPlants, setUsersPlants] = useState([]);
+  const [isError, setIsError] = useState(false);
 
   let navigation = useNavigation();
 
-  function handleCameraPress() {
-    navigation.navigate("Camera");
+  useEffect(() => {
+    setIsLoading(true);
+    getPlantList(loggedInUser.username)
+      .then(({ data }) => {
+        setUsersPlants(data.plants);
+        setIsLoading(false);
+      })
+      .catch(() => {
+        setIsError(true);
+        setIsLoading(false);
+      });
+  }, []);
+
+  function handleSignOut() {
+    setLoggedInUser(null);
   }
 
-  const handleSignOut = () => {
-    setLoggedInUser(null);
-  };
-
-  const formatDate = (dateString) => {
+  function formatDate(dateString) {
     return new Date(dateString).toLocaleDateString();
-  };
+  }
 
   if (!loggedInUser) {
     return <View style={styles.container}></View>;
   }
 
-  const numberOfPlants = loggedInUser.plants ? loggedInUser.plants.length : 0;
+  function handleNavigateToGraveyard() {
+    navigation.navigate("My Plants", { screen: "Plant Graveyard" });
+  }
+
+  const alivePlantsList = usersPlants.filter((plant) => plant.is_dead === false);
+
+  const numberOfPlants = loggedInUser.plants ? alivePlantsList.length : 0;
 
   if (isLoading) return <Loading />;
 
@@ -43,11 +57,6 @@ export default function User() {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
           <LottieView source={require("../assets/ProfilePic.json")} autoPlay loop style={styles.profile_picture} />
-          {/* <Image 
-            source={{ uri: loggedInUser.profile_picture }}
-            style={styles.profile_picture}
-          /> */}
-
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>
           <Text style={styles.infoText}>{loggedInUser.email}</Text>
@@ -58,6 +67,9 @@ export default function User() {
             {numberOfPlants === 1 ? <Text style={styles.infoText}> plant!</Text> : <Text style={styles.infoText}> plants!</Text>}
           </Text>
           <Text style={styles.infoText}>Joined {formatDate(loggedInUser.created_at)}</Text>
+          <TouchableOpacity style={styles.signOutButton} onPress={handleNavigateToGraveyard}>
+            <Text style={styles.signOutText}>View your plants who didn't make it </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutText}>Sign Out</Text>
           </TouchableOpacity>
@@ -121,7 +133,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     width: "100%",
     alignItems: "center",
-    marginBottom: 15,
+    marginTop: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.22,

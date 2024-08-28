@@ -17,7 +17,11 @@ export default function MyPlants() {
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
   const revivedPlant = route.params?.inGraveyard;
   const { loggedInUser } = useContext(UserContext);
-  const username = loggedInUser ? loggedInUser.username : null;
+  const username = loggedInUser ? loggedInUser.username : {};
+
+  function handleNavigateToGraveyard() {
+    navigation.navigate("Plant Graveyard", { plants });
+  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,9 +37,7 @@ export default function MyPlants() {
       });
   }, [newAddedPlant, deletedPlant, revivedPlant]);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
 
   return (
     <View style={styles.container}>
@@ -49,7 +51,7 @@ export default function MyPlants() {
             })
           )}
         </View>
-        <TouchableOpacity style={styles.graveyardButton} onPress={() => navigation.navigate("Plant graveyard", { plants })}>
+        <TouchableOpacity style={styles.graveyardButton} onPress={handleNavigateToGraveyard}>
           <Text style={styles.buttonText}>The Plant Memorial</Text>
         </TouchableOpacity>
       </ScrollView>

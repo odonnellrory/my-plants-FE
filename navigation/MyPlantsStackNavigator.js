@@ -9,9 +9,7 @@ export default function MyPlantsStackNavigator() {
   return (
     <Stack.Navigator initialRouteName="My Plants" screenOptions={{ headerTitleAlign: "center" }}>
       <Stack.Screen name="My Plant Collection" component={MyPlants} />
-
-      <Stack.Screen name="Plant graveyard" component={PlantGraveyard} />
-
+      <Stack.Screen name="Plant Graveyard" component={PlantGraveyard} />
       <Stack.Screen name="SinglePlant" component={SinglePlant} options={({ route }) => ({ title: route.params.name })} />
     </Stack.Navigator>
   );
