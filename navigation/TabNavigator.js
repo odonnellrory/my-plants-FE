@@ -6,7 +6,7 @@ import { StyleSheet } from "react-native";
 import Newsfeed from "../screens/Newsfeed";
 import User from "../screens/User";
 import MyPlantsStackNavigator from "./MyPlantsStackNavigator";
-import AddPlant from "../screens/AddPlant";
+import AddPlantStackNavigator from "../navigation/AddPlantStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -44,9 +44,10 @@ const TabNavigator = () => {
       />
 
       <Tab.Screen
-        name="Add Plant"
-        component={AddPlant}
+        name="Add Plants"
+        component={AddPlantStackNavigator}
         options={{
+          headerShown: false,
           tabBarHideOnKeyboard: true,
           tabBarIcon: ({ color, size }) => <Ionicons name="add-circle" size={size} color={color} />,
         }}
