@@ -29,6 +29,7 @@ export default function MyPlants() {
 
     getPlantList(username)
       .then(({ data }) => {
+        console.log(data.plants);
         setplants(data.plants);
 
         setIsLoading(false);
@@ -49,15 +50,6 @@ export default function MyPlants() {
           <Text style={styles.buttonText}>The Garden</Text>
         </Pressable>
 
-        <View>
-          {plants ? (
-            plants.map((plant) => {
-              return <PlantCard plant={plant} key={plant._id} />;
-            })
-          ) : (
-            <Text>No plants yet!</Text>
-          )}
-        </View>
         <View>
           {plants.length === 0 ? (
             <NoPlantsCard />
