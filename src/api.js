@@ -9,7 +9,7 @@ const getPlantById = (username, plant_id) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -20,7 +20,7 @@ const getPlantList = (username) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -31,22 +31,20 @@ const getDeadPlants = (username) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
 const killPlant = (username, plant_id) => {
-
-  return api.patch(`/api/users/${username}/plants/${plant_id}/dead`).then((response) => {
-
-    return response;
-
-  }).catch((error) => {
-
-    console.log(error)
-
-  })
-}
+  return api
+    .patch(`/api/users/${username}/plants/${plant_id}/dead`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
 
 const getUserInfo = (username) => {
   api
@@ -55,7 +53,7 @@ const getUserInfo = (username) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -68,7 +66,7 @@ const changeUsername = (username) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -79,7 +77,7 @@ const changeNickname = (username, plant_id, nickname) => {
     .patch(`/api/users/${username}/plants/${plant_id}`, newNickname)
     .then(() => {})
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -90,7 +88,7 @@ const postPlantByUser = (username, body) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -108,7 +106,7 @@ const registerNewUser = (username, name, email, password) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -121,7 +119,7 @@ const loginUser = (username, password) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -132,7 +130,7 @@ const deletePlantById = (username, plant_id) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
     });
 };
 
@@ -161,8 +159,6 @@ const updatePlantWatering = (username, plantId) => {
     });
 };
 
-
-
 export {
   getPlantById,
   getPlantList,
@@ -176,5 +172,5 @@ export {
   fetchPlants,
   updatePlantWatering,
   getDeadPlants,
-  killPlant
+  killPlant,
 };

@@ -99,7 +99,7 @@ function AddPlantCard(props) {
         navigation.navigate("My Plant Collection", { newAddedPlant });
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         setIsError(true);
       });
   }
