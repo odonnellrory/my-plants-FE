@@ -15,8 +15,12 @@ function AddPlantCard(props) {
 
   let plantImage = "";
 
-  if (plant.default_image === null || plant.default_image.original_url === null) {
-    plantImage = "https://img.freepik.com/free-vector/houseplant-brown-pot-nature-icon_24877-82849.jpg";
+  if (
+    plant.default_image === null ||
+    plant.default_image.original_url === null
+  ) {
+    plantImage =
+      "https://img.freepik.com/free-vector/houseplant-brown-pot-nature-icon_24877-82849.jpg";
   } else {
     plantImage = plant.default_image.original_url;
   }
@@ -32,21 +36,23 @@ function AddPlantCard(props) {
       .then((response) => {
         const nickname = plantNickname ? plantNickname : "";
         const plant_location = plantLocation ? plantLocation : "";
-        const common_name = response.data.common_name ? response.data.common_name : "";
-        const scientific_name = response.data.scientific_name ? response.data.scientific_name : "";
+        const common_name = response.data.common_name
+          ? response.data.common_name
+          : "";
+        const scientific_name = response.data.scientific_name
+          ? response.data.scientific_name
+          : "";
         const type = response.data.type ? response.data.type : "";
         const cycle = response.data.cycle ? response.data.cycle : "";
-        const description = response.data.description ? response.data.description : "";
-        const sunlight = response.data.sunlight[0] ? response.data.sunlight[0] : "";
+        const description = response.data.description
+          ? response.data.description
+          : "";
+        const sunlight = response.data.sunlight[0]
+          ? response.data.sunlight[0]
+          : "";
         let watering = response.data.watering ? response.data.watering : "";
         const image_url = plantImage;
         let next_watering = new Date();
-
-        if (watering === "Average") watering = 7;
-        if (watering === "Frequent") watering = 3;
-        if (watering === "Minimum") watering = 10;
-
-        next_watering.setDate(next_watering.getDate() + watering);
 
         const dbObject = {
           nickname,
@@ -62,17 +68,26 @@ function AddPlantCard(props) {
           next_watering,
         };
 
-        return Promise.all([dbObject, axios.get(`${API_URL_CG}${plant.id}&key=${API_KEY}`)]);
+        return Promise.all([
+          dbObject,
+          axios.get(`${API_URL_CG}${plant.id}&key=${API_KEY}`),
+        ]);
       })
       .then(([dbObject, response]) => {
         response.data.data.forEach((responseObject) => {
           responseObject.section.forEach((careGuide) => {
             if (careGuide.type === "watering") {
-              dbObject.watering_care_guide = careGuide.description ? careGuide.description.trim() : "";
+              dbObject.watering_care_guide = careGuide.description
+                ? careGuide.description.trim()
+                : "";
             } else if (careGuide.type === "sunlight") {
-              dbObject.sunlight_care_guide = careGuide.description ? careGuide.description.trim() : "";
+              dbObject.sunlight_care_guide = careGuide.description
+                ? careGuide.description.trim()
+                : "";
             } else if (careGuide.type === "pruning") {
-              dbObject.pruning_care_guide = careGuide.description ? careGuide.description.trim() : "";
+              dbObject.pruning_care_guide = careGuide.description
+                ? careGuide.description.trim()
+                : "";
             }
           });
         });
@@ -93,17 +108,30 @@ function AddPlantCard(props) {
 
   return (
     <View style={styles.container}>
-      {plant.id < 3000 && <Image style={styles.image} source={{ uri: plantImage }}></Image>}
-      {plant.id < 3000 && <Text style={styles.text}>Common name: {plant.common_name}</Text>}
-      {plant.id < 3000 && <Text style={styles.text}>Scientific name: {plant.scientific_name[0]}</Text>}
+      {plant.id < 3000 && (
+        <Image style={styles.image} source={{ uri: plantImage }}></Image>
+      )}
+      {plant.id < 3000 && (
+        <Text style={styles.text}>Common name: {plant.common_name}</Text>
+      )}
+      {plant.id < 3000 && (
+        <Text style={styles.text}>
+          Scientific name: {plant.scientific_name[0]}
+        </Text>
+      )}
       {plant.id < 3000 && (
         <TouchableOpacity style={styles.button} onPress={handleAddPlantPress}>
-          <Text style={styles.buttonText}>Add Plant to my Plant Collection</Text>
+          <Text style={styles.buttonText}>
+            Add Plant to my Plant Collection
+          </Text>
         </TouchableOpacity>
       )}
       {plant.id > 3000 && <Text style={styles.text}>{plant.common_name}</Text>}
       {plant.id > 3000 && (
-        <Text style={styles.paywallText}>This plant exists in the database but is locked behind a premium api - sorry about that</Text>
+        <Text style={styles.paywallText}>
+          This plant exists in the database but is locked behind a premium api -
+          sorry about that
+        </Text>
       )}
     </View>
   );
