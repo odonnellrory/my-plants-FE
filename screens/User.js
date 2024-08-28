@@ -5,13 +5,14 @@ import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import PushNotification from "../Components/PushNotification";
 import Loading from "../Components/Loading";
+import LottieView from "lottie-react-native";
 
 export default function User() {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const [isLoading, setIsLoading] = useState(true);
 
-  setTimeout(() => {setIsLoading(false)}, 2000)
+  setTimeout(() => {setIsLoading(false)}, 1000)
 
   let navigation = useNavigation();
 
@@ -49,10 +50,17 @@ export default function User() {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.profileContainer}>
-          <Image 
+
+        <LottieView
+               source={require('../ProfilePic.json')}
+               autoPlay
+               loop
+               style={styles.profile_picture}
+            />
+          {/* <Image 
             source={{ uri: loggedInUser.profile_picture }}
             style={styles.profile_picture}
-          />
+          /> */}
 
           <Text style={styles.username}>{loggedInUser.username}</Text>
           <Text style={styles.infoText}>{loggedInUser.name}</Text>
@@ -110,17 +118,26 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     textAlign: "center",
   },
+  infoTextBold: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#388E3C",
+    marginBottom: 5,
+    textAlign: "center",
+  },
+
   signOutButton: {
-    backgroundColor: "#EF5350",
-    paddingVertical: 12,
-    paddingHorizontal: 30,
+    backgroundColor: "#66BB6A",
+    padding: 15,
     borderRadius: 25,
-    marginTop: 20,
+    width: "100%",
+    alignItems: "center",
+    marginBottom: 15,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
   signOutText: {
     color: "#FFFFFF",
