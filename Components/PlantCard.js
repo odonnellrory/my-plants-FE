@@ -27,10 +27,10 @@ export default function PlantCard({ plant }) {
         <View style={styles.cardContent}>
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={{ uri: plant.image_url }} />
-            <Text>{plant.nickname || plant.common_name}</Text>
+            <Text style={styles.scientificName}>{plant.scientific_name[0]}</Text>
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{plant.common_name}</Text>
+            <Text style={styles.text}>{plant.nickname || plant.common_name}</Text>
             <View style={styles.conditionContainer}>
               <SimpleLineIcons style={styles.icons} name="drop" />
               <Text style={styles.conditionText}>Next Watering: {formatDate(plant.next_watering)}</Text>
@@ -67,6 +67,12 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 10,
   },
+  scientificName: {
+    color: "#2E7D32",
+    width: 100,
+    textAlign: "center",
+    fontWeight: "bold",
+  },
   imageContainer: {
     justifyContent: "center",
     alignItems: "center",
@@ -100,6 +106,7 @@ const styles = StyleSheet.create({
   conditionText: {
     fontSize: 14,
     color: "#388E3C",
+    padding: 2,
   },
   notificationContainer: {
     marginTop: 10,
