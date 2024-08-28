@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
-import { updatePlantWatering } from "../src/api";
+import { updatePlantWatering, updateUserRewards } from "../src/api";
 import { UserContext } from "../Context/UserContext";
 
 const PushNotification = ({ plant, updatePlantData }) => {
-  const { loggedInUser } = useContext(UserContext);
+  const { loggedInUser, setLoggedInUser } = useContext(UserContext);
 
   const handleWatered = async () => {
     if (!plant || !loggedInUser) {
@@ -15,35 +15,41 @@ const PushNotification = ({ plant, updatePlantData }) => {
 
     const currentDate = new Date();
     const nextWateringDate = new Date(currentDate);
-    nextWateringDate.setDate(nextWateringDate.getDate() + 7); // Assuming a 7-day watering cycle
+    nextWateringDate.setDate(nextWateringDate.getDate() + 7);
 
-    // Optimistic update
     updatePlantData({
       last_watered: currentDate.toISOString(),
       next_watering: nextWateringDate.toISOString(),
     });
 
     try {
-      const updatedPlant = await updatePlantWatering(
-        loggedInUser.username,
-        plant._id
-      );
+      const [updatedPlant, updatedUser] = await Promise.all([
+        updatePlantWatering(loggedInUser.username, plant._id),
+        updateUserRewards(loggedInUser.username, 20),
+      ]);
+
       await scheduleNextWateringNotification(updatedPlant.plant);
 
-      // Update with actual server data
       updatePlantData(updatedPlant.plant);
+
+      setLoggedInUser((prevUser) => ({
+        ...prevUser,
+        reward_points: updatedUser.user.reward_points,
+      }));
 
       Alert.alert(
         "Success",
         `Plant watered! Last watered: ${currentDate.toLocaleDateString()}\nNext watering: ${new Date(
           updatedPlant.plant.next_watering
-        ).toLocaleDateString()}`
+        ).toLocaleDateString()}\n\nYou earned 20 reward points!`
       );
     } catch (error) {
-      console.error("Error updating plant watering:", error);
-      Alert.alert("Error", "Failed to update plant watering. Please try again");
+      console.error("Error updating plant watering or user rewards:", error);
+      Alert.alert(
+        "Error",
+        "Failed to update plant watering or user rewards. Please try again"
+      );
 
-      // Revert optimistic update on error
       updatePlantData({
         last_watered: plant.last_watered,
         next_watering: plant.next_watering,

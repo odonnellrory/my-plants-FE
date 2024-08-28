@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
+import {
+  Button,
+  Text,
+  View,
+  KeyboardAvoidingView,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
@@ -10,7 +20,9 @@ import Loading from "../Components/Loading";
 
 export default function AddPlant() {
   const route = useRoute();
-  const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
+  const identifiedPlantName = route.params?.identifiedPlant
+    ? route.params?.identifiedPlant.name
+    : "";
 
   let navigation = useNavigation();
 
@@ -105,31 +117,60 @@ export default function AddPlant() {
         <View style={styles.formContainer}>
           <Text>Plant Name</Text>
           <View style={styles.nameContainer}>
-            <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
+            <TextInput
+              style={styles.nameInput}
+              value={plantName}
+              onChangeText={handlePlantNameChange}
+            ></TextInput>
             <TouchableOpacity style={styles.nameTouchableOpacity}>
-              <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
+              <Ionicons
+                style={styles.icon}
+                name="camera"
+                onPress={handleCameraPress}
+              ></Ionicons>
             </TouchableOpacity>
             <TouchableOpacity style={styles.nameTouchableOpacity}>
-              <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
+              <FontAwesome
+                style={styles.icon}
+                name="photo"
+                onPress={handlePhotoGalleryPress}
+              ></FontAwesome>
             </TouchableOpacity>
           </View>
           <View style={styles.textContainer}>
             <Text style={styles.nameText}>
-              This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and
+              This is used to identify the plant. It can be it's scientific name
+              or its common name. If you are unsure you can take a photo and
               identify the plant that way
             </Text>
           </View>
           <Text>Plant Location (optional)</Text>
-          <TextInput style={styles.input} value={plantLocation} onChangeText={handlePlantLocationChange}></TextInput>
+          <TextInput
+            style={styles.input}
+            value={plantLocation}
+            onChangeText={handlePlantLocationChange}
+          ></TextInput>
           <View style={styles.textContainer}>
-            <Text style={styles.nameText}>Where is this plant kept? e.g. Living room</Text>
+            <Text style={styles.nameText}>
+              Where is this plant kept? e.g. Living room
+            </Text>
           </View>
           <Text>Plant Nickname (optional)</Text>
-          <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
+          <TextInput
+            style={styles.input}
+            value={plantNickname}
+            onChangeText={handlePlantNicknameChange}
+          ></TextInput>
           <View style={styles.textContainer}>
-            <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
+            <Text style={styles.nameText}>
+              Feel free to give your plant a nickname!
+            </Text>
           </View>
-          <TouchableOpacity title="Add Plant" style={styles.TouchableOpacity} onPress={handleAddPlantPress}>
+          <TouchableOpacity
+            title="Add Plant"
+            style={styles.TouchableOpacity}
+            onPress={handleAddPlantPress}
+          >
             <Text style={styles.text}>Add Plant</Text>
           </TouchableOpacity>
           <AddPlantModal
