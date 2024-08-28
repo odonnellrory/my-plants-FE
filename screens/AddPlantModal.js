@@ -60,15 +60,15 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     backgroundColor: "#E8F5E9",
-    padding: 20,
     borderRadius: 10,
-    alignItems: "center",
+    padding: 10,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
     color: "#2E7D32",
+    textAlign: "center",
   },
   closeButton: {
     marginLeft: 8,

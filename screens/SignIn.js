@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, KeyboardAvoidingView } from "react-native";
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../Context/UserContext";
@@ -47,7 +47,7 @@ export default function SignIn() {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <View style={styles.formContainer}>
         <Text style={styles.title}>Sign In</Text>
         <TextInput style={styles.input} placeholder="Username" value={username} onChangeText={setUsername} />
@@ -60,16 +60,14 @@ export default function SignIn() {
           <Text style={styles.signUpButtonText}>Not A User? Sign up Here!</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    padding: 15,
     backgroundColor: "#E8F5E9",
   },
   formContainer: {
@@ -84,10 +82,11 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   title: {
-    fontSize: 28,
-    marginBottom: 20,
+    fontSize: 22,
+    marginBottom: 15,
     color: "#2E7D32",
     fontWeight: "bold",
+    textAlign: "center",
   },
   input: {
     width: "100%",

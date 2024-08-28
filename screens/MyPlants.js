@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#E8F5E9",
     alignItems: "center",
     justifyContent: "flex-start",
-    padding: 15,
+    paddingHorizontal: 15,
   },
   singlePlantContainer: {
     alignSelf: "stretch",
