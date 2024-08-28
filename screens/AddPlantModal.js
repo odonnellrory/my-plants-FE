@@ -1,8 +1,6 @@
 import { Text, Modal, View, ScrollView, StyleSheet, TouchableOpacity, SafeAreaView } from "react-native";
 import AddPlantCard from "../Components/AddPlantCard";
 import { AntDesign } from "@expo/vector-icons";
-import { useState } from "react";
-import LottieView from "lottie-react-native";
 
 function AddPlantModal(props) {
   const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname, setPlantNickname, setPlantLocation } = props;
@@ -10,9 +8,6 @@ function AddPlantModal(props) {
   function handleButtonPress() {
     setIsModalVisible(false);
   }
-
-  //if (isModalLoading) return <LottieView style={{ flex: 1 }} source={require("../assets/loadingAnimation.json")} autoPlay loop />;
-
   return (
     <Modal visible={isModalVisible} animationType="slide" transparent={true}>
       <SafeAreaView style={styles.modalContainer}>

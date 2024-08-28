@@ -1,14 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import {
-  Button,
-  Text,
-  View,
-  Pressable,
-  Modal,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { Button, Text, View, Pressable, Modal, ScrollView, StyleSheet } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
@@ -28,9 +20,7 @@ export default function MyPlants() {
   const data = testData();
   let navigation = useNavigation();
   const route = useRoute();
-  const newAddedPlant = route.params?.newAddedPlant
-    ? route.params?.newAddedPlant.plant._id
-    : "";
+  const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
 
   const { loggedInUser } = useContext(UserContext);
@@ -57,10 +47,7 @@ export default function MyPlants() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.singlePlantContainer}>
-        <Pressable
-          style={styles.graveyardButton}
-          onPress={() => navigation.navigate("Plant graveyard", { plants })}
-        >
+        <Pressable style={styles.graveyardButton} onPress={() => navigation.navigate("Plant graveyard", { plants })}>
           <Text style={styles.buttonText}>The Garden</Text>
         </Pressable>
 
@@ -142,7 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     paddingHorizontal: 32,
     borderRadius: 25,
-    backgroundColor: "#AAD4B4",
+    backgroundColor: "#66BB6A",
     marginBottom: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
