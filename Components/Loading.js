@@ -5,7 +5,7 @@ import LottieView from "lottie-react-native";
 export default function Loading() {
   return (
     <View style={styles.loadingContainer}>
-      <LottieView source={require("../loadingImage.json")} autoPlay loop style={styles.animation} />
+      <LottieView source={require("../assets/loadingImage.json")} autoPlay loop style={styles.animation} />
     </View>
   );
 }

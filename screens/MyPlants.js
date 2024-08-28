@@ -1,29 +1,21 @@
 import React, { useContext, useEffect, useState } from "react";
-
-import { Button, Text, View, Pressable, Modal, ScrollView, StyleSheet } from "react-native";
-
+import { Button, Text, View, TouchableOpacity, ScrollView, StyleSheet } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
 import { getPlantList } from "../src/api";
 import Loading from "../Components/Loading";
-
 import NoPlantsCard from "../Components/NoPlantsCard";
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const data = testData();
   let navigation = useNavigation();
   const route = useRoute();
   const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
   const revivedPlant = route.params?.inGraveyard;
-
-  console.log(revivedPlant);
-
   const { loggedInUser } = useContext(UserContext);
   const username = loggedInUser ? loggedInUser.username : null;
 
@@ -48,10 +40,6 @@ export default function MyPlants() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.singlePlantContainer}>
-        <Pressable style={styles.graveyardButton} onPress={() => navigation.navigate("Plant graveyard", { plants })}>
-          <Text style={styles.buttonText}>The Garden</Text>
-        </Pressable>
-
         <View>
           {plants.length === 0 ? (
             <NoPlantsCard />
@@ -61,6 +49,9 @@ export default function MyPlants() {
             })
           )}
         </View>
+        <TouchableOpacity style={styles.graveyardButton} onPress={() => navigation.navigate("Plant graveyard", { plants })}>
+          <Text style={styles.buttonText}>The Plant Memorial</Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

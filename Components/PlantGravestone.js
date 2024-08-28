@@ -10,7 +10,7 @@ const PlantGravestone = ({ plant }) => {
   const { loggedInUser } = useContext(UserContext);
   return (
     <View style={styles.container}>
-      <LottieView source={require("../HoverPlantpot.json")} autoPlay loop style={styles.plantPot} />
+      <LottieView source={require("../assets/HoverPlantpot.json")} autoPlay loop style={styles.plantPot} />
 
       <View style={styles.container2}>
         <Text style={styles.text}>In Memory of: </Text>
