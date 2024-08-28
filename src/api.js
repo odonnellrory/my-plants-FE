@@ -35,9 +35,12 @@ const getDeadPlants = (username) => {
     });
 };
 
-const killPlant = (username, plant_id) => {
+const killPlant = (username, plant_id, is_true) => {
+  console.log(username, plant_id, is_true);
   return api
-    .patch(`/api/users/${username}/plants/${plant_id}/dead`)
+    .patch(`/api/users/${username}/plants/${plant_id}/dead`, {
+      is_dead: is_true,
+    })
     .then((response) => {
       return response;
     })

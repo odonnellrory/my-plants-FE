@@ -5,7 +5,7 @@ import Loading from "./Loading";
 import { killPlant } from "../src/api";
 import { UserContext } from "../Context/UserContext";
 
-const GardenOption = (props) => {
+const RevivePlant = (props) => {
   const { plant_id } = props;
 
   const [showWarning, setShowWarning] = useState(false);
@@ -29,7 +29,7 @@ const GardenOption = (props) => {
     setIsDead(true);
     setIsLoading(true);
 
-    killPlant(loggedInUser.username, plant_id, true)
+    killPlant(loggedInUser.username, plant_id, false)
       .then(() => {
         setIsLoading(false);
         navigation.navigate("My Plant Collection", { plant_id });
@@ -61,8 +61,8 @@ const GardenOption = (props) => {
                     </Text>
                   ) : (
                     <Text>
-                      This will permanently move your plant to the plant
-                      graveyard, are you sure you want to do this?
+                      This will move your plant to the plant ypur plants list,
+                      are you sure you want to do this?
                     </Text>
                   )}
                 </View>
@@ -89,13 +89,13 @@ const GardenOption = (props) => {
         style={styles.touchableOpacity}
         onPress={handleGardenButtonOnPress}
       >
-        <Text style={styles.text}>Move to Garden</Text>
+        <Text style={styles.text}>Revive</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-export default GardenOption;
+export default RevivePlant;
 
 const styles = StyleSheet.create({
   touchableOpacity: {
