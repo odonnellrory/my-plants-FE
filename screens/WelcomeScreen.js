@@ -39,8 +39,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.3)",
   },
   container: {
-    width: "80%",
+    alignSelf: "stretch",
     padding: 30,
+    margin: 15,
     borderRadius: 15,
     backgroundColor: "rgba(255, 255, 255, 0.9)",
     alignItems: "center",

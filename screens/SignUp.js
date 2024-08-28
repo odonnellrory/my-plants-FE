@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, TouchableOpacity, ScrollView, KeyboardAvoidingView } from "react-native";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
@@ -51,34 +51,35 @@ export default function RegisterScreen() {
     navigation.navigate("LoginScreen");
   };
   return (
-    <View style={styles.container}>
-      <View style={styles.formContainer}>
-        <Text style={styles.label}>Username</Text>
-        <TextInput style={styles.input} value={username} onChangeText={setUsername} placeholder="Enter username" />
-        <Text style={styles.label}>Name</Text>
-        <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter name" />
-        <Text style={styles.label}>Email</Text>
-        <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter email" keyboardType="email-address" />
-        <Text style={styles.label}>Password</Text>
-        <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Enter password" secureTextEntry />
-        <TouchableOpacity style={styles.pressable} onPress={handleSubmit}>
-          <Text style={styles.text}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginNavigate} onPress={handleLoginNavigate}>
-          <Text style={styles.loginText}>Already have an account? Log in here.</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <KeyboardAvoidingView style={styles.container}>
+      <ScrollView>
+        <View style={styles.formContainer}>
+          <Text style={styles.title}>Sign Up!</Text>
+          <Text style={styles.label}>Username</Text>
+          <TextInput style={styles.input} value={username} onChangeText={setUsername} placeholder="Enter username" />
+          <Text style={styles.label}>Name</Text>
+          <TextInput style={styles.input} value={name} onChangeText={setName} placeholder="Enter name" />
+          <Text style={styles.label}>Email</Text>
+          <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Enter email" keyboardType="email-address" />
+          <Text style={styles.label}>Password</Text>
+          <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Enter password" secureTextEntry />
+          <TouchableOpacity style={styles.pressable} onPress={handleSubmit}>
+            <Text style={styles.text}>Sign Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.loginNavigate} onPress={handleLoginNavigate}>
+            <Text style={styles.loginText}>Already have an account? Log in here.</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#E8F5E9",
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
+    backgroundColor: "#E8F5E9",
+    padding: 15,
   },
   formContainer: {
     alignSelf: "stretch",
@@ -103,6 +104,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#81C784",
     marginBottom: 15,
+  },
+  title: {
+    fontSize: 22,
+    marginBottom: 15,
+    color: "#2E7D32",
+    fontWeight: "bold",
+    textAlign: "center",
   },
   pressable: {
     alignSelf: "stretch",
