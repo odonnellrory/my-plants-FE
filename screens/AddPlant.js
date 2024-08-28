@@ -9,6 +9,7 @@ import AddPlantModal from "./AddPlantModal";
 import Loading from "../Components/Loading";
 
 export default function AddPlant() {
+  
   const route = useRoute();
   const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
 

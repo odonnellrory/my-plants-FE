@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Pressable,
+  TouchableOpacity,
 } from "react-native";
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 import PushNotification from "../Components/PushNotification";
@@ -19,11 +20,13 @@ import { useNavigation } from "@react-navigation/native";
 import Loading from "../Components/Loading";
 
 import DeletePlant from "../Components/DeletePlant";
+import GardenOption from "../Components/GardenOption";
 
 export default function SinglePlant(props) {
+
   const [plantProfile, setPlantProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isDead, setIsDead] = useState(false);
+
 
   const route = useRoute();
   const plant = route.params?.plant;
@@ -48,17 +51,9 @@ export default function SinglePlant(props) {
       .catch((error) => {
         console.error(error, "getPlantById");
       });
-  }, [isDead]);
+  }, []);
 
-  const handleGardenButton = () => {
-    setIsDead(true);
-    setIsLoading(true);
-
-    killPlant(loggedInUser.username, plant_id);
-
-    setPlantProfile([]);
-    setIsLoading(false);
-  };
+ 
 
   if (isLoading) {
     return <Loading />;
@@ -132,14 +127,7 @@ export default function SinglePlant(props) {
 
         <PushNotification plant={plant} />
         <DeletePlant plant_id={plant._id} />
-        <View>
-          <Pressable
-            style={styles.graveyardButton}
-            onPress={handleGardenButton}
-          >
-            <Text style={styles.buttonText}>Send to Garden</Text>
-          </Pressable>
-        </View>
+      <GardenOption plant_id={plant._id} />
       </ScrollView>
     </View>
   );

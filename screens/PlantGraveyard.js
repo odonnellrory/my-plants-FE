@@ -30,7 +30,7 @@ const PlantGraveyard = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>The Plant Graveyard</Text>
+    
 
       <ScrollView style={styles.plants}>
         {plants.map((plant) => {
@@ -55,4 +55,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
   },
+  plants: {
+    alignSelf: "stretch",
+  
+  }
 });
