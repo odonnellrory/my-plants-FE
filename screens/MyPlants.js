@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Text, View, Pressable, Modal, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import testData from "../ExampleData";
 import PlantCard from "../Components/PlantCard";
 import { UserContext } from "../Context/UserContext";
 import { getPlantList } from "../src/api";
-import LottieView from "lottie-react-native";
 import Loading from "../Components/Loading";
+import NoPlantsCard from "../Components/NoPlantsCard";
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
@@ -42,10 +42,15 @@ export default function MyPlants() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.singlePlantContainer}>
+        <View></View>
         <View>
-          {plants.map((plant) => {
-            return <PlantCard plant={plant} key={plant._id} />;
-          })}
+          {plants.length === 0 ? (
+            <NoPlantsCard />
+          ) : (
+            plants.map((plant) => {
+              return <PlantCard plant={plant} key={plant._id} />;
+            })
+          )}
         </View>
       </ScrollView>
     </View>
