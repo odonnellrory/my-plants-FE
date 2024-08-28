@@ -5,7 +5,7 @@ import { useState } from "react";
 import LottieView from "lottie-react-native";
 
 function AddPlantModal(props) {
-  const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname, isModalLoading } = props;
+  const { isModalVisible, setIsModalVisible, plantList, plantLocation, plantNickname, setPlantNickname, setPlantLocation } = props;
 
   function handleButtonPress() {
     setIsModalVisible(false);
@@ -41,6 +41,8 @@ function AddPlantModal(props) {
                   plantLocation={plantLocation}
                   plantNickname={plantNickname}
                   setIsModalVisible={setIsModalVisible}
+                  setPlantLocation={setPlantLocation}
+                  setPlantNickname={setPlantNickname}
                 ></AddPlantCard>
               );
             })}

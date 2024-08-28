@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  Text,
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
@@ -20,9 +10,7 @@ import Loading from "../Components/Loading";
 
 export default function AddPlant() {
   const route = useRoute();
-  const identifiedPlantName = route.params?.identifiedPlant
-    ? route.params?.identifiedPlant.name
-    : "";
+  const identifiedPlantName = route.params?.identifiedPlant ? route.params?.identifiedPlant.name : "";
 
   let navigation = useNavigation();
 
@@ -56,6 +44,8 @@ export default function AddPlant() {
   function handlePlantNicknameChange(newText) {
     setPlantNickname(newText);
   }
+
+  console.log(plantNickname, "<<<INSIDE ADD PLANT");
 
   async function handleCameraPress() {
     try {
@@ -97,8 +87,6 @@ export default function AddPlant() {
         setPlantList(response.data.data);
         setIsModalLoading(false);
         setPlantName("");
-        setPlantNickname("");
-        setPlantLocation("");
         setIsLoading(false);
       })
       .catch((error) => {
@@ -119,54 +107,31 @@ export default function AddPlant() {
         <View style={styles.formContainer}>
           <Text>Plant Name</Text>
           <View style={styles.nameContainer}>
-            <TextInput
-              style={styles.nameInput}
-              value={plantName}
-              onChangeText={handlePlantNameChange}
-            ></TextInput>
+            <TextInput style={styles.nameInput} value={plantName} onChangeText={handlePlantNameChange}></TextInput>
             <TouchableOpacity style={styles.nameTouchableOpacity}>
-              <Ionicons
-                style={styles.icon}
-                name="camera"
-                onPress={handleCameraPress}
-              ></Ionicons>
+              <Ionicons style={styles.icon} name="camera" onPress={handleCameraPress}></Ionicons>
             </TouchableOpacity>
             <TouchableOpacity style={styles.nameTouchableOpacity}>
-              <FontAwesome
-                style={styles.icon}
-                name="photo"
-                onPress={handlePhotoGalleryPress}
-              ></FontAwesome>
+              <FontAwesome style={styles.icon} name="photo" onPress={handlePhotoGalleryPress}></FontAwesome>
             </TouchableOpacity>
           </View>
-          <Text style={styles.nameText}>
-            This is used to identify the plant. It can be it's scientific name
-            or its common name. If you are unsure you can take a photo and
-            identify the plant that way
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>
+              This is used to identify the plant. It can be it's scientific name or its common name. If you are unsure you can take a photo and
+              identify the plant that way
+            </Text>
+          </View>
           <Text>Plant Location (optional)</Text>
-          <TextInput
-            style={styles.input}
-            value={plantLocation}
-            onChangeText={handlePlantLocationChange}
-          ></TextInput>
-          <Text style={styles.nameText}>
-            Where is this plant kept? e.g. Living room
-          </Text>
+          <TextInput style={styles.input} value={plantLocation} onChangeText={handlePlantLocationChange}></TextInput>
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>Where is this plant kept? e.g. Living room</Text>
+          </View>
           <Text>Plant Nickname (optional)</Text>
-          <TextInput
-            style={styles.input}
-            value={plantNickname}
-            onChangeText={handlePlantNicknameChange}
-          ></TextInput>
-          <Text style={styles.nameText}>
-            Feel free to give your plant a nickname!
-          </Text>
-          <TouchableOpacity
-            title="Add Plant"
-            style={styles.TouchableOpacity}
-            onPress={handleAddPlantPress}
-          >
+          <TextInput style={styles.input} value={plantNickname} onChangeText={handlePlantNicknameChange}></TextInput>
+          <View style={styles.textContainer}>
+            <Text style={styles.nameText}>Feel free to give your plant a nickname!</Text>
+          </View>
+          <TouchableOpacity title="Add Plant" style={styles.TouchableOpacity} onPress={handleAddPlantPress}>
             <Text style={styles.text}>Add Plant</Text>
           </TouchableOpacity>
           <AddPlantModal
@@ -177,6 +142,8 @@ export default function AddPlant() {
             plantNickname={plantNickname}
             isModalLoading={isModalLoading}
             setIsModalLoading={setIsModalLoading}
+            setPlantLocation={setPlantLocation}
+            setPlantNickname={setPlantNickname}
           ></AddPlantModal>
         </View>
       </ScrollView>
@@ -218,21 +185,18 @@ const styles = StyleSheet.create({
   },
   nameText: {
     padding: 5,
-
     color: "#1B5E20",
   },
   text: {
     fontSize: 16,
-    lineHeight: 21,
     fontWeight: "bold",
-    letterSpacing: 0.25,
     color: "#FFFFFF",
   },
   textContainer: {
     backgroundColor: "#C8E6C9",
     borderRadius: 8,
     marginTop: 5,
-    marginBottom: 15,
+    marginBottom: 25,
   },
   input: {
     backgroundColor: "#F1F8E9",
@@ -240,12 +204,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#81C784",
-    marginBottom: 15,
+    marginBottom: 5,
   },
   nameContainer: {
     flexDirection: "row",
     gap: 10,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   nameTouchableOpacity: {
     flex: 1,

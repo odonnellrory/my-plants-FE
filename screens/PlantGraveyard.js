@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   title: {
-    fontFamily: "Georgia",
     fontSize: 24,
     justifyContent: "center",
     alignContent: "center",
