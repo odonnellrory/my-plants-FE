@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import * as Notifications from "expo-notifications";
 import { updatePlantWatering, updateUserRewards } from "../src/api";
@@ -6,6 +6,19 @@ import { UserContext } from "../Context/UserContext";
 
 const PushNotification = ({ plant, updatePlantData }) => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext);
+  const [isWatered, setIsWatered] = useState(false);
+  const [nextWateringDate, setNextWateringDate] = useState(null);
+
+  useEffect(() => {
+    checkWateringStatus();
+  }, [plant]);
+
+  const checkWateringStatus = () => {
+    const currentDate = new Date();
+    const nextWatering = new Date(plant.next_watering);
+    setIsWatered(currentDate < nextWatering);
+    setNextWateringDate(nextWatering);
+  };
 
   const handleWatered = async () => {
     if (!plant || !loggedInUser) {
@@ -21,6 +34,8 @@ const PushNotification = ({ plant, updatePlantData }) => {
       last_watered: currentDate.toISOString(),
       next_watering: nextWateringDate.toISOString(),
     });
+    setIsWatered(true);
+    setNextWateringDate(nextWateringDate);
 
     try {
       const [updatedPlant, updatedUser] = await Promise.all([
@@ -51,6 +66,7 @@ const PushNotification = ({ plant, updatePlantData }) => {
         last_watered: plant.last_watered,
         next_watering: plant.next_watering,
       });
+      checkWateringStatus();
     }
   };
 
@@ -74,21 +90,32 @@ const PushNotification = ({ plant, updatePlantData }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={handleWatered}>
-        <Text style={styles.buttonText}>I just watered this plant!</Text>
+      <TouchableOpacity
+        style={[styles.button, isWatered && styles.wateredButton]}
+        onPress={handleWatered}
+        disabled={isWatered}
+      >
+        <Text style={styles.buttonText}>
+          {isWatered ? `Watered!` : "Water this plant!"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginTop: 10,
+  },
   button: {
     backgroundColor: "#66BB6A",
     borderRadius: 25,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: "center",
+  },
+  wateredButton: {
+    backgroundColor: "#BECFC2",
   },
   buttonText: {
     color: "#FFFFFF",
