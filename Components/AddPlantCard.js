@@ -7,11 +7,13 @@ import { useNavigation } from "@react-navigation/native";
 import Loading from "./Loading";
 
 function AddPlantCard(props) {
-  const { plant, plantNickname, plantLocation, setIsModalVisible } = props;
+  const { plant, plantNickname, plantLocation, setIsModalVisible, setPlantNickname, setPlantLocation } = props;
   const { loggedInUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   let navigation = useNavigation();
+
+  console.log(plantNickname, plantLocation);
 
   let plantImage = "";
 
@@ -80,6 +82,10 @@ function AddPlantCard(props) {
       .catch((error) => {
         console.error(error);
         setIsError(true);
+      })
+      .finally(() => {
+        setPlantLocation("");
+        setPlantNickname("");
       });
   }
 
