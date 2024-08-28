@@ -32,7 +32,7 @@ const RevivePlant = (props) => {
     killPlant(loggedInUser.username, plant_id, false)
       .then(() => {
         setIsLoading(false);
-        navigation.navigate("My Plant Collection", { plant_id });
+        navigation.navigate("My Plant Collection", { inGraveyard: false });
       })
       .catch(() => {
         setIsError(true);

@@ -32,7 +32,7 @@ const GardenOption = (props) => {
     killPlant(loggedInUser.username, plant_id, true)
       .then(() => {
         setIsLoading(false);
-        navigation.navigate("My Plant Collection", { plant_id });
+        navigation.navigate("My Plant Collection", { inGraveyard: true });
       })
       .catch(() => {
         setIsError(true);

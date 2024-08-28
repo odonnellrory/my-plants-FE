@@ -20,6 +20,9 @@ export default function MyPlants() {
   const route = useRoute();
   const newAddedPlant = route.params?.newAddedPlant ? route.params?.newAddedPlant.plant._id : "";
   const deletedPlant = route.params?.plant_id ? route.params?.plant_id : "";
+  const revivedPlant = route.params?.inGraveyard;
+
+  console.log(revivedPlant);
 
   const { loggedInUser } = useContext(UserContext);
   const username = loggedInUser ? loggedInUser.username : null;
@@ -36,7 +39,7 @@ export default function MyPlants() {
       .catch((error) => {
         console.error(error);
       });
-  }, [newAddedPlant, deletedPlant]);
+  }, [newAddedPlant, deletedPlant, revivedPlant]);
 
   if (isLoading) {
     return <Loading />;
