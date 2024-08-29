@@ -7,6 +7,7 @@ import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
 import AddPlantModal from "./AddPlantModal";
 import Loading from "../Components/Loading";
+import ErrorCard from "../Components/ErrorCard";
 
 export default function AddPlant() {
   const route = useRoute();
@@ -21,9 +22,8 @@ export default function AddPlant() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalLoading, setIsModalLoading] = useState(false);
   const [plantList, setPlantList] = useState([]);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [loadingPlants, setLoadingPlants] = useState(false);
 
   API_URL = process.env.REACT_APP_PERENUAL_API_URL_NAME;
 
@@ -88,16 +88,14 @@ export default function AddPlant() {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error(error);
-        setIsError(true);
+        setError("Looks like something went wrong trying while trying to add your plant - please try again later");
         setIsModalLoading(false);
         setIsLoading(false);
       });
   }
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorCard errorMessage={error} />;
 
   return (
     <KeyboardAvoidingView style={styles.container}>

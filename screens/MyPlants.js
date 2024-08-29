@@ -6,10 +6,12 @@ import { UserContext } from "../Context/UserContext";
 import { getPlantList } from "../src/api";
 import Loading from "../Components/Loading";
 import NoPlantsCard from "../Components/NoPlantsCard";
+import ErrorCard from "../Components/ErrorCard";
 
 export default function MyPlants() {
   const [plants, setplants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   let navigation = useNavigation();
   const route = useRoute();
@@ -32,12 +34,14 @@ export default function MyPlants() {
 
         setIsLoading(false);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
+        setIsLoading(false);
+        setError("Looks like something went wrong trying to load your plants - please try again later!");
       });
   }, [newAddedPlant, deletedPlant, revivedPlant]);
 
   if (isLoading) return <Loading />;
+  if (error) return <ErrorCard errorMessage={error} />;
 
   return (
     <View style={styles.container}>

@@ -55,7 +55,7 @@ const RevivePlant = (props) => {
                 </View>
                 <View style={styles.warningBody}>
                   {isError ? (
-                    <Text style={styles.error}>Something went wrong and we coudn't remove your plant - please try again!</Text>
+                    <Text style={styles.error}>Something went wrong and we coudn't move your plant - please try again!</Text>
                   ) : (
                     <Text>This will move your plant to the plant ypur plants list, are you sure you want to do this?</Text>
                   )}

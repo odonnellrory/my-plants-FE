@@ -13,6 +13,7 @@ const PlantGraveyard = () => {
   const { loggedInUser } = useContext(UserContext);
   const [plants, setplants] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getDeadPlants(loggedInUser.username)
@@ -21,14 +22,14 @@ const PlantGraveyard = () => {
 
         setIsLoading(false);
       })
-      .catch((error) => {
-        console.error(error);
+      .catch(() => {
+        setIsLoading(false);
+        setError("Something went wrong trying to load you plants - please try again later!");
       });
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorCard errorMessage={error} />;
 
   return (
     <View style={styles.container}>
