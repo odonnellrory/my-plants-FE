@@ -1,6 +1,14 @@
 import { useRoute } from "@react-navigation/native";
 import React from "react";
-import { Text, View, Image, ScrollView, StyleSheet, Pressable, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
 import { SimpleLineIcons, Feather } from "@expo/vector-icons";
 import PushNotification from "../Components/PushNotification";
 import { useEffect, useState } from "react";
@@ -17,6 +25,7 @@ import GardenOption from "../Components/GardenOption";
 export default function SinglePlant(props) {
   const [plantProfile, setPlantProfile] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const route = useRoute();
   const plant = route.params?.plant;
@@ -39,7 +48,7 @@ export default function SinglePlant(props) {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error(error, "getPlantById");
+        setError(error);
       });
   }, []);
 
@@ -47,12 +56,22 @@ export default function SinglePlant(props) {
     return <Loading />;
   }
 
+  if (error)
+    return <ErrorCard ErrorMessage={"There was an error please try again"} />;
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.screenContainer}>
         <View style={styles.plantInfoContainer}>
-          <Text style={styles.nickname}>{plantProfile.nickname ? plantProfile.nickname : plantProfile.common_name}</Text>
-          <Image style={styles.image} source={{ uri: plantProfile.image_url }} />
+          <Text style={styles.nickname}>
+            {plantProfile.nickname
+              ? plantProfile.nickname
+              : plantProfile.common_name}
+          </Text>
+          <Image
+            style={styles.image}
+            source={{ uri: plantProfile.image_url }}
+          />
           <Text style={styles.guideText}>
             <Text>This plants scientific name is </Text>
             <Text style={styles.bold}>{plantProfile.scientific_name}</Text>
@@ -82,21 +101,27 @@ export default function SinglePlant(props) {
               <Feather style={styles.sunIcon} name="sun" />
               <Text style={styles.guideHeadings}>Sunlight Guide</Text>
             </View>
-            <Text style={styles.guideText}>{plantProfile.sunlight_care_guide}</Text>
+            <Text style={styles.guideText}>
+              {plantProfile.sunlight_care_guide}
+            </Text>
           </View>
           <View style={styles.individualCareGuideContainer}>
             <View style={styles.individualGuide}>
               <SimpleLineIcons style={styles.waterIcon} name="drop" />
               <Text style={styles.guideHeadings}>Watering Guide</Text>
             </View>
-            <Text style={styles.guideText}>{plantProfile.watering_care_guide}</Text>
+            <Text style={styles.guideText}>
+              {plantProfile.watering_care_guide}
+            </Text>
           </View>
           <View style={styles.individualCareGuideContainer}>
             <View style={styles.individualGuide}>
               <Feather style={styles.scissorIcon} name="scissors" />
               <Text style={styles.guideHeadings}>Pruning Guide</Text>
             </View>
-            <Text style={styles.guideText}>{plantProfile.pruning_care_guide}</Text>
+            <Text style={styles.guideText}>
+              {plantProfile.pruning_care_guide}
+            </Text>
           </View>
         </View>
 

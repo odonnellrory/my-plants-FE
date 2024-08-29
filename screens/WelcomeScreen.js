@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export default function WelcomeScreen() {
@@ -16,11 +22,17 @@ export default function WelcomeScreen() {
       <View style={styles.container}>
         <Text style={styles.title}>Welcome to My Plant App</Text>
 
-        <TouchableOpacity style={styles.pressable} onPress={() => navigation.navigate("LoginScreen")}>
+        <TouchableOpacity
+          style={styles.pressable}
+          onPress={() => navigation.navigate("LoginScreen")}
+        >
           <Text style={styles.pressableText}>Sign In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.pressable, styles.registerButton]} onPress={() => navigation.navigate("RegisterScreen")}>
+        <TouchableOpacity
+          style={[styles.pressable, styles.registerButton]}
+          onPress={() => navigation.navigate("RegisterScreen")}
+        >
           <Text style={styles.pressableText}>Sign Up</Text>
         </TouchableOpacity>
       </View>
