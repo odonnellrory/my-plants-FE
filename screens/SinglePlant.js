@@ -58,7 +58,7 @@ export default function SinglePlant(props) {
             <Text style={styles.bold}>{plantProfile.scientific_name}</Text>
           </Text>
           {plantProfile.plant_location && (
-            <Text style={styles.guideText}>
+            <Text style={styles.imageSuffixText}>
               {plantProfile.nickname ? (
                 <Text>{plantProfile.nickname} is located in the </Text>
               ) : (
@@ -235,6 +235,12 @@ const styles = StyleSheet.create({
   guideText: {
     fontSize: 14,
     color: "#2E7D32",
+  },
+  imageSuffixText: {
+    fontSize: 14,
+    color: "#2E7D32",
+    alignText: "justify",
+    alignSelf: "flex-start",
   },
   origin: {
     margin: 10,
