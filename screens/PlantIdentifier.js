@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "rea
 import * as FileSystem from "expo-file-system";
 import axios from "axios";
 import IdentifiedPlantCard from "../Components/IdentifiedPlantCard";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import Loading from "../Components/Loading";
 import ErrorCard from "../Components/ErrorCard";
 

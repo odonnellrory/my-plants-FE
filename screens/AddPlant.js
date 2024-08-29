@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Text, View, KeyboardAvoidingView, TextInput, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
+import { Text, View, KeyboardAvoidingView, TextInput, StyleSheet, ScrollView, TouchableOpacity, Image } from "react-native";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";

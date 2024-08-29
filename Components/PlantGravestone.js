@@ -2,7 +2,6 @@ import { View, StyleSheet, Text, Image, Pressable, TouchableOpacity } from "reac
 import LottieView from "lottie-react-native";
 import { UserContext } from "../Context/UserContext";
 import { useContext } from "react";
-import { killPlant } from "../src/api";
 import RevivePlant from "./RevivingPlant";
 
 const PlantGravestone = ({ plant }) => {

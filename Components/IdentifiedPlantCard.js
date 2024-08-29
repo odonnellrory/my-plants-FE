@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, View, Image, TouchableOpacity, TurboModuleRegistry } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import Loading from "./Loading";
 
 export default function IdentifiedPlantCard(props) {
   let navigation = useNavigation();
