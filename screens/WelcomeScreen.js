@@ -14,7 +14,7 @@ export default function WelcomeScreen() {
     >
       <View style={styles.overlay} />
       <View style={styles.container}>
-        <Text style={styles.title}>Welcome to My Plant App</Text>
+        <Text style={styles.title}>Welcome to My Plants App</Text>
 
         <TouchableOpacity style={styles.pressable} onPress={() => navigation.navigate("LoginScreen")}>
           <Text style={styles.pressableText}>Sign In</Text>
