@@ -45,7 +45,7 @@ export default function PlantCard({ plant: initialPlant }) {
       </Pressable>
       <View style={styles.notificationContainer}>
         <PushNotification plant={plant} updatePlantData={updatePlantData} compact={true} />
-        {plant._id === "66cf893fc95c4481c183e6e0" && <TestNotification plant={plant} />}
+        {plant._id === "66d05bcd696acdab7ec7cab0" && <TestNotification plant={plant} />}
       </View>
     </View>
   );
