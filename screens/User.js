@@ -67,7 +67,7 @@ export default function User() {
           </Text>
           <Text style={styles.infoText}>Joined {formatDate(loggedInUser.created_at)}</Text>
           <TouchableOpacity style={styles.signOutButton} onPress={handleNavigateToGraveyard}>
-            <Text style={styles.signOutText}>View your plants who didn't make it </Text>
+            <Text style={styles.signOutText}>Move to Plant Graveyard</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
             <Text style={styles.signOutText}>Sign Out</Text>

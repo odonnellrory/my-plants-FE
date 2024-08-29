@@ -74,7 +74,7 @@ const GardenOption = (props) => {
         </View>
       </Modal>
       <TouchableOpacity style={styles.touchableOpacity} onPress={handleGardenButtonOnPress}>
-        <Text style={styles.text}>Move to Garden</Text>
+        <Text style={styles.text}>Move to Plant Graveyard</Text>
       </TouchableOpacity>
     </View>
   );
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     height: 75,
+    padding: 10,
   },
   buttonContainer: {
     flexDirection: "row",

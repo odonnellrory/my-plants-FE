@@ -56,7 +56,7 @@ export default function MyPlants() {
           )}
         </View>
         <TouchableOpacity style={styles.graveyardButton} onPress={handleNavigateToGraveyard}>
-          <Text style={styles.buttonText}>The Plant Memorial</Text>
+          <Text style={styles.buttonText}>Move to Plant Graveyard</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>

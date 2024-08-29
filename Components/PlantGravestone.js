@@ -33,12 +33,12 @@ const styles = StyleSheet.create({
   container2: {
     backgroundColor: "#8CC498",
     borderRadius: 10,
-    padding: 10,
+    padding: 20,
     paddingBottom: 20,
     alignItems: "center",
     width: 250,
-    borderTopRightRadius: 150,
-    borderTopLeftRadius: 150,
+    borderTopRightRadius: 80,
+    borderTopLeftRadius: 80,
   },
   name: {
     fontSize: 16,
