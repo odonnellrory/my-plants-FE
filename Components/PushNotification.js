@@ -9,6 +9,14 @@ const PushNotification = ({ plant, updatePlantData }) => {
   const [isWatered, setIsWatered] = useState(false);
   const [nextWateringDate, setNextWateringDate] = useState(null);
 
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+
   useEffect(() => {
     checkWateringStatus();
   }, [plant]);
@@ -90,14 +98,8 @@ const PushNotification = ({ plant, updatePlantData }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={[styles.button, isWatered && styles.wateredButton]}
-        onPress={handleWatered}
-        disabled={isWatered}
-      >
-        <Text style={styles.buttonText}>
-          {isWatered ? `Watered!` : "Water this plant!"}
-        </Text>
+      <TouchableOpacity style={[styles.button, isWatered && styles.wateredButton]} onPress={handleWatered} disabled={isWatered}>
+        <Text style={styles.buttonText}>{isWatered ? `Watered!` : "Water this plant!"}</Text>
       </TouchableOpacity>
     </View>
   );

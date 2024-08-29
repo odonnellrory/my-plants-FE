@@ -6,6 +6,14 @@ import { UserContext } from "../Context/UserContext";
 const TestNotification = ({ plant }) => {
   const { loggedInUser } = useContext(UserContext);
 
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+
   const handleInstantNotification = async () => {
     if (!plant || !loggedInUser) {
       Alert.alert("Error", "Plant or user information not available");
