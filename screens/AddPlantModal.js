@@ -7,6 +7,8 @@ function AddPlantModal(props) {
 
   function handleButtonPress() {
     setIsModalVisible(false);
+    setPlantNickname("");
+    setPlantLocation("");
   }
   return (
     <Modal visible={isModalVisible} animationType="slide" transparent={true}>
