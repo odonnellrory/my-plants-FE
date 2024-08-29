@@ -3,7 +3,6 @@ import { View, Text, Image, StyleSheet, ScrollView, TouchableOpacity, Pressable 
 import { useState, useContext, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
-import PushNotification from "../Components/PushNotification";
 import Loading from "../Components/Loading";
 import LottieView from "lottie-react-native";
 import { getPlantList } from "../src/api";
