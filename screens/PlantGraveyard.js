@@ -1,11 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { useRoute } from "@react-navigation/core";
+import { View, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import PlantGravestone from "../Components/PlantGravestone";
 import { UserContext } from "../Context/UserContext";
 import { getDeadPlants } from "../src/api";
-import NoPlantsCard from "../Components/NoPlantsCard";
 import Loading from "../Components/Loading";
 import NoMemorialPlants from "../Components/NoMemorialPlants";
 

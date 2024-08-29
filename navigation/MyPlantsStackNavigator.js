@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import SinglePlant from "../screens/SinglePlant";
 import MyPlants from "../screens/MyPlants";
-
 import PlantGraveyard from "../screens/PlantGraveyard";
 
 const Stack = createStackNavigator();

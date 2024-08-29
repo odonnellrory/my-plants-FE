@@ -2,7 +2,6 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, FontAwesome, FontAwesome6 } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
-
 import Newsfeed from "../screens/Newsfeed";
 import User from "../screens/User";
 import MyPlantsStackNavigator from "./MyPlantsStackNavigator";

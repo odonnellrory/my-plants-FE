@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { StatusBar, StyleSheet, View } from "react-native";
 import { useContext } from "react";
 
 import TabNavigator from "./TabNavigator";
