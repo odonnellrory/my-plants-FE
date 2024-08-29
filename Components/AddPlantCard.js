@@ -5,12 +5,13 @@ import { useContext, useState } from "react";
 import { UserContext } from "../Context/UserContext";
 import { useNavigation } from "@react-navigation/native";
 import Loading from "./Loading";
+import ErrorCard from "./ErrorCard";
 
 function AddPlantCard(props) {
   const { plant, plantNickname, plantLocation, setIsModalVisible, setPlantNickname, setPlantLocation } = props;
   const { loggedInUser } = useContext(UserContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(null);
   let navigation = useNavigation();
 
   let plantImage = "";
@@ -77,9 +78,9 @@ function AddPlantCard(props) {
         setIsModalVisible(false);
         navigation.navigate("My Plant Collection", { newAddedPlant });
       })
-      .catch((error) => {
-        console.error(error);
-        setIsError(true);
+      .catch(() => {
+        setIsLoading(false);
+        setError("Looks like something went wrong trying while trying to add your plant - please try again later");
       })
       .finally(() => {
         setPlantLocation("");
@@ -88,6 +89,7 @@ function AddPlantCard(props) {
   }
 
   if (isLoading) return <Loading />;
+  if (error) return <ErrorCard errorMessage={error} />;
 
   return (
     <View style={styles.container}>

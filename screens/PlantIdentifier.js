@@ -5,6 +5,7 @@ import axios from "axios";
 import IdentifiedPlantCard from "../Components/IdentifiedPlantCard";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Loading from "../Components/Loading";
+import ErrorCard from "../Components/ErrorCard";
 
 const API_KEY = process.env.REACT_APP_PLANT_ID_API_KEY; //within .env file
 const API_URL = process.env.REACT_APP_PLANT_ID_API_URL;
@@ -14,6 +15,7 @@ export default function PlantIdentifier() {
   const capturedImage = route.params?.imageToProcess;
   const [identifiedPlantList, setidentifiedPlantList] = useState([]);
   const [isIdentifying, setIsIdentifying] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setidentifiedPlantList([]);
@@ -47,11 +49,12 @@ export default function PlantIdentifier() {
 
       setIsIdentifying(false);
     } catch (error) {
-      console.error("Error identifying plant:", error);
       setIsIdentifying(false);
-      setidentifiedPlantList([{ name: "Error identifying plant", probability: 0, similar_images: {} }]);
+      setError("Looks like something went wrong trying to indentify your plant - please try again later!");
     }
   }
+
+  if (error) return <ErrorCard errorMessage={error} />;
 
   return (
     <View style={styles.container}>
