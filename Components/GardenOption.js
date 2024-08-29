@@ -74,7 +74,7 @@ const GardenOption = (props) => {
         </View>
       </Modal>
       <TouchableOpacity style={styles.touchableOpacity} onPress={handleGardenButtonOnPress}>
-        <Text style={styles.text}>Move to Plant Graveyard</Text>
+        <Text style={styles.text}>Plant Graveyard</Text>
       </TouchableOpacity>
     </View>
   );
